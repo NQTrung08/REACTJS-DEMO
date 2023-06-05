@@ -1,0 +1,2 @@
+- Chạy npm install hoặc yarn install để cài đặt node_modules
+- Chạy lệnh npm run dev hoặc yarn dev để chạy project

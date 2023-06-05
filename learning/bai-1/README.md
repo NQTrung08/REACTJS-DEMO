@@ -1,0 +1,3 @@
+- Cắt layout theo ảnh
+- Phân tích chia các component sao cho hợp lý
+- Sử dụng tailwindscss để cắt giao diện
