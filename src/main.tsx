@@ -5,10 +5,7 @@ import App from './App';
 import './i18n';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
+ReactDOM.createRoot(document.getElementById("root") as any).render(
   <React.StrictMode>
     <BrowserRouter>
       <App />

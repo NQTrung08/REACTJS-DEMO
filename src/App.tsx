@@ -10,7 +10,7 @@ function App() {
     await initStores()
   }, [])
   return (
-    <div className="App">
+    <div className="w-full h-full relative">
       <Suspense fallback={<div>Loading... </div>}>
         <ConfigProvider locale={viVN}>
           <RouteApp />
