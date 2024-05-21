@@ -1,0 +1,6 @@
+{
+  "name": "core-store",
+  "private": true,
+  "license": "MIT",
+  "main": "index"
+}

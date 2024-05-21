@@ -1,0 +1,6 @@
+{
+  "name": "core-modules",
+  "private": true,
+  "license": "MIT",
+  "main": "index"
+}

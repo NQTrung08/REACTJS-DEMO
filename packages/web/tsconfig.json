@@ -21,13 +21,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "web-components": [
-        "./src/components"
+      "core-store": [
+        "../core/src/stores"
       ],
-      "web-store": [
-        "./src/mobx-store"
+      "core-modules": [
+        "../core/src/modules"
       ],
-    }
+    },
   },
   "include": [
     "src"
