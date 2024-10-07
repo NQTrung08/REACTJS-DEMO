@@ -6,6 +6,7 @@ import { PublicLayout } from './based/components/layout';
 import { PublicScreen } from './modules/home/public';
 import { LoginRoutes } from './modules/login/routes';
 
+
 export const RouteApp = observer(() => {
 
     return (
