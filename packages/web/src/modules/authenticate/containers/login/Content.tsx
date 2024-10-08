@@ -1,6 +1,6 @@
 import React from 'react'
-import LoginForm from '../containers/LoginForm'
-import Slider from './Slider'
+import LoginForm from './LoginForm'
+import Slider from '../../../../based/components/common/Slider'
 
 const Content = () => {
   return (

@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import { PublicLayout } from './based/components/layout';
 import { PublicScreen } from './modules/home/public';
-import { LoginRoutes } from './modules/login/routes';
+import { LoginRoutes } from './modules/authenticate/routes';
 
 
 export const RouteApp = observer(() => {
