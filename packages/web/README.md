@@ -7,4 +7,20 @@
       + components: là các thành phần tái sử dụng, dùng chung trong nhiều màn hình. Ví dụ: button, input, checkbox,...
       + containers: là các thành phần tái sử dụng tuy nhiến có chứa logic call dữ liệu. Ví dụ: Dropdown select nhân viên, Dropdown select tỉnh, huyện, xã.
       
-       
+2. icons:
+   + notification: mdiBellOutline
+   + cart: mdiCartOutline
+   + down: mdiChevronDown
+   + sort: mdiSortAscending
+   + trash: mdiTrashCanOutline
+   + filter: mdiFilterMultipleOutline
+   + search: mdiMagnify
+   + add: mdiPlus
+   + email: mdiEmailOutline
+   + phone: mdiPhoneInTalkOutline
+   + user: mdiAccountOutline
+   + arrow left: mdiChevronLeft
+   + right: mdiChevronRight
+   + role: mdiAccountCogOutline
+   + sale-staff: mdiCardAccountPhoneOutline
+   + upload: mdiTrayArrowUp

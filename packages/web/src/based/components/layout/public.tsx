@@ -1,4 +1,4 @@
-import Header from "../common/Header";
+import Header from "../common/HeaderLogin";
 import Footer from "../common/Footer";
 import { observer } from "mobx-react";
 import { Outlet } from "react-router-dom";
@@ -7,9 +7,9 @@ export const PublicLayout = observer(() => {
         <div className="w-full flex-col">
             {/* <PublicHeader /> */}
             <div className="h-full w-full">
-                <Header />
+                {/* <Header /> */}
                 <Outlet />
-                <Footer />
+                {/* <Footer /> */}
             </div>
         </div>
     );

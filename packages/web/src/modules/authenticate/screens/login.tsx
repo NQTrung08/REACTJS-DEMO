@@ -1,5 +1,5 @@
 import { LoginProvider } from 'core-modules'
-import LoginHeader from '../../../based/components/common/Header'
+import LoginHeader from '../../../based/components/common/HeaderLogin'
 import LoginFooter from '../../../based/components/common/Footer'
 import Content from '../containers/login/Content'
 

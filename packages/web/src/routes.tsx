@@ -5,6 +5,7 @@ import {
 import { PublicLayout } from './based/components/layout';
 import { PublicScreen } from './modules/home/public';
 import { LoginRoutes } from './modules/authenticate/routes';
+import { StaffRoutes } from './modules/staff/routes';
 
 
 export const RouteApp = observer(() => {
@@ -14,6 +15,7 @@ export const RouteApp = observer(() => {
             <Route element={<PublicLayout />}>
                 <Route path="/" element={<PublicScreen />} />
                 <Route path="/login" element={<LoginRoutes />} />
+                <Route path="/staff" element={<StaffRoutes />} />
             </Route>
         </Routes>
     );
