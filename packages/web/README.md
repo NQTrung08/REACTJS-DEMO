@@ -24,3 +24,4 @@
    + role: mdiAccountCogOutline
    + sale-staff: mdiCardAccountPhoneOutline
    + upload: mdiTrayArrowUp
+3. tool bar, advange, breadcrumb

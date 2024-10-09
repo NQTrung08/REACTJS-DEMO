@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { Outlet } from "react-router-dom";
 import MainNavigation from "./Navigation/mainNavigation";
 import SubNavigation from "./Navigation/subNavigation";
+import BreadCrumb from "../common/BreadCrumb";
 
 export const PublicLayout = observer(() => {
     return (
@@ -14,21 +15,19 @@ export const PublicLayout = observer(() => {
         //         <Outlet />
         //         {/* <Footer /> */}
 
-                <div className='flex h-screen'>
-      <MainNavigation />
-      <div className='flex flex-col w-screen'>
-        <Header />
-        <div className='py-2 px-3 relative bg-[#EEF3FE]'>
-          <span className='text-xs font-medium'>Nhân viên / Danh sách nhân viên</span>
-        </div>
         <div className='flex h-screen'>
-          <SubNavigation />
-          <Outlet />
+            <MainNavigation />
+            <div className='flex flex-col w-screen'>
+                <Header />
+                <BreadCrumb />
+                <div className='flex h-screen'>
+                    <SubNavigation />
+                    <Outlet />
+
+                </div>
+            </div>
 
         </div>
-      </div>
-
-    </div>
         //     </div>
         // </div>
     );

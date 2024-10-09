@@ -5,6 +5,8 @@ import { mdiMagnify,
   mdiChevronDown
  } from '@mdi/js'
 
+import Filter from './Filter'
+
 const Search = () => {
   return (
     <div className='border-y p-2 flex justify-between items-center'>
@@ -17,15 +19,7 @@ const Search = () => {
         />
       </div>
       {/* Filter */}
-      <div className='flex gap-2'>
-        <Icon path={mdiSortAscending} size={1} className='text-gray-500' />
-        <span>
-          Sắp xếp theo tên: A &gt; Z
-        </span>
-        <Icon path={mdiChevronDown} size={1} className='text-gray-500' />
-      </div>
-
-
+      <Filter />
     </div>
   )
 }

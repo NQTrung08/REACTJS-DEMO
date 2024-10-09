@@ -1,113 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
 import MainNavigation from '../../../../based/components/layout/Navigation/mainNavigation';
 import Header from '../../../../based/components/layout/Header/Header';
 import SubNavigation from 'src/based/components/layout/Navigation/subNavigation';
 import ButtonAdd from 'src/based/components/common/ButtonAdd';
 import Search from 'src/based/components/common/Search';
 import CardListStaff from '../../components/list-staff/cardListStaff';
+import { useStaffContext } from '../../../../../../core/src/modules/staff';
+
 
 import Icon from '@mdi/react';
 import { mdiFilterMultipleOutline } from '@mdi/js';
 
-const listStaff = () => {
-  const staffs = [
-    {
-      id: 1,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân viên Sale',
-      manager: 'SM Nghĩa Trần',
-      avatar: ''
-    }, {
-      id: 2,
-      name: 'Đ nonprofits',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân.nlm Sale',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 3,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 4,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 5,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 6,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 7,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 8,
-      name: 'Đ Burma',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân viên Sale',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 9,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }
-  ]
+import AddStaff from '../list-staff/addStaff'
+import { Staff } from 'core/src/model/staff-model';
+
+const ListStaff: React.FC = () => {
+  const [isAddingNew, setIsAddingNew] = useState<boolean>(false);
+
+  const { staffs,
+    addStaff,
+
+   } = useStaffContext();
+
+  const handleAddButtonClick = () => {
+    setIsAddingNew(!isAddingNew);
+  }
+
+  const handleCancelAdd = () => {
+    setIsAddingNew(false);
+  }
+
+  const handleAddStaff = (staff: Staff) => {
+    addStaff(staff);
+    setIsAddingNew(false);
+  };
 
   return (
     <div className='flex-1 py-1'>
-      <div className='flex justify-between items-center py-2 px-3'>
-        <span className='font-[550] text-[18px]'>
-          Danh sách nhân viên
-        </span>
-        <ButtonAdd />
+      <div className='flex flex-col'>
+        <div className='flex justify-between items-center py-2 px-3'>
+          <span className='font-[550] text-[18px]'>
+          {isAddingNew ? 'Thêm mới nhân viên' : 'Danh sách nhân viên'}
+          </span>
+          <ButtonAdd onClick={handleAddButtonClick} />
+        </div>
+        
+        {isAddingNew && (
+          <div className="p-4">
+            <AddStaff onCancel={handleCancelAdd} onAdd={handleAddStaff} />
+          </div>
+        )}
       </div>
 
-      {/* Search */}
       <Search />
-
-      {/* Status */}
       <div className='flex gap-2 p-2 items-center text-xs'>
         <Icon path={mdiFilterMultipleOutline} className='size-4' />
         <span className='text-[#000] font-[460]'>
@@ -117,32 +62,21 @@ const listStaff = () => {
           <span>Hoạt động</span>
         </div>
         <div className='bg-blue-100 py-1 px-2 rounded-lg'>
-          <span className='text-blue-600 font-[550]'>Ngừng họat động</span>
+          <span className='text-blue-600 font-[550]'>Ngừng hoạt động</span>
         </div>
       </div>
-      {/* <Status /> */}
-
-      {/* total amount staff */}
       <div className='bg-gray-200 py-1 px-2'>
         <span className='text-xs text-gray-500'>
-          Có tất cả {
-            staffs.length
-          } tài khoản nhân viên
+          Có tất cả {staffs.length} tài khoản nhân viên
         </span>
-
       </div>
-
-      {/* card list staff*/}
-      <div className='overflow-y-auto h-[calc(100vh-300px)]'>
-        {
-          staffs.map((staff) => {
-            return <CardListStaff key={staff.id} staff={staff} />
-          })
-        }
+      <div className= {`overflow-y-auto ${isAddingNew ? 'h-[280px]' : 'h-[calc(100vh-300px)]'}`}>
+        {staffs.map((staff) => (
+          <CardListStaff key={staff.id} staff={staff} />
+        ))}
       </div>
-
     </div>
   )
 }
 
-export default listStaff
+export default ListStaff
