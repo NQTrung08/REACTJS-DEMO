@@ -8,106 +8,36 @@ interface StaffContextType {
   addStaff: (staff: Staff) => void;
   updateStaff: (id: number, staff: Staff) => void;
   deleteStaff: (id: number) => void;
-  searchStaff: (query: string) => void;
+  onCreateOrUpdate: (value: boolean) => void;
+  isCreateOrUpdate: boolean;
 }
 
 // Tạo context
-const StaffContext = createContext<StaffContextType | null>(null);
+const StaffContext = createContext<StaffContextType>({
+  staffs: [],
+  addStaff: () => {},
+  updateStaff: () => {},
+  deleteStaff: () => {},
+  onCreateOrUpdate: () => {},
+  isCreateOrUpdate: false,
+
+});
 
 interface IProps {
   children: ReactNode;
 }
 
-const StaffProvider: React.FC<IProps> = ({ children }) => {
-
-  const [staffs, setStaffs] = useState<Staff[]>([
-    {
-      id: 1,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân viên Sale',
-      manager: 'SM Nghĩa Trần',
-      avatar: ''
-    }, {
-      id: 2,
-      name: 'Đ nonprofits',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân.nlm Sale',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 3,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 4,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 5,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 6,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 7,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 8,
-      name: 'Đ Burma',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân viên Sale',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }, {
-      id: 9,
-      name: 'Đặng Thị Chinh',
-      middleName: 'chinh dt',
-      phone: '0123456789',
-      email: 'chinhdt',
-      role: 'Nhân làm',
-      manager: 'SM Nghĩa Tr-Christian',
-      avatar: ''
-    }
-  ]);
+const ListStaffProvider = ({ children }: IProps) => {
+  const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
+  const [staffs, setStaffs] = useState<Staff[]>([]);
 
   const addStaff = (staff: Staff) => {
     setStaffs((prevStaffs) => [...prevStaffs, staff]);
   };
+
+  const onCreateOrUpdate = (value: boolean) => {
+    setIsCreateOrUpdate(value);
+  }
 
   const updateStaff = (id: number, updatedStaff: Staff) => {
     setStaffs((prevStaffs) =>
@@ -119,17 +49,9 @@ const StaffProvider: React.FC<IProps> = ({ children }) => {
     setStaffs((prevStaffs) => prevStaffs.filter((staff) => staff.id !== id));
   };
 
-  const searchStaff = (query: string) => {
-    setStaffs((prevStaffs) =>
-      prevStaffs.filter((staff) =>
-        staff.name.toLowerCase().includes(query.toLowerCase())
-      )
-    );
-  };
-
   return (
     <StaffContext.Provider value={{
-      staffs, addStaff, updateStaff, deleteStaff, searchStaff   
+      staffs, addStaff, updateStaff, deleteStaff, isCreateOrUpdate, onCreateOrUpdate
     }}>
       {children}
     </StaffContext.Provider>
@@ -138,11 +60,9 @@ const StaffProvider: React.FC<IProps> = ({ children }) => {
 
 // Hook để sử dụng StaffContext
 const useStaffContext = (): StaffContextType => {
-  const context = useContext(StaffContext);
-  if (!context) {
-    throw new Error('useStaffContext must be used within a StaffProvider');
-  }
-  return context;
+  return useContext(StaffContext);
+  
+  
 };
 
-export { StaffProvider, useStaffContext };
+export { ListStaffProvider, useStaffContext };

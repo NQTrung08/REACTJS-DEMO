@@ -8,18 +8,24 @@ import {
   mdiAccountOutline,
 } from '@mdi/js';
 
-interface Staff {
-  id: number;
-  name: string;
-  middleName: string;
-  phone: string;
-  email: string;
-  role: string;
-  manager: string;
-  avatar: string;
-}
+import { Staff } from 'core/src/model/staff-model';
+
+import { useStaffContext } from 'core/src/modules/staff';
+
 
 const CardListStaff: React.FC<{ staff: Staff }> = ({ staff }) => {
+  const { staffs,
+    updateStaff,
+    deleteStaff,
+
+   } = useStaffContext();
+
+  const handleDeleteStaff = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const confirmDelete = window.confirm(`Bạn có chắc chắn muốn xóa nhân viên ${staff.name}?`);
+    if (confirmDelete) {
+      deleteStaff(staff.id);
+    }
+  }
   return (
     <div className="grid grid-cols-5 items-center p-4 border-b">
      
@@ -67,7 +73,8 @@ const CardListStaff: React.FC<{ staff: Staff }> = ({ staff }) => {
           <Icon path={mdiPencil} size={1} className="mr-1" />
           Cập nhật
         </button>
-        <button className="flex items-center bg-red-500 text-white px-2 py-1 rounded-md">
+        <button className="flex items-center bg-red-500 text-white px-2 py-1 rounded-md"
+          onClick={handleDeleteStaff}>
           <Icon path={mdiDelete} size={1} className="mr-1" />
           Xóa
         </button>
