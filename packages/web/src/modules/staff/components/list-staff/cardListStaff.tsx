@@ -7,20 +7,21 @@ import {
   mdiEmailOutline,
   mdiAccountOutline,
 } from '@mdi/js';
+import { Switch } from 'antd';
 
-import { Staff } from 'core/src/model/staff-model';
+import { StaffModel } from 'core-model';
 
 import { useStaffContext } from 'core/src/modules/staff';
 
 
-const CardListStaff = ({ staff, onEdit}: { staff: Staff, onEdit: () => void }) => {
+const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void }) => {
   const { staffs,
     updateStaff,
     deleteStaff,
     isCreateOrUpdate,
     onCreateOrUpdate
 
-   } = useStaffContext();
+  } = useStaffContext();
 
   const handleDeleteStaff = (e: React.MouseEvent<HTMLButtonElement>) => {
     const confirmDelete = window.confirm(`Bạn có chắc chắn muốn xóa nhân viên ${staff.name}?`);
@@ -29,61 +30,77 @@ const CardListStaff = ({ staff, onEdit}: { staff: Staff, onEdit: () => void }) =
     }
   }
 
+  const onChange = (checked: boolean) => {
+    console.log(`switch to ${checked}`);
+  };
+
 
 
   return (
-    <div className="grid grid-cols-5 items-center p-4 border-b">
-     
-     <div className='col-span-3 flex'>
-       {/* Avatar */}
-       <div className="flex items-center">
-        <img
-          src={staff?.avatar || 'https://via.placeholder.com/50'}
-          alt={`${staff.name} avatar`}
-          className="rounded-full w-12 h-12 mr-4"
-        />
-      </div>
+    <div className="flex group transition-all duration-200 justify-between items-center p-4 border-b">
 
-      {/* Info: Name, Phone, Email, Role */}
-      <div className="flex flex-col ">
-        <div className="font-bold text-lg">{staff.name} ({staff.middleName})</div>
-        <div className="flex gap-2 mt-1">
-          <div className="flex items-center gap-1">
-            <Icon path={mdiPhoneInTalkOutline} size={1} />
-            <span>{staff.phone}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Icon path={mdiEmailOutline} size={1} />
-            <span>{staff.email}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Icon path={mdiAccountOutline} size={1} />
-            <span>{staff.role}</span>
+      <div className='min-w-[592px] flex'>
+        {/* Avatar */}
+        <div className="flex items-center ">
+          <img
+            src={staff?.avatar || 'https://via.placeholder.com/50'}
+            alt={`${staff.name} avatar`}
+            className="rounded-full w-12 h-12 mr-4"
+          />
+        </div>
+
+        {/* Info: Name, Phone, Email, Role */}
+        <div className="flex flex-col">
+          <div className="font-bold text-lg">{staff.name} ({staff.middleName})</div>
+          <div className="flex gap-2 mt-1">
+            <div className="flex items-center gap-1">
+              <Icon path={mdiPhoneInTalkOutline} size={1} />
+              <span>{staff.phone}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Icon path={mdiEmailOutline} size={1} />
+              <span>{staff.email}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Icon path={mdiAccountOutline} size={1} />
+              <span>{staff.role}</span>
+            </div>
           </div>
         </div>
+
       </div>
 
-     </div>
-     
 
       {/* Manager */}
-      <div className="flex flex-col col-span-1 justify-center items-center">
+      <div className="flex flex-col justify-center items-center min-w-[196px] w-[15%]">
         <span className="text-gray-500 text-xs">Người quản lý</span>
         <span className="font-semibold text-black text-xs">{staff.manager}</span>
       </div>
 
-      {/* Update and Delete */}
-      <div className="flex items-center justify-end col-span-1">
-        <button className="flex items-center bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
-          onClick={onEdit}>
+
+      <div className='min-w-[196px] w-[15%] items-center justify-center flex'>
+        <button className="hidden group-hover:flex border font-medium items-center px-[12px] py-[10px] rounded-md mr-2
+        "
+          onClick={onEdit}
+          >
           <Icon path={mdiPencil} size={1} className="mr-1" />
           Cập nhật
         </button>
-        <button className="flex items-center bg-red-500 text-white px-2 py-1 rounded-md"
-          onClick={handleDeleteStaff}>
-          <Icon path={mdiDelete} size={1} className="mr-1" />
-          Xóa
-        </button>
+
+      </div>
+
+      {/* Switch and Delete */}
+      <div className="flex justify-end items-center min-w-[196px] w-[15%]">
+        <div className='flex items-center gap-12'>
+
+          <Switch defaultChecked onChange={onChange} />
+          <button className="flex items-center w-[40px] h-[40px]"
+            onClick={handleDeleteStaff}>
+            <Icon path={mdiDelete} size={1} className="mr-1" />
+          </button>
+
+        </div>
+
       </div>
     </div>
   );

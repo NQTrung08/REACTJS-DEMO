@@ -19,13 +19,13 @@ const ButtonAdd = ({ onClick, isDisabled = false, title, size = 'medium' } : But
   
   return (
     <div
-      className={`border rounded-sm border-[#174291] py-[8px] px-[12px] flex items-center text-[16px] cursor-pointer
-        ${isDisabled ? 'border-gray-200 cursor' : 'hover:bg-[#a7badf]'}
+      className={`border rounded-sm border-[#174291] py-[8px] px-[12px] flex items-center text-[16px]
+        ${isDisabled ? 'border-gray-200 cursor' : 'hover:bg-[#a7badf] cursor-pointer'}
         transition-colors duration-300 ${sizeClasses[size]}`}
       onClick={!isDisabled ? onClick : undefined} // Không gọi onClick nếu bị disabled
     >
-      <Icon path={mdiPlus} size={1} className={`text-[#174291] font-normal ${isDisabled ? 'text-gray-600 opacity-25' : ''}`} />
-      <span className={`text-[#174291] font-[500] ${isDisabled ? 'text-gray-600 opacity-30' : ''}`}>
+      <Icon path={mdiPlus} size={1} className={`text-[#174291] font-normal ${isDisabled ? 'text-gray-600 opacity-25 cursor' : ''}`} />
+      <span className={`text-[#174291] font-[500] ${isDisabled ? 'text-gray-600 opacity-30 cursor' : ''}`}>
         {title}
       </span>
     </div>

@@ -2,6 +2,9 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 import {
   StaffModel
 } from '../../../models/staff-model';
+import {
+  staffsData
+} from './data-staff'
 
 // Kiểu cho context
 interface StaffContextType {
@@ -30,7 +33,7 @@ interface IProps {
 
 const ListStaffProvider = ({ children }: IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
-  const [staffs, setStaffs] = useState<StaffModel[]>([]);
+  const [staffs, setStaffs] = useState<StaffModel[]>(staffsData);
 
   const addStaff = (staff: StaffModel) => {
     setStaffs((prevStaffs) => [...prevStaffs, staff]);

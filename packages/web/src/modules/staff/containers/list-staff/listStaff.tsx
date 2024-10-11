@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import MainNavigation from '../../../../based/components/layout/Navigation/mainNavigation';
-import Header from '../../../../based/components/layout/Header/Header';
 import SubNavigation from 'src/based/components/layout/Navigation/subNavigation';
 import ButtonAdd from 'src/based/components/common/ButtonAdd';
 import Search from 'src/based/components/common/Search';
@@ -15,6 +14,7 @@ import {
   CreateOrUpdateStaffContainer
 } from './create-or-update-staff';
 import { useStaffContext } from 'core-modules';
+import HeaderListStaff from '../../components/list-staff/header'
 
 const ListStaff = () => {
   const [viewStaff, setviewStaff] = useState<StaffModel[]>([]);
@@ -61,16 +61,10 @@ const ListStaff = () => {
   };
 
   return (
-    <div className='flex-1 py-1'>
+    <div className='w-full py-1'>
       <div className='flex flex-col'>
         {/*TODO: Header */}
-        <div className='flex justify-between items-center py-2 px-3'>
-          {/*  */}
-          <span className='font-[550] text-[18px]'>
-            {isCreateOrUpdate ? 'Thêm mới nhân viên' : 'Danh sách nhân viên'}
-          </span>
-          <ButtonAdd onClick={handleCreateOrUpdateButtonClick} title='Thêm mới' />
-        </div>
+        <HeaderListStaff />
         {/* header end */}
 
         {isCreateOrUpdate && (

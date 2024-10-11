@@ -258,7 +258,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="px-4 py-2 text-md font-medium hover:bg-gray-50 rounded-md"
           >
             Hủy bỏ
           </button>

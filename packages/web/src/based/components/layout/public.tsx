@@ -17,7 +17,7 @@ export const PublicLayout = observer(() => {
 
         <div className='flex h-screen'>
             <MainNavigation />
-            <div className='flex flex-col w-screen'>
+            <div className='flex flex-col flex-1'>
                 <Header />
                 <BreadCrumb />
                 <div className='flex h-screen'>
