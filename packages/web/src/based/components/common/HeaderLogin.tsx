@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Header = () => {
+const HeaderLogin = () => {
   return (
     <div className='flex justify-between items-center pt-2 pb-2 pl-5 pr-5 bg-white border-x-4'>
       <div className='flex justify-center items-center'>
@@ -21,4 +21,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default HeaderLogin

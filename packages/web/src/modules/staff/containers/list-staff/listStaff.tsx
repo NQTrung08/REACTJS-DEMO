@@ -34,10 +34,6 @@ const ListStaff = () => {
     setFilterStaff(staffs);
   }, [staffs]);
 
-  const handleCreateOrUpdateButtonClick = () => {
-    onCreateOrUpdate(!isCreateOrUpdate);
-  }
-
   const handleCancelAdd = () => {
     onCreateOrUpdate(false);
     setSelectedStaff(null);
@@ -106,7 +102,7 @@ const ListStaff = () => {
         </span>
       </div>
       {/* list staff */}
-      <div className={`overflow-y-auto ${isCreateOrUpdate ? 'h-[280px]' : 'h-[calc(100vh-300px)]'}`}>
+      <div className={`overflow-y-auto ${isCreateOrUpdate ? 'max-h-[calc(100vh-700px)]' : 'h-[calc(100vh-300px)]'}`}>
         {
           filterStaff.length > 0 ?
             filterStaff.map((staff) => (

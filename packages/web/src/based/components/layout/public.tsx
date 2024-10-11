@@ -1,4 +1,4 @@
-import Header from "../common/HeaderLogin";
+import Header from "../layout/Header/Header";
 import Footer from "../common/Footer";
 import { observer } from "mobx-react";
 import { Outlet } from "react-router-dom";

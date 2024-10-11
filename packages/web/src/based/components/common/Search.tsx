@@ -13,7 +13,6 @@ const Search = <T extends object> ({
   searchField,
   placeholder = 'Tìm kiếm',
   onResults
-  
 }: ISearch<T>) => {
   const [query, setQuery] = React.useState<string>('');
   const handleSearch = (q: string) => {
