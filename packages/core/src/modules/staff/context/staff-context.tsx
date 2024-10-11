@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { StaffStore } from '../../../stores/StaffStore'; // Import lớp StaffStore
-import { Staff } from 'core/src/model/staff-model'
+import {
+  StaffModel
+} from '../../../models/staff-model';
 
 // Kiểu cho context
 interface StaffContextType {
-  staffs: Staff[];
-  addStaff: (staff: Staff) => void;
-  updateStaff: (id: number, staff: Staff) => void;
+  staffs: StaffModel[];
+  addStaff: (staff: StaffModel) => void;
+  updateStaff: (id: number, staff: StaffModel) => void;
   deleteStaff: (id: number) => void;
   onCreateOrUpdate: (value: boolean) => void;
   isCreateOrUpdate: boolean;
@@ -29,9 +30,9 @@ interface IProps {
 
 const ListStaffProvider = ({ children }: IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
-  const [staffs, setStaffs] = useState<Staff[]>([]);
+  const [staffs, setStaffs] = useState<StaffModel[]>([]);
 
-  const addStaff = (staff: Staff) => {
+  const addStaff = (staff: StaffModel) => {
     setStaffs((prevStaffs) => [...prevStaffs, staff]);
   };
 
@@ -39,7 +40,7 @@ const ListStaffProvider = ({ children }: IProps) => {
     setIsCreateOrUpdate(value);
   }
 
-  const updateStaff = (id: number, updatedStaff: Staff) => {
+  const updateStaff = (id: number, updatedStaff: StaffModel) => {
     setStaffs((prevStaffs) =>
       prevStaffs.map((staff) => (staff.id === id ? updatedStaff : staff))
     );

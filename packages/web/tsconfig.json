@@ -27,6 +27,9 @@
       "core-modules": [
         "../core/src/modules"
       ],
+      "core-model": [
+        "../core/src/models"
+      ],
     },
   },
   "include": [

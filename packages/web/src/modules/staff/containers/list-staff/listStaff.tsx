@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MainNavigation from '../../../../based/components/layout/Navigation/mainNavigation';
 import Header from '../../../../based/components/layout/Header/Header';
 import SubNavigation from 'src/based/components/layout/Navigation/subNavigation';
@@ -6,48 +6,79 @@ import ButtonAdd from 'src/based/components/common/ButtonAdd';
 import Search from 'src/based/components/common/Search';
 import Filter from 'src/based/components/common/Filter';
 import CardListStaff from '../../components/list-staff/cardListStaff';
-import { useStaffContext } from '../../../../../../core/src/modules/staff';
 
 
 import Icon from '@mdi/react';
 import { mdiFilterMultipleOutline } from '@mdi/js';
+import {StaffModel} from "core-model"
+import {
+  CreateOrUpdateStaffContainer
+} from './create-or-update-staff';
+import { useStaffContext } from 'core-modules';
 
-import AddStaff from '../list-staff/addStaff'
-import { Staff } from 'core/src/model/staff-model';
+const ListStaff = () => {
+  const [viewStaff, setviewStaff] = useState<StaffModel[]>([]);
 
-const ListStaff: React.FC = () => {
-  const [isAddingNew, setIsAddingNew] = useState<boolean>(false);
-  const [filterStaff, setFilterStaff] = useState<Staff[]>([]);
+  const [filterStaff, setFilterStaff] = useState<StaffModel[]>([]);
+  const [selectedStaff, setSelectedStaff] = useState<StaffModel | null>(null);
   const { staffs,
     addStaff,
+    updateStaff,
+    isCreateOrUpdate,
+    onCreateOrUpdate
   } = useStaffContext();
 
-  const handleAddButtonClick = () => {
-    setIsAddingNew(!isAddingNew);
+
+  useEffect(() => {
+    setviewStaff(staffs);
+    setFilterStaff(staffs);
+  }, [staffs]);
+
+  const handleCreateOrUpdateButtonClick = () => {
+    onCreateOrUpdate(!isCreateOrUpdate);
   }
 
   const handleCancelAdd = () => {
-    setIsAddingNew(false);
+    onCreateOrUpdate(false);
+    setSelectedStaff(null);
   }
 
-  const handleAddStaff = (staff: Staff) => {
-    addStaff(staff);
-    setIsAddingNew(false);
+  const handleCreateOrUpdateStaff = (staff: StaffModel) => {
+    if (selectedStaff) {
+      updateStaff(selectedStaff.id, staff);
+      setSelectedStaff(null);
+
+    } else {
+      addStaff(staff);
+    }
+    onCreateOrUpdate(false);
+
+  };
+
+  const handleEditStaff = (staff: StaffModel) => {
+    setSelectedStaff(staff);
+    onCreateOrUpdate(true);
   };
 
   return (
     <div className='flex-1 py-1'>
       <div className='flex flex-col'>
+        {/*TODO: Header */}
         <div className='flex justify-between items-center py-2 px-3'>
+          {/*  */}
           <span className='font-[550] text-[18px]'>
-            {isAddingNew ? 'Thêm mới nhân viên' : 'Danh sách nhân viên'}
+            {isCreateOrUpdate ? 'Thêm mới nhân viên' : 'Danh sách nhân viên'}
           </span>
-          <ButtonAdd onClick={handleAddButtonClick} />
+          <ButtonAdd onClick={handleCreateOrUpdateButtonClick} title='Thêm mới' />
         </div>
+        {/* header end */}
 
-        {isAddingNew && (
+        {isCreateOrUpdate && (
           <div className="p-4">
-            <AddStaff onCancel={handleCancelAdd} onAdd={handleAddStaff} />
+            <CreateOrUpdateStaffContainer onCancel={handleCancelAdd}
+              onSubmit={handleCreateOrUpdateStaff}
+              initialData={selectedStaff}
+            />
           </div>
         )}
       </div>
@@ -77,19 +108,18 @@ const ListStaff: React.FC = () => {
       </div>
       <div className='bg-gray-200 py-1 px-2'>
         <span className='text-xs text-gray-500'>
-          Có tất cả {staffs.length} tài khoản nhân viên
+          Có tất cả {viewStaff.length} tài khoản nhân viên
         </span>
       </div>
       {/* list staff */}
-      <div className={`overflow-y-auto ${isAddingNew ? 'h-[280px]' : 'h-[calc(100vh-300px)]'}`}>
-
+      <div className={`overflow-y-auto ${isCreateOrUpdate ? 'h-[280px]' : 'h-[calc(100vh-300px)]'}`}>
         {
           filterStaff.length > 0 ?
             filterStaff.map((staff) => (
-              <CardListStaff key={staff.id} staff={staff} />
+              <CardListStaff key={staff.id} staff={staff} onEdit={() => handleEditStaff(staff)} />
             )) :
-            staffs.map((staff) => (
-              <CardListStaff key={staff.id} staff={staff} />
+            viewStaff.map((staff) => (
+              <CardListStaff key={staff.id} staff={staff} onEdit={() => handleEditStaff(staff)} />
             ))}
       </div>
     </div>

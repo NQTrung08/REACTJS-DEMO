@@ -5,7 +5,7 @@ import {
   mdiSortAscending,
   mdiChevronDown
 } from '@mdi/js'
-import { ISearch } from 'core/src/model/search-model';
+import { ISearch } from 'core-model';
 
 
 const Search = <T extends object> ({

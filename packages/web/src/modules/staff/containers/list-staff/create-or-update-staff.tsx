@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
-import { Staff } from 'core/src/model/staff-model';
+import React, { useState, useEffect } from 'react';
+import { StaffModel } from 'core-model';
 
-interface AddStaffProps {
+import Icon from '@mdi/react';
+import { mdiTrayArrowUp } from '@mdi/js';
+import ButtonAdd from 'src/based/components/common/ButtonAdd';
+
+
+interface FormStaffProps {
+  initialData?: StaffModel | null; 
   onCancel: () => void;
-  onAdd: (staff: Staff) => void;
+  onSubmit: (staff: StaffModel) => void;
 }
 
-const AddStaff: React.FC<AddStaffProps> = ({ onCancel,
-  onAdd
-}) => {
+const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormStaffProps) => {
 
+  
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -20,91 +25,132 @@ const AddStaff: React.FC<AddStaffProps> = ({ onCancel,
     status: 'active',
   });
 
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Nếu có dữ liệu ban đầu (trong trường hợp cập nhật), cập nhật formData
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        fullName: initialData.name || '',
+        email: initialData.email || '',
+        phone: initialData.phone || '',
+        username: initialData.username || '',
+        password: initialData.password || '',
+        confirmPassword: '',
+        status: initialData.status || 'active',
+      });
+    }
+  }, [initialData]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  // So sánh dữ liệu form
 
-    // vadidate form
-    if (!formData.fullName || !formData.email || !formData.phone || !formData.username || !formData.password || !formData.confirmPassword) {
-      setErrorMessage('Vui lý nhap day du thong tin');
+  useEffect(() => {
+    const isFormChanged =
+      formData.fullName !== (initialData?.name || '') ||
+      formData.email !== (initialData?.email || '') ||
+      formData.phone !== (initialData?.phone || '') ||
+      formData.username !== (initialData?.username || '') ||
+      formData.status !== (initialData?.status || 'active') ||
+      (!initialData && (formData.password || formData.confirmPassword)); // Trong trường hợp thêm mới
+
+    setIsSubmitDisabled(!isFormChanged);
+  }, [formData, initialData]);
+  const handleSubmit = () => {
+    // event.preventDefault();
+
+    // Validate form
+    if (!formData.fullName || !formData.email || !formData.phone || !formData.username || (!initialData && !formData.password) || formData.password !== formData.confirmPassword) {
+      setErrorMessage('Vui lòng nhập đầy đủ thông tin và đảm bảo mật khẩu khớp nhau.');
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setErrorMessage('Vui lòng nhap lai mat khau');
+    const emailRegex = /^[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage('Vui lòng nhập email hợp lệ.');
       return;
     }
 
-    const newStaff: Staff = {
-      id: Date.now(),
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      setErrorMessage('Vui lòng nhập số điện thoại hợp lệ.');
+      return;
+    }
+
+    const newStaff: StaffModel = {
+      id: initialData ? initialData.id : Date.now(),
       name: formData.fullName,
-      middleName: '', 
       phone: formData.phone,
       email: formData.email,
-      role: 'staff', 
+      middleName: '',
+      username: formData.username,
+      password: initialData ? initialData.password : formData.password, // Chỉ thêm mật khẩu khi tạo mới
+      status: formData.status,
+      role: 'staff',
       manager: '',
       avatar: '',
     };
 
-    onAdd(newStaff);
+    onSubmit(newStaff);
 
-    setFormData({
-      fullName: '',
-      email: '',
-      phone: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
-      status: 'active',
-    });
+    // Nếu là cập nhật, không reset formData
+    if (!initialData) {
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        username: '',
+        password: '',
+        confirmPassword: '',
+        status: 'active',
+      });
+    }
 
     setErrorMessage('');
   }
 
   return (
     <div className="p-4">
-      <form onSubmit={handleSubmit}>
-        {/* Chia 2 cột */}
+      
         <div className="flex gap-4">
-          <div className='w-[260px]'>
-            {/* upload avater */}s
+          <div className='w-[260px] flex flex-col items-center'>
             <div className="mb-4">
-              <input
-                type="file"
-                id="avatar"
-                name="avatar"
-                className="mt-1  w-full border border-gray-300 rounded-md shadow-sm"
-              />
+              <div className=" relative w-[100px] h-[100px] rounded-full border border-gray-300 shadow-sm flex items-center justify-center bg-gray-300">
+                <input
+                  type="file"
+                  id="avatar"
+                  name="avatar"
+                  className="opacity-0 cursor-pointer absolute"
+                />
+                <div className='flex flex-col items-center'>
+                  <Icon path={mdiTrayArrowUp} size={1} className="text-gray-500" />
+                  <span className="text-center text-xs text-blue-600">Chọn ảnh</span>
+
+                </div>
+              </div>
             </div>
 
-            {/* status */}
             <div className="mb-4 flex items-center gap-2">
-              <label htmlFor="status" className=" text-xs font-medium text-gray-700">Trạng thái:</label>
+              <label htmlFor="status" className="text-xs font-medium text-gray-700">Trạng thái:</label>
               <input
                 type="radio"
-                id="status"
-                name="status"
-                value="inactive"
-                checked={formData.status === 'inactive'}
-                onChange={(event) => setFormData(
-                  { ...formData, status: event.target.value }
-                )}
-              />
-              <span className='text-xs'>Khóa</span>
-              <input
-                type="radio"
-                id="status"
+                id="status-active"
                 name="status"
                 value="active"
                 checked={formData.status === 'active'}
-                onChange={(event) => setFormData(
-                  { ...formData, status: event.target.value }
-                )}
-
+                onChange={(event) => setFormData({ ...formData, status: event.target.value })}
               />
               <span className='text-xs'>Hoạt động</span>
+              <input
+                type="radio"
+                id="status-inactive"
+                name="status"
+                value="inactive"
+                checked={formData.status === 'inactive'}
+                onChange={(event) => setFormData({ ...formData, status: event.target.value })}
+              />
+              <span className='text-xs'>Khóa</span>
             </div>
           </div>
 
@@ -208,25 +254,27 @@ const AddStaff: React.FC<AddStaffProps> = ({ onCancel,
           </div>
         </div>
 
-
-        <div className="flex justify-end space-x-2">
+        <div className="flex justify-end gap-2">
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50"
+            className="px-4 py-2 border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50"
           >
             Hủy bỏ
           </button>
-          <button
-            type="submit"
-            className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
-          >
-            Thêm mới
-          </button>
+          <ButtonAdd 
+            onClick={handleSubmit}
+            title={initialData ? 'Cập nhật' : 'Thêm mới'}
+            isDisabled={isSubmitDisabled}
+            size="small"
+          
+          />
         </div>
-      </form>
+
     </div>
   );
-}
+};
 
-export default AddStaff;
+export {
+  CreateOrUpdateStaffContainer
+};

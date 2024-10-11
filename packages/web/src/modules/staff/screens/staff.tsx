@@ -3,13 +3,13 @@ import ListStaff from '../containers/list-staff/listStaff'
 import MainNavigation from '../../../based/components/layout/Navigation/mainNavigation';
 import Header from '../../../based/components/layout/Header/Header';
 import SubNavigation from '../../../based/components/layout/Navigation/subNavigation';
-import { StaffProvider } from '../../../../../core/src/modules/staff';
+import { ListStaffProvider } from '../../../../../core/src/modules/staff';
 
 const StaffScreen = () => {
   return (
-    <StaffProvider>
+    <ListStaffProvider>
       <ListStaff />
-    </StaffProvider>
+    </ListStaffProvider>
   )
 
 

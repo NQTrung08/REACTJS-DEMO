@@ -13,10 +13,12 @@ import { Staff } from 'core/src/model/staff-model';
 import { useStaffContext } from 'core/src/modules/staff';
 
 
-const CardListStaff: React.FC<{ staff: Staff }> = ({ staff }) => {
+const CardListStaff = ({ staff, onEdit}: { staff: Staff, onEdit: () => void }) => {
   const { staffs,
     updateStaff,
     deleteStaff,
+    isCreateOrUpdate,
+    onCreateOrUpdate
 
    } = useStaffContext();
 
@@ -26,6 +28,9 @@ const CardListStaff: React.FC<{ staff: Staff }> = ({ staff }) => {
       deleteStaff(staff.id);
     }
   }
+
+
+
   return (
     <div className="grid grid-cols-5 items-center p-4 border-b">
      
@@ -69,7 +74,8 @@ const CardListStaff: React.FC<{ staff: Staff }> = ({ staff }) => {
 
       {/* Update and Delete */}
       <div className="flex items-center justify-end col-span-1">
-        <button className="flex items-center bg-blue-500 text-white px-2 py-1 rounded-md mr-2">
+        <button className="flex items-center bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
+          onClick={onEdit}>
           <Icon path={mdiPencil} size={1} className="mr-1" />
           Cập nhật
         </button>
