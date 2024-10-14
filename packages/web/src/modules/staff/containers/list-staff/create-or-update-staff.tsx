@@ -16,12 +16,6 @@ interface FormStaffProps {
 const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormStaffProps) => {
 
   const {
-    selectedStaff,
-    setSelectedStaff,
-    addStaff,
-    updateStaff,
-    isCreateOrUpdate,
-    onCreateOrUpdate,
   } = useStaffContext();
   const {
     formData,
@@ -29,6 +23,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
     resetFormData,
     validateForm,
     errorMessage,
+    handleSubmit
   } = useCreateOrUpdateContext();
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
@@ -36,9 +31,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
     if (initialData) {
       setFormData({
         ...initialData,
-       
         status: initialData.status,
-        fullName: initialData.name,
         
       });
     } else {
@@ -49,7 +42,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
   
   useEffect(() => {
     const isFormChanged =
-      formData.fullName !== (initialData?.name || '') ||
+      formData.fullName !== (initialData?.fullName || '') ||
       formData.email !== (initialData?.email || '') ||
       formData.phone !== (initialData?.phone || '') ||
       formData.username !== (initialData?.username || '') ||
@@ -59,35 +52,11 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
     setIsSubmitDisabled(!isFormChanged);
   }, [formData, initialData]);
 
-  const handleSubmitForm = () => {
-    const { isValid, error } = validateForm();
-    if (!isValid) {
-      console.error(error); // Handle error (e.g., show a toast notification)
-      return;
+  const handleFormSubmit = () => {
+    const isSubmitted = handleSubmit();
+    if (isSubmitted) {
+      onCancel(); // Close form if submission is successful
     }
-  
-    const newStaff: StaffModel = {
-      id: selectedStaff ? selectedStaff.id : Date.now(),
-      name: formData.fullName,
-      phone: formData.phone,
-      email: formData.email,
-      username: formData.username,
-      password: selectedStaff ? selectedStaff.password : formData.password,
-      status: formData.status,
-      middleName: '',
-      role: 'staff',
-      manager: '',
-      avatar: ''
-    };
-  
-    if (selectedStaff) {
-      updateStaff(newStaff.id, newStaff); // Update existing staff
-    } else {
-      addStaff(newStaff); // Add new staff
-    }
-  
-    resetFormData(); // Reset form after submission
-    onCreateOrUpdate(!isCreateOrUpdate);
   };
   
 
@@ -244,7 +213,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
             Hủy bỏ
           </button>
           <ButtonAdd 
-            onClick={handleSubmitForm}
+            onClick={handleFormSubmit}
             title={initialData ? 'Cập nhật' : 'Thêm mới'}
             isDisabled={isSubmitDisabled}
             size="small"

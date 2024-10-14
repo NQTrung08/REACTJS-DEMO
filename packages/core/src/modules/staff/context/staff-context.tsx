@@ -54,13 +54,13 @@ const ListStaffProvider = ({ children }: IProps) => {
 
   const searchStaff = (q: string) => {
     return staffs.filter((staff) =>
-      staff.name.toLowerCase().includes(q.toLowerCase())
+      staff.fullName.toLowerCase().includes(q.toLowerCase())
     );
   };
 
   const filterStaff = (filterValue: string) => {
     return staffs.filter((staff) =>
-      staff.name.toLowerCase().includes(filterValue.toLowerCase())
+      staff.fullName.toLowerCase().includes(filterValue.toLowerCase())
     );
   };
 

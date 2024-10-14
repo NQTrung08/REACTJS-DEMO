@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { StaffModel } from '../../../models/staff-model';
 import { useStaffContext } from './staff-context';
 
 interface CreateOrUpdateContextType {
@@ -15,7 +16,7 @@ interface CreateOrUpdateContextType {
   setFormData: React.Dispatch<React.SetStateAction<any>>;
   resetFormData: () => void;
   validateForm: () => { isValid: boolean; error?: string };
-  // handleSubmit: () => boolean;
+  handleSubmit: () => boolean;
   errorMessage: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -30,9 +31,9 @@ const CreateOrUpdateContext = createContext<CreateOrUpdateContextType>({
     confirmPassword: '',
     status: 'active',
   },
-  setFormData: () => { },
+  setFormData: () => {},
   resetFormData: () => { },
-  // handleSubmit: () => false,
+  handleSubmit: () => false,
   errorMessage: '',
   setErrorMessage: () => { },
   validateForm: () => ({ isValid: true }),
@@ -61,7 +62,7 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
     // Khi selectedStaff thay đổi, cập nhật formData nếu có selectedStaff
     if (selectedStaff) {
       setFormData({
-        fullName: selectedStaff.name,
+        fullName: selectedStaff.fullName,
         email: selectedStaff.email,
         phone: selectedStaff.phone,
         username: selectedStaff.username,
@@ -126,6 +127,36 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
     return { isValid, error };
   };
 
+  const handleSubmit = () => {
+    const { isValid, error } = validateForm();
+    if (!isValid) {
+      console.error(error); // Handle error, e.g., show a toast notification
+      return false;
+    }
+
+    const newStaff: StaffModel = {
+      id: selectedStaff ? selectedStaff.id : Date.now(), // Generate new ID if adding
+      fullName: formData.fullName,
+      phone: formData.phone,
+      email: formData.email,
+      username: formData.username,
+      password: selectedStaff ? selectedStaff.password : formData.password, // Keep existing password when editing
+      status: formData.status,
+      middleName: '', // Add default value for unused fields
+      role: 'staff',
+      manager: '',
+      avatar: '',
+    };
+
+    if (selectedStaff) {
+      updateStaff(newStaff.id, newStaff); // Update staff
+    } else {
+      addStaff(newStaff); // Add new staff
+    }
+
+    resetFormData(); // Clear form after submission
+    return true; // Return true to indicate successful submission
+  };
 
 
 
@@ -135,7 +166,7 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       setFormData,
       resetFormData,
       validateForm,
-      // handleSubmit,
+      handleSubmit,
       errorMessage,
       setErrorMessage
     }}>

@@ -1,20 +1,18 @@
-import React, { } from 'react';
-import Icon from '@mdi/react';
 import {
-  mdiMenu,
-  mdiLogout,
   mdiAccountCircleOutline,
-  mdiCartOutline,
   mdiBellOutline,
-  mdiStorefrontOutline,
-  mdiChevronDown
+  mdiCartOutline,
+  mdiChevronDown,
+  mdiStorefrontOutline
 } from '@mdi/js';
+import Icon from '@mdi/react';
+import { } from 'react';
 
 const Header = () => {
 
 
   return (
-    <header className='bg-white h-12 shadow-md w-full flex items-center justify-between p-4 relative'>
+    <header className='bg-white shadow-md w-full flex items-center justify-between px-4 py-2'>
       {/* Logo và tên */}
       <div className='flex items-center'>
         <span className='text-lg font-semibold text-green-500'>CLOUD

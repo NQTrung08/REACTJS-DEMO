@@ -22,7 +22,7 @@ const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void })
   } = useStaffContext();
 
   const handleDeleteStaff = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const confirmDelete = window.confirm(`Bạn có chắc chắn muốn xóa nhân viên ${staff.name}?`);
+    const confirmDelete = window.confirm(`Bạn có chắc chắn muốn xóa nhân viên ${staff.fullName}?`);
     if (confirmDelete) {
       deleteStaff(staff.id);
     }
@@ -42,14 +42,14 @@ const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void })
         <div className="flex items-center">
           <img
             src={staff?.avatar || 'https://via.placeholder.com/50'}
-            alt={`${staff.name} avatar`}
+            alt={`${staff.fullName} avatar`}
             className="rounded-full w-8 h-8 mr-4"
           />
         </div>
 
         {/* Info: Name, Phone, Email, Role */}
         <div className="flex flex-col">
-          <div className="font-medium text-black text-md">{staff.name} ({staff.middleName})</div>
+          <div className="font-medium text-black text-md">{staff.fullName} ({staff.middleName})</div>
           <div className="flex gap-2 mt-1 text-xs">
             <div className="flex items-center gap-1">
               <Icon path={mdiPhoneInTalkOutline} className='w-[12px] h-[12px]' />
