@@ -17,12 +17,14 @@ const ListStaff = () => {
   const [viewStaff, setviewStaff] = useState<StaffModel[]>([]);
 
   const [filterStaff, setFilterStaff] = useState<StaffModel[]>([]);
-  const [selectedStaff, setSelectedStaff] = useState<StaffModel | null>(null);
   const { staffs,
     addStaff,
     updateStaff,
     isCreateOrUpdate,
-    onCreateOrUpdate
+    onCreateOrUpdate,
+    selectedStaff,
+    setSelectedStaff
+
   } = useStaffContext();
 
 
@@ -86,10 +88,10 @@ const ListStaff = () => {
         <span className='text-[#000] font-[460]'>
           Trạng thái:
         </span>
-        <div className='bg-gray-200 py-1 px-2 rounded-lg'>
+        <div className='bg-gray-200 py-1 px-2 rounded-[24px]'>
           <span>Hoạt động</span>
         </div>
-        <div className='bg-blue-100 py-1 px-2 rounded-lg'>
+        <div className='bg-blue-100 py-1 px-2 rounded-[24px]'>
           <span className='text-blue-600 font-[550]'>Ngừng hoạt động</span>
         </div>
       </div>

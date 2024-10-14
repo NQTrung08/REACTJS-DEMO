@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import { StaffModel } from 'core-model';
+import { useEffect, useState } from 'react';
 
-import Icon from '@mdi/react';
 import { mdiTrayArrowUp } from '@mdi/js';
+import Icon from '@mdi/react';
+import { useCreateOrUpdateContext, useStaffContext } from 'core-modules';
 import ButtonAdd from 'src/based/components/common/ButtonAdd';
 
 
@@ -14,38 +15,40 @@ interface FormStaffProps {
 
 const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormStaffProps) => {
 
-  
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-    status: 'active',
-  });
+  const {
+    selectedStaff,
+    setSelectedStaff,
+    addStaff,
+    updateStaff,
+    isCreateOrUpdate,
+    onCreateOrUpdate,
+  } = useStaffContext();
+  const {
+    formData,
+    setFormData,
+    resetFormData,
+    validateForm,
+    errorMessage,
+  } = useCreateOrUpdateContext();
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-
-  const [errorMessage, setErrorMessage] = useState('');
-
-  // Nếu có dữ liệu ban đầu (trong trường hợp cập nhật), cập nhật formData
   useEffect(() => {
+   
     if (initialData) {
+     
       setFormData({
-        fullName: initialData.name || '',
-        email: initialData.email || '',
-        phone: initialData.phone || '',
-        username: initialData.username || '',
-        password: initialData.password || '',
-        confirmPassword: '',
-        status: initialData.status || 'active',
+        ...initialData,
+       
+        status: initialData.status,
+        fullName: initialData.name,
+        
       });
+    } else {
+      resetFormData();
     }
   }, [initialData]);
 
-  // So sánh dữ liệu form
-
+  
   useEffect(() => {
     const isFormChanged =
       formData.fullName !== (initialData?.name || '') ||
@@ -57,58 +60,38 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
 
     setIsSubmitDisabled(!isFormChanged);
   }, [formData, initialData]);
-  const handleSubmit = () => {
-    // event.preventDefault();
 
-    // Validate form
-    if (!formData.fullName || !formData.email || !formData.phone || !formData.username || (!initialData && !formData.password) || formData.password !== formData.confirmPassword) {
-      setErrorMessage('Vui lòng nhập đầy đủ thông tin và đảm bảo mật khẩu khớp nhau.');
+  const handleSubmitForm = () => {
+    const { isValid, error } = validateForm();
+    if (!isValid) {
+      console.error(error); // Handle error (e.g., show a toast notification)
       return;
     }
-
-    const emailRegex = /^[A-Za-z0-9\._%+\-]+@[A-Za-z0-9\.\-]+\.[A-Za-z]{2,}$/;
-    if (!emailRegex.test(formData.email)) {
-      setErrorMessage('Vui lòng nhập email hợp lệ.');
-      return;
-    }
-
-    const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(formData.phone)) {
-      setErrorMessage('Vui lòng nhập số điện thoại hợp lệ.');
-      return;
-    }
-
+  
     const newStaff: StaffModel = {
-      id: initialData ? initialData.id : Date.now(),
+      id: selectedStaff ? selectedStaff.id : Date.now(),
       name: formData.fullName,
       phone: formData.phone,
       email: formData.email,
-      middleName: '',
       username: formData.username,
-      password: initialData ? initialData.password : formData.password, // Chỉ thêm mật khẩu khi tạo mới
+      password: selectedStaff ? selectedStaff.password : formData.password,
       status: formData.status,
+      middleName: '',
       role: 'staff',
       manager: '',
-      avatar: '',
+      avatar: ''
     };
-
-    onSubmit(newStaff);
-
-    // Nếu là cập nhật, không reset formData
-    if (!initialData) {
-      setFormData({
-        fullName: '',
-        email: '',
-        phone: '',
-        username: '',
-        password: '',
-        confirmPassword: '',
-        status: 'active',
-      });
+  
+    if (selectedStaff) {
+      updateStaff(newStaff.id, newStaff); // Update existing staff
+    } else {
+      addStaff(newStaff); // Add new staff
     }
-
-    setErrorMessage('');
-  }
+  
+    resetFormData(); // Reset form after submission
+    onCreateOrUpdate(!isCreateOrUpdate);
+  };
+  
 
   return (
     <div className="p-4">
@@ -263,7 +246,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
             Hủy bỏ
           </button>
           <ButtonAdd 
-            onClick={handleSubmit}
+            onClick={handleSubmitForm}
             title={initialData ? 'Cập nhật' : 'Thêm mới'}
             isDisabled={isSubmitDisabled}
             size="small"
