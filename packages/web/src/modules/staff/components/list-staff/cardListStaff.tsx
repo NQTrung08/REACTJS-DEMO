@@ -1,13 +1,13 @@
-import React from 'react';
-import Icon from '@mdi/react';
 import {
-  mdiPencil,
-  mdiDelete,
-  mdiPhoneInTalkOutline,
-  mdiEmailOutline,
   mdiAccountOutline,
+  mdiDelete,
+  mdiEmailOutline,
+  mdiPencil,
+  mdiPhoneInTalkOutline,
 } from '@mdi/js';
+import Icon from '@mdi/react';
 import { Switch } from 'antd';
+import React from 'react';
 
 import { StaffModel } from 'core-model';
 
@@ -18,8 +18,6 @@ const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => voi
   const { staffs,
     updateStaff,
     deleteStaff,
-    isCreateOrUpdate,
-    onCreateOrUpdate
 
   } = useStaffContext();
 
@@ -37,32 +35,32 @@ const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => voi
 
 
   return (
-    <div className="flex group transition-all duration-200 justify-between items-center p-4 border-b">
+    <div className="flex h-[56px] group transition-all duration-200 justify-between items-center p-4 border-b hover:shadow-md">
 
       <div className='min-w-[592px] flex'>
         {/* Avatar */}
-        <div className="flex items-center ">
+        <div className="flex items-center">
           <img
             src={staff?.avatar || 'https://via.placeholder.com/50'}
             alt={`${staff.name} avatar`}
-            className="rounded-full w-12 h-12 mr-4"
+            className="rounded-full w-8 h-8 mr-4"
           />
         </div>
 
         {/* Info: Name, Phone, Email, Role */}
         <div className="flex flex-col">
-          <div className="font-bold text-lg">{staff.name} ({staff.middleName})</div>
-          <div className="flex gap-2 mt-1">
+          <div className="font-[500] text-[#000000] text-[14px]">{staff.name} ({staff.middleName})</div>
+          <div className="flex gap-2 mt-1 text-xs">
             <div className="flex items-center gap-1">
-              <Icon path={mdiPhoneInTalkOutline} size={1} />
+              <Icon path={mdiPhoneInTalkOutline} className='w-[12px] h-[12px]' />
               <span>{staff.phone}</span>
             </div>
             <div className="flex items-center gap-1">
-              <Icon path={mdiEmailOutline} size={1} />
+              <Icon path={mdiEmailOutline} className='w-[12px] h-[12px]' />
               <span>{staff.email}</span>
             </div>
             <div className="flex items-center gap-1">
-              <Icon path={mdiAccountOutline} size={1} />
+              <Icon path={mdiAccountOutline} className='w-[12px] h-[12px]' />
               <span>{staff.role}</span>
             </div>
           </div>
@@ -73,17 +71,17 @@ const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => voi
 
       {/* Manager */}
       <div className="flex flex-col justify-center items-center min-w-[196px] w-[15%]">
-        <span className="text-gray-500 text-xs">Người quản lý</span>
-        <span className="font-semibold text-black text-xs">{staff.manager}</span>
+        <span className="text-[#757575] text-xs mb-[2px]">Người quản lý</span>
+        <span className="font-medium text-black text-[14px]">{staff.manager}</span>
       </div>
 
 
       <div className='min-w-[196px] w-[15%] items-center justify-center flex'>
-        <button className="hidden group-hover:flex border font-medium items-center px-[12px] py-[10px] rounded-md mr-2
+        <button className="hidden border-[#ECEDEF] group-hover:flex border font-medium items-center px-[12px] py-[8px] rounded-[2px] mr-2
         "
           onClick={onEdit}
-          >
-          <Icon path={mdiPencil} size={1} className="mr-1" />
+        >
+          <Icon path={mdiPencil} className="mr-2 w-[16px] h-[16px]" />
           Cập nhật
         </button>
 
@@ -92,11 +90,12 @@ const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => voi
       {/* Switch and Delete */}
       <div className="flex justify-end items-center min-w-[196px] w-[15%]">
         <div className='flex items-center gap-12'>
-
-          <Switch defaultChecked onChange={onChange} />
-          <button className="flex items-center w-[40px] h-[40px]"
+          <div className='flex items-center justify-center w-[20px] h-[12px]'>
+            <Switch onChange={onChange} size="small"/>
+          </div>
+          <button className="flex items-center justify-center w-[40px] h-[40px]"
             onClick={handleDeleteStaff}>
-            <Icon path={mdiDelete} size={1} className="mr-1" />
+            <Icon path={mdiDelete} className="w-[20px] text-[#AFAFAF] hover:text-red-500" />
           </button>
 
         </div>

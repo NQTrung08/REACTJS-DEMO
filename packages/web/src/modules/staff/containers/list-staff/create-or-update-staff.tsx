@@ -116,7 +116,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
         <div className="flex gap-4">
           <div className='w-[260px] flex flex-col items-center'>
             <div className="mb-4">
-              <div className=" relative w-[100px] h-[100px] rounded-full border border-gray-300 shadow-sm flex items-center justify-center bg-gray-300">
+              <div className=" relative w-[100px] h-[100px] rounded-full shadow-sm flex items-center justify-center bg-[#F5F5F5]">
                 <input
                   type="file"
                   id="avatar"
@@ -155,13 +155,13 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
           </div>
 
           <div className='-ml-11'>
-            <div className="mb-4 grid grid-cols-2 items-center gap-2">
-              <label htmlFor="fullName" className="col-span-1 text-right text-lg font-medium text-gray-900">Họ và tên:</label>
+            <div className="mb-[6px] grid grid-cols-2 items-center gap-2 text-[16px]">
+              <label htmlFor="fullName" className="col-span-1 text-right text-lg font-medium text-[#000]">Họ và tên:</label>
               <input
                 type="text"
                 id="fullName"
                 name="fullName"
-                className="mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500"
+                className="mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500 font-medium"
                 placeholder="Nhập họ và tên"
                 value={formData.fullName}
                 onChange={(event) => setFormData(
@@ -171,13 +171,13 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
               />
             </div>
 
-            <div className="mb-4 grid grid-cols-2 items-center gap-2">
-              <label htmlFor="email" className="col-span-1 text-right text-[14px] text-gray-700">Email:</label>
+            <div className="mb-[2px] grid grid-cols-2 items-center gap-2">
+              <label htmlFor="email" className="col-span-1 text-right text-[14px] text-[#000]">Email:</label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                className="mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500"
+                className="mt-1 border-b col-span-1 border-gray-300 text-[14px] focus:outline-none focus:border-blue-500"
                 placeholder="Nhập email"
                 value={formData.email}
                 onChange={(event) => setFormData(
@@ -186,13 +186,13 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
               />
             </div>
 
-            <div className="mb-4 grid grid-cols-2 items-center gap-2">
-              <label htmlFor="phone" className="col-span-1 text-right text-[14px] text-gray-700">Điện thoại</label>
+            <div className="mb-[2px] grid grid-cols-2 items-center gap-2 text-[14px]">
+              <label htmlFor="phone" className="col-span-1 text-right text-[14px] text-[#000] font-normal">Điện thoại:</label>
               <input
                 type="text"
                 id="phone"
                 name="phone"
-                className="mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500"
+                className=" mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500"
                 placeholder="Nhập số điện thoại"
                 value={formData.phone}
                 onChange={(event) => setFormData(
@@ -201,8 +201,8 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
               />
             </div>
 
-            <div className="mb-4 grid grid-cols-2 items-center gap-2">
-              <label htmlFor="username" className="col-span-1 text-right text-[14px] text-gray-700">Tên đăng nhập:</label>
+            <div className="mb-[2px] grid grid-cols-2 items-center gap-2 text-[14px]">
+              <label htmlFor="username" className="col-span-1 text-right text-[14px] text-[#000]">Tên đăng nhập:</label>
               <input
                 type="text"
                 id="username"
@@ -216,8 +216,8 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
               />
             </div>
 
-            <div className="mb-4 grid grid-cols-2 items-center gap-2">
-              <label htmlFor="password" className="col-span-1 text-right text-[14px] text-gray-700">Mật khẩu: </label>
+            <div className="mb-[2px] grid grid-cols-2 items-center gap-2 text-[14px]">
+              <label htmlFor="password" className="col-span-1 text-right text-[14px] text-[#000]">Mật khẩu: </label>
               <input
                 type="password"
                 id="password"
@@ -231,8 +231,8 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
               />
             </div>
 
-            <div className="mb-4 grid grid-cols-2 items-center gap-2">
-              <label htmlFor="confirmPassword" className="col-span-1 text-right text-[14px] text-gray-700">Nhập lại mật khẩu:</label>
+            <div className="mb-4 grid grid-cols-2 items-center gap-2 text-[14px]">
+              <label htmlFor="confirmPassword" className="col-span-1 text-right text-[14px] text-[#000]">Nhập lại mật khẩu:</label>
               <input
                 type="password"
                 id="confirmPassword"

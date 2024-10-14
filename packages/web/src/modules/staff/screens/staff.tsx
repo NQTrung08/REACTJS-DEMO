@@ -1,14 +1,12 @@
-import React from 'react'
-import ListStaff from '../containers/list-staff/listStaff'
-import MainNavigation from '../../../based/components/layout/Navigation/mainNavigation';
-import Header from '../../../based/components/layout/Header/Header';
-import SubNavigation from '../../../based/components/layout/Navigation/subNavigation';
-import { ListStaffProvider } from '../../../../../core/src/modules/staff';
+import { CreateOrUpdateProvider, ListStaffProvider } from '../../../../../core/src/modules/staff';
+import ListStaff from '../containers/list-staff/listStaff';
 
 const StaffScreen = () => {
   return (
     <ListStaffProvider>
-      <ListStaff />
+      <CreateOrUpdateProvider>
+        <ListStaff />
+      </CreateOrUpdateProvider>
     </ListStaffProvider>
   )
 

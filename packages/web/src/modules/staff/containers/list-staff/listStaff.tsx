@@ -1,20 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import MainNavigation from '../../../../based/components/layout/Navigation/mainNavigation';
-import SubNavigation from 'src/based/components/layout/Navigation/subNavigation';
-import ButtonAdd from 'src/based/components/common/ButtonAdd';
-import Search from 'src/based/components/common/Search';
+import { useEffect, useState } from 'react';
 import Filter from 'src/based/components/common/Filter';
+import Search from 'src/based/components/common/Search';
 import CardListStaff from '../../components/list-staff/cardListStaff';
 
 
-import Icon from '@mdi/react';
 import { mdiFilterMultipleOutline } from '@mdi/js';
-import {StaffModel} from "core-model"
+import Icon from '@mdi/react';
+import { StaffModel } from "core-model";
+import { useStaffContext } from 'core-modules';
+import HeaderListStaff from '../../components/list-staff/header';
 import {
   CreateOrUpdateStaffContainer
 } from './create-or-update-staff';
-import { useStaffContext } from 'core-modules';
-import HeaderListStaff from '../../components/list-staff/header'
 
 const ListStaff = () => {
   const [viewStaff, setviewStaff] = useState<StaffModel[]>([]);
@@ -102,7 +99,7 @@ const ListStaff = () => {
         </span>
       </div>
       {/* list staff */}
-      <div className={`overflow-y-auto ${isCreateOrUpdate ? 'max-h-[calc(100vh-700px)]' : 'h-[calc(100vh-300px)]'}`}>
+      <div className={`overflow-y-auto ${isCreateOrUpdate ? 'max-h-[calc(100vh-600px)]' : 'h-[calc(100vh-300px)]'}`}>
         {
           filterStaff.length > 0 ?
             filterStaff.map((staff) => (

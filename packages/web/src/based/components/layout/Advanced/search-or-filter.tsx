@@ -6,9 +6,9 @@ import { useStaffContext } from 'core-modules';
 
 const SearchOrFilter = () => {
   const {
-    staffs,
-    setFilterStaff
+    staffs
   } = useStaffContext();
+  const [filterStaff, setFilterStaff] = React.useState(staffs);
   return (
     <div className='border-y p-2 flex justify-between items-center'>
         <Search

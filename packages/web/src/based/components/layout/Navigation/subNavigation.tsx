@@ -23,14 +23,14 @@ const SubNavigation = () => {
   ];
 
   return (
-    <div className='flex flex-col gap-4 min-w-[300px] px-4 py-2 bg-[#EEF3FE] h-full'>
+    <div className='flex flex-col gap-4 min-w-[300px] text-[14px] text[#141414] px-4 py-2 bg-[#EEF3FE] h-full'>
       {subMenu.map((item, index) => (
         <div 
           key={index} 
           className={`flex items-center p-2 rounded-r-2xl  
             ${item.title === 'Danh sách nhân viên' ? 'bg-[#D4E2FC]' : ''}`} // Thay đổi màu background
         >
-          <Icon path={item.icon} size={1} />
+          <Icon path={item.icon} className='w-[18px] h-[20px]' />
           <span className='ml-2'>{item.title}</span>
         </div>
       ))}
