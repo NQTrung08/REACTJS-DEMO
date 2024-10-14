@@ -14,7 +14,7 @@ import { StaffModel } from 'core-model';
 import { useStaffContext } from 'core/src/modules/staff';
 
 
-const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void }) => {
+const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void }) => {
   const { staffs,
     updateStaff,
     deleteStaff,
@@ -49,7 +49,7 @@ const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => voi
 
         {/* Info: Name, Phone, Email, Role */}
         <div className="flex flex-col">
-          <div className="font-[500] text-[#000000] text-[14px]">{staff.name} ({staff.middleName})</div>
+          <div className="font-medium text-black text-md">{staff.name} ({staff.middleName})</div>
           <div className="flex gap-2 mt-1 text-xs">
             <div className="flex items-center gap-1">
               <Icon path={mdiPhoneInTalkOutline} className='w-[12px] h-[12px]' />
@@ -72,7 +72,7 @@ const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => voi
       {/* Manager */}
       <div className="flex flex-col justify-center items-center min-w-[196px] w-[15%]">
         <span className="text-[#757575] text-xs mb-[2px]">Người quản lý</span>
-        <span className="font-medium text-black text-[14px]">{staff.manager}</span>
+        <span className="font-medium text-black text-md">{staff.manager}</span>
       </div>
 
 
@@ -105,4 +105,4 @@ const CardListStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => voi
   );
 };
 
-export default CardListStaff;
+export default ItemStaff;

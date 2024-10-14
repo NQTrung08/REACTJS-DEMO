@@ -35,6 +35,7 @@ interface IProps {
 const ListStaffProvider = ({ children }: IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
   const [staffs, setStaffs] = useState<StaffModel[]>(staffsData);
+  // todo: item update
   const [selectedStaff, setSelectedStaff] = useState<StaffModel | null>(null);
 
   const addStaff = (staff: StaffModel) => {

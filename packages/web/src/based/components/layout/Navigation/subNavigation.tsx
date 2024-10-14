@@ -1,10 +1,9 @@
-import React from 'react';
-import Icon from '@mdi/react';
 import {
-  mdiCardAccountDetailsOutline,
   mdiAccountCogOutline,
+  mdiCardAccountDetailsOutline,
   mdiCardAccountPhoneOutline
 } from '@mdi/js';
+import Icon from '@mdi/react';
 
 const SubNavigation = () => {
   const subMenu = [
@@ -23,7 +22,7 @@ const SubNavigation = () => {
   ];
 
   return (
-    <div className='flex flex-col gap-4 min-w-[300px] text-[14px] text[#141414] px-4 py-2 bg-[#EEF3FE] h-full'>
+    <div className='flex flex-col gap-4 min-w-[300px] text-md text[#141414] px-4 py-2 bg-[#EEF3FE]'>
       {subMenu.map((item, index) => (
         <div 
           key={index} 

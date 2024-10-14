@@ -1,19 +1,21 @@
-import React from 'react';
-import Icon from '@mdi/react';
 import {
-  mdiFormatListBulleted,
-  mdiMonitorDashboard,
-  mdiBullhornVariantOutline,
-  mdiPrinterPosEditOutline,
-  mdiStorefrontOutline,
-  mdiCarLiftedPickup,
-  mdiCreditCardOutline,
-  mdiChartBoxPlusOutline,
   mdiAccountLockOutline,
-  mdiPackageVariantClosed,
-  mdiInvoiceTextMultipleOutline,
+  mdiBullhornVariantOutline,
+  mdiCarLiftedPickup,
+  mdiChartBoxPlusOutline,
   mdiCogOutline // settings
+  ,
+
+
+  mdiCreditCardOutline,
+  mdiFormatListBulleted,
+  mdiInvoiceTextMultipleOutline,
+  mdiMonitorDashboard,
+  mdiPackageVariantClosed,
+  mdiPrinterPosEditOutline,
+  mdiStorefrontOutline
 } from '@mdi/js';
+import Icon from '@mdi/react';
 
 const MainNavigation = () => {
   // Mảng chứa thông tin icon và tiêu đề

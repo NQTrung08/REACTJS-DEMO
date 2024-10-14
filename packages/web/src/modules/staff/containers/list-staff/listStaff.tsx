@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import Filter from 'src/based/components/common/Filter';
 import Search from 'src/based/components/common/Search';
-import CardListStaff from '../../components/list-staff/cardListStaff';
 
 
 import { mdiFilterMultipleOutline } from '@mdi/js';
 import Icon from '@mdi/react';
 import { StaffModel } from "core-model";
 import { useStaffContext } from 'core-modules';
+import Toolbar from 'src/based/components/common/Toolbar';
 import HeaderListStaff from '../../components/list-staff/header';
+import ItemStaff from '../../components/list-staff/item-staff';
 import {
   CreateOrUpdateStaffContainer
 } from './create-or-update-staff';
 
 const ListStaff = () => {
-  const [viewStaff, setviewStaff] = useState<StaffModel[]>([]);
 
-  const [filterStaff, setFilterStaff] = useState<StaffModel[]>([]);
+  const [filteredViewStaff, setfilteredViewStaff] = useState<StaffModel[]>([]);
   const { staffs,
     addStaff,
     updateStaff,
@@ -29,8 +29,7 @@ const ListStaff = () => {
 
 
   useEffect(() => {
-    setviewStaff(staffs);
-    setFilterStaff(staffs);
+    setfilteredViewStaff(staffs);
   }, [staffs]);
 
   const handleCancelAdd = () => {
@@ -57,27 +56,25 @@ const ListStaff = () => {
 
   return (
     <div className='w-full py-1'>
-      <div className='flex flex-col'>
+   
         {/*TODO: Header */}
-        <HeaderListStaff />
+        <HeaderListStaff initialData={selectedStaff} />
         {/* header end */}
 
         {isCreateOrUpdate && (
-          <div className="p-4">
             <CreateOrUpdateStaffContainer onCancel={handleCancelAdd}
               onSubmit={handleCreateOrUpdateStaff}
               initialData={selectedStaff}
             />
-          </div>
         )}
-      </div>
 
+        {/* TODO: advanced */}
       <div className='border-y p-2 flex justify-between items-center'>
         <Search
           data={staffs}
           placeholder='Tìm kiếm nhân viên...'
           searchField='name'
-          onResults={(results) => setFilterStaff(results)}
+          onResults={(results) => setfilteredViewStaff(results)}
         />
         {/* Filter */}
         <Filter />
@@ -95,21 +92,20 @@ const ListStaff = () => {
           <span className='text-blue-600 font-[550]'>Ngừng hoạt động</span>
         </div>
       </div>
-      <div className='bg-gray-200 py-1 px-2'>
-        <span className='text-xs text-gray-500'>
-          Có tất cả {viewStaff.length} tài khoản nhân viên
-        </span>
-      </div>
+
+      {/* TODO: toolbar */}
+      <Toolbar quantity={filteredViewStaff.length} title='Tài khoản nhân viên' />
+      
       {/* list staff */}
+      {/* TODO: merge filterStaff and viewStaff */}
       <div className={`overflow-y-auto ${isCreateOrUpdate ? 'max-h-[calc(100vh-600px)]' : 'h-[calc(100vh-300px)]'}`}>
-        {
-          filterStaff.length > 0 ?
-            filterStaff.map((staff) => (
-              <CardListStaff key={staff.id} staff={staff} onEdit={() => handleEditStaff(staff)} />
-            )) :
-            viewStaff.map((staff) => (
-              <CardListStaff key={staff.id} staff={staff} onEdit={() => handleEditStaff(staff)} />
-            ))}
+      {filteredViewStaff.length > 0 ? (
+          filteredViewStaff.map((staff) => (
+            <ItemStaff key={staff.id} staff={staff} onEdit={() => handleEditStaff(staff)} />
+          ))
+        ) : (
+          <span className=''>Không có nhân viên nào để hiển thị.</span>
+        )}
       </div>
     </div>
   )
