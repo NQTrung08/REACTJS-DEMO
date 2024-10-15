@@ -1,21 +1,20 @@
-import { StaffModel } from 'core-model';
 import { useEffect, useState } from 'react';
 
 import { mdiTrayArrowUp } from '@mdi/js';
 import Icon from '@mdi/react';
+import classNames from 'classnames';
 import { useCreateOrUpdateContext, useStaffContext } from 'core-modules';
 import { ButtonAdd } from 'src/based/components/common/ButtonAdd';
 
 
-interface FormStaffProps {
-  initialData?: StaffModel | null; 
-  onCancel: () => void;
-  onSubmit: (staff: StaffModel) => void;
-}
 
-const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormStaffProps) => {
+const CreateOrUpdateStaffContainer = () => {
 
   const {
+    onCreateOrUpdate,
+    setItemUpdate,
+    itemUpdate,
+    isCreateOrUpdate,
   } = useStaffContext();
   const {
     formData,
@@ -27,34 +26,30 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
   } = useCreateOrUpdateContext();
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  useEffect(() => {
-    if (initialData) {
-      setFormData({
-        ...initialData,
-      });
-    } else {
-      resetFormData();
-    }
-  }, [initialData]);
+  // vứt vào context
+  const handleCancel = () => {
+    onCreateOrUpdate(false);
+    setItemUpdate(null);
+  }
 
-  
+  // vứt hết vào context
   useEffect(() => {
     const isFormChanged =
-      formData.avatar !== (initialData?.avatar || '') ||
-      formData.fullName !== (initialData?.fullName || '') ||
-      formData.email !== (initialData?.email || '') ||
-      formData.phone !== (initialData?.phone || '') ||
-      formData.username !== (initialData?.username || '') ||
-      formData.status !== (initialData?.status || 'active') ||
-      (!initialData && (formData.password || formData.confirmPassword)); // Trong trường hợp thêm mới
+      formData.avatar !== (itemUpdate?.avatar || '') ||
+      formData.fullName !== (itemUpdate?.fullName || '') ||
+      formData.email !== (itemUpdate?.email || '') ||
+      formData.phone !== (itemUpdate?.phone || '') ||
+      formData.username !== (itemUpdate?.username || '') ||
+      formData.status !== (itemUpdate?.status || 'active') ||
+      (!itemUpdate && (formData.password || formData.confirmPassword)); // Trong trường hợp thêm mới
 
     setIsSubmitDisabled(!isFormChanged);
-  }, [formData, initialData]);
+  }, [formData, itemUpdate]);
 
   const handleFormSubmit = () => {
     const isSubmitted = handleSubmit();
     if (isSubmitted) {
-      onCancel(); // Close form if submission is successful
+      handleCancel(); // Close form if submission is successful
     }
   };
 
@@ -74,7 +69,10 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
   };
 
   return (
-    <div className="p-4">
+    <div className={classNames("p-4", {
+      "block": isCreateOrUpdate,
+      "hidden": !isCreateOrUpdate
+    })} id='create-or-update'>
       
         <div className="flex gap-4">
           <div className='w-[260px] flex flex-col items-center'>
@@ -224,14 +222,14 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
         <div className="flex justify-end gap-2">
           <button
             type="button"
-            onClick={onCancel}
+            onClick={handleCancel}
             className="px-4 py-2 text-md font-medium hover:bg-gray-50 rounded-md"
           >
             Hủy bỏ
           </button>
           <ButtonAdd 
             onClick={handleFormSubmit}
-            title={initialData ? 'Cập nhật' : 'Thêm mới'}
+            title={itemUpdate ? 'Cập nhật' : 'Thêm mới'}
             isDisabled={isSubmitDisabled}
             size="small"
           

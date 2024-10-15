@@ -2,25 +2,30 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 import {
   FilterStaff
 } from '../../../models/filter-staff';
-import { StaffModel } from '../../../models/staff-model';
+import { IStaff } from '../../../models/staff-model';
 import { staffsData } from './data-staff';
 
 
 interface StaffContextType {
-  staffs: StaffModel[];
-  itemUpdate: StaffModel | null;
-  setItemUpdate: (staff: StaffModel | null) => void;
-  addStaff: (staff: StaffModel) => void;
-  updateStaff: (id: number, staff: StaffModel) => void;
-  deleteStaff: (id: number) => void;
-  searchStaff: (q: string) => StaffModel[];
-  filterStaff: (filterValue: string) => StaffModel[];
+  staffs: IStaff[];
+  itemUpdate: IStaff | null;
+  setItemUpdate: (staff: IStaff | null) => void;
+  addStaff: (staff: IStaff) => void;
+  updateStaff: (id: number, staff: IStaff) => void;
+  deleteStaff: (id: number) => void
   onCreateOrUpdate: (value: boolean) => void;
   isCreateOrUpdate: boolean;
   filter: FilterStaff,
-  dataView: StaffModel[],
-  setDataView: React.Dispatch<React.SetStateAction<StaffModel[]>>
+  dataView: IStaff[],
+  setDataView: React.Dispatch<React.SetStateAction<IStaff[]>>
   setFilter: React.Dispatch<React.SetStateAction<FilterStaff>>
+
+  currentPage: number; // Thêm biến trạng thái cho trang hiện tại
+  perPage: number; // Số lượng bản ghi trên mỗi trang
+  totalPages: number; // Tổng số trang
+  handleNextPage: () => void; // Hàm để chuyển sang trang tiếp theo
+  handlePreviousPage: () => void; // Hàm để quay lại trang trước
+  currentStaffs: IStaff[]; // Danh sách nhân viên hiển thị trên trang hiện tại
 }
 
 const StaffContext = createContext<StaffContextType>({
@@ -32,12 +37,16 @@ const StaffContext = createContext<StaffContextType>({
   deleteStaff: () => { },
   onCreateOrUpdate: () => { },
   isCreateOrUpdate: false,
-  searchStaff: () => [],
-  filterStaff: () => [],
   filter: new FilterStaff(),
   dataView: [],
   setDataView: () => { },
-  setFilter: () => { }
+  setFilter: () => { },
+  currentPage: 0,
+  perPage: 0,
+  totalPages: 0,
+  handleNextPage: () => { },
+  handlePreviousPage: () => { },
+  currentStaffs: [],
 });
 
 interface IProps {
@@ -47,14 +56,17 @@ interface IProps {
 
 const ListStaffProvider = ({ children }: IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
-  const [staffs, setStaffs] = useState<StaffModel[]>(staffsData);
+  const [staffs, setStaffs] = useState<IStaff[]>(staffsData);
   // todo: item update
-  const [itemUpdate, setItemUpdate] = useState<StaffModel | null>(null);
+  const [itemUpdate, setItemUpdate] = useState<IStaff | null>(null);
   const [filter, setFilter] = useState<FilterStaff>(new FilterStaff());
-  const [dataView, setDataView] = useState<StaffModel[]>([]);
+  const [dataView, setDataView] = useState<IStaff[]>([]);
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const perPage = 10; 
 
   useEffect(() => {
-    let dataTemp: StaffModel[] = [];
+    let dataTemp: IStaff[] = [];
 
     dataTemp = staffs.filter((staff) => staff.status === filter.status);
     if (filter.keyword) {
@@ -72,11 +84,22 @@ const ListStaffProvider = ({ children }: IProps) => {
     setDataView(dataTemp);
   }, [filter.keyword, filter.status, filter.sort, staffs]);
 
-  const addStaff = (staff: StaffModel) => {
+  // TODO: pagination
+  const totalPages = Math.ceil(dataView.length / perPage);
+  const currentStaffs = dataView.slice(currentPage * perPage, (currentPage + 1) * perPage);
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+  
+  const addStaff = (staff: IStaff) => {
     setStaffs((prevStaffs) => [...prevStaffs, staff]);
   };
 
-  const updateStaff = (id: number, updatedStaff: StaffModel) => {
+  const updateStaff = (id: number, updatedStaff: IStaff) => {
     setStaffs((prevStaffs) =>
       prevStaffs.map((staff) => (staff.id === id ? updatedStaff : staff))
     );
@@ -84,18 +107,6 @@ const ListStaffProvider = ({ children }: IProps) => {
 
   const deleteStaff = (id: number) => {
     setStaffs((prevStaffs) => prevStaffs.filter((staff) => staff.id !== id));
-  };
-
-  const searchStaff = (q: string) => {
-    return staffs.filter((staff) =>
-      staff.fullName.toLowerCase().includes(q.toLowerCase())
-    );
-  };
-
-  const filterStaff = (filterValue: string) => {
-    return staffs.filter((staff) =>
-      staff.fullName.toLowerCase().includes(filterValue.toLowerCase())
-    );
   };
 
   const onCreateOrUpdate = (value: boolean) => {
@@ -110,21 +121,24 @@ const ListStaffProvider = ({ children }: IProps) => {
       addStaff,
       updateStaff,
       deleteStaff,
-      searchStaff,
-      filterStaff,
       isCreateOrUpdate,
       onCreateOrUpdate,
       filter,
       dataView,
       setDataView,
-      setFilter
+      setFilter,
+      currentPage,
+      perPage,
+      totalPages,
+      handleNextPage,
+      handlePreviousPage,
+      currentStaffs
     }}>
       {children}
     </StaffContext.Provider>
   );
 };
 
-// Hook để sử dụng StaffContext
 const useStaffContext = (): StaffContextType => {
   return useContext(StaffContext);
 };

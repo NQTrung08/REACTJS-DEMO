@@ -4,7 +4,7 @@ import { useStaffContext } from './staff-context';
 
 interface CreateOrUpdateContextType {
   // 
-  formData: StaffModel & { confirmPassword: string };
+  formData: StaffModel;
   setFormData: React.Dispatch<React.SetStateAction<any>>;
   resetFormData: () => void;
   validateForm: () => { isValid: boolean; error?: string };
@@ -14,20 +14,7 @@ interface CreateOrUpdateContextType {
 }
 
 const CreateOrUpdateContext = createContext<CreateOrUpdateContextType>({
-  formData: {
-    id: 0,
-    fullName: '',
-    middleName: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
-    email: '',
-    role: 'staff',
-    manager: '',
-    avatar: '',
-    status: 'active',
-  },
+  formData: new StaffModel(),
   setFormData: () => {},
   resetFormData: () => { },
   handleSubmit: () => false,
@@ -43,20 +30,7 @@ interface IProps {
 const CreateOrUpdateProvider = ({ children }: IProps) => {
   const { itemUpdate, addStaff, updateStaff } = useStaffContext();
 
-  const [formData, setFormData] = useState<StaffModel & { confirmPassword: string }>({
-    id: 0,
-    fullName: '',
-    middleName: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-    phone: '',
-    email: '',
-    role: 'staff',
-    manager: '',
-    avatar: '',
-    status: 'active',
-  });
+  const [formData, setFormData] = useState<StaffModel & { confirmPassword: string }>(new StaffModel());
 
   const [errorMessage, setErrorMessage] = useState('');
 

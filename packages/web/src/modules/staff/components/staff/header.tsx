@@ -1,33 +1,27 @@
-import { StaffModel } from 'core-model';
 import {
   useStaffContext
 } from 'core-modules';
 
 import { ButtonAdd } from 'src/based/components/common/ButtonAdd';
 
-interface HeaderListProps {
-  initialData?: StaffModel | null; 
-
-}
-
 export const HeaderListStaff = ({
-  initialData,
-} : HeaderListProps) => {
+}) => {
   const {
     isCreateOrUpdate,
-    onCreateOrUpdate
+    onCreateOrUpdate,
+    itemUpdate,
   } = useStaffContext();
 
   return (
     <div className='flex justify-between items-center py-2 px-3 border-b'>
       {/*  */}
       <span className='font-[550] text-[18px]'>
-        {initialData 
+        {itemUpdate 
           ? 'Cập nhật thông tin nhân viên' 
           : (isCreateOrUpdate ? 'Thêm mới nhân viên' : 'Danh sách nhân viên')}
       </span>
       <ButtonAdd onClick={() => onCreateOrUpdate(!isCreateOrUpdate)}
-        title={initialData ? 'Cập nhật' : 'Thêm mới'} />
+        title={itemUpdate ? 'Cập nhật' : 'Thêm mới'} />
     </div>
   )
 }

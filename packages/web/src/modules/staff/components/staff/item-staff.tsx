@@ -9,15 +9,17 @@ import Icon from '@mdi/react';
 import { Switch } from 'antd';
 import React from 'react';
 
-import { StaffModel } from 'core-model';
+import { IStaff } from 'core-model';
 
 import { useStaffContext } from 'core/src/modules/staff';
 
 
-export const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void }) => {
+export const ItemStaff = ({ staff}: { staff: IStaff}) => {
   const { staffs,
     updateStaff,
     deleteStaff,
+    onCreateOrUpdate,
+    setItemUpdate,
 
   } = useStaffContext();
 
@@ -29,12 +31,22 @@ export const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => 
   }
 
   const onChange = (checked: boolean) => {
-    if (checked) {
-      updateStaff(staff.id, { ...staff, status: 'active' });
-    } else {
-      updateStaff(staff.id, { ...staff, status: 'inactive' });
+    updateStaff(staff.id, { ...staff, status: checked ? 'active' : 'inactive' });
+  };
+
+  const handleEditStaff = (staff: IStaff) => {
+    setItemUpdate(staff);
+    onCreateOrUpdate(true);
+    const targetElement = document.querySelector('#create-or-update'); // ID của phần tử bạn muốn cuộn đến
+    console.log('targetElement', targetElement);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',  // Cuộn mượt
+        block: 'nearest',      // Đưa phần tử lên đầu viewport
+      });
     }
   };
+
 
 
 
@@ -82,7 +94,7 @@ export const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => 
 
       <div className='min-w-[196px] w-[15%] items-center justify-center flex'>
         <button className="hidden border-[#ECEDEF] group-hover:flex border font-medium items-center px-3 py-2 rounded-sm"
-          onClick={onEdit}
+          onClick={() =>handleEditStaff(staff)}
         >
           <Icon path={mdiPencil} className="mr-2 w-4 h-4" />
           <span className='text-md'>

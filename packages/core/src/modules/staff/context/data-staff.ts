@@ -1,8 +1,8 @@
 import {
-  StaffModel
+  IStaff
 } from '../../../models/staff-model';
 
-export const staffsData: StaffModel[] = [
+export const staffsData: IStaff[] = [
   {
     id: 1,
     fullName: 'Đặng Thị Chinh',
