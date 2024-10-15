@@ -5,7 +5,7 @@ import Icon from '@mdi/react';
 import { ISearch } from 'core-model';
 import React from 'react';
 
-const Search = ({
+export const Search = ({
   placeholder = 'Tìm kiếm',
   filter,
   setFilter,
@@ -31,5 +31,3 @@ const Search = ({
     </div>
   )
 }
-
-export default Search

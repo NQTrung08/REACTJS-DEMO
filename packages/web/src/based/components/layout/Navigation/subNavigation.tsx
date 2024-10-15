@@ -5,7 +5,7 @@ import {
 } from '@mdi/js';
 import Icon from '@mdi/react';
 
-const SubNavigation = () => {
+export const SubNavigation = () => {
   const subMenu = [
     {
       icon: mdiCardAccountDetailsOutline,
@@ -37,4 +37,3 @@ const SubNavigation = () => {
   );
 }
 
-export default SubNavigation;

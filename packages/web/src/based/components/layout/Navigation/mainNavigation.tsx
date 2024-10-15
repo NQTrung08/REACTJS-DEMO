@@ -12,6 +12,7 @@ import {
 
 
 
+
   mdiCreditCardOutline,
   mdiFormatListBulleted,
   mdiInvoiceTextMultipleOutline,
@@ -22,7 +23,7 @@ import {
 } from '@mdi/js';
 import Icon from '@mdi/react';
 
-const MainNavigation = () => {
+export const MainNavigation = () => {
   // Mảng chứa thông tin icon và tiêu đề
   const navigationItems = [
     { icon: mdiFormatListBulleted, title: '' },
@@ -56,4 +57,3 @@ const MainNavigation = () => {
   );
 };
 
-export default MainNavigation;

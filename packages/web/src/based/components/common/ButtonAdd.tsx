@@ -8,7 +8,7 @@ interface ButtonAddProps {
   size?: 'small' | 'medium' | 'large';
 }
 
-const ButtonAdd = ({ onClick, isDisabled = false, title, size = 'medium' } : ButtonAddProps) => {
+export const ButtonAdd = ({ onClick, isDisabled = false, title, size = 'medium' } : ButtonAddProps) => {
   
   const sizeClasses = {
     small: 'py-[4px] px-[8px] text-xs icon-size-0.8',  // icon-size-0.8 là lớp tùy chỉnh
@@ -30,5 +30,3 @@ const ButtonAdd = ({ onClick, isDisabled = false, title, size = 'medium' } : But
     </div>
   )
 }
-
-export default ButtonAdd

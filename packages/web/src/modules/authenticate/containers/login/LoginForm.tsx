@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Tbutton from '../../../../based/components/common/Tbutton';
+import { Tbutton } from '../../../../based/components/common/Tbutton';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState<string>('');

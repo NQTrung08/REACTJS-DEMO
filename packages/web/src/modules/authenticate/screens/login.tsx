@@ -1,7 +1,5 @@
 import { LoginProvider } from 'core-modules'
-import LoginHeader from '../../../based/components/common/HeaderLogin'
-import LoginFooter from '../../../based/components/common/Footer'
-import Content from '../containers/login/Content'
+import { Content } from '../containers/login/Content'
 
 export const LoginScreen = () => {
     return <LoginProvider>

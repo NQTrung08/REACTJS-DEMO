@@ -2,18 +2,13 @@
 
 import { StaffModel } from "core-model";
 import { CreateOrUpdateProvider, useStaffContext } from 'core-modules';
-import Toolbar from 'src/based/components/common/Toolbar';
-import {
-  Advanced
-} from 'src/based/components/layout/Advanced/advanced';
-import HeaderListStaff from '../../components/list-staff/header';
-import {
-  CreateOrUpdateStaffContainer
-} from './create-or-update-staff';
-import ListStaff from './list-staff';
-const LayoutStaff = () => {
-
-  // const [filteredViewStaff, setfilteredViewStaff] = useState<StaffModel[]>([]);
+import { useState } from "react";
+import { Toolbar } from 'src/based/components/common/Toolbar';
+import { Advanced } from 'src/based/components/layout/Advanced/advanced';
+import { HeaderListStaff } from '../../components/list-staff/header';
+import { CreateOrUpdateStaffContainer } from './create-or-update-staff';
+import { ListStaff } from './list-staff';
+export const LayoutStaff = () => {
   const { staffs,
     addStaff,
     updateStaff,
@@ -24,8 +19,24 @@ const LayoutStaff = () => {
     filter,
     dataView,
   } = useStaffContext();
+  
+  // TODO: pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const perPage = 10;
 
+  const totalPages = Math.ceil(dataView.length / perPage);
 
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
+  };
+
+  const startIndex = currentPage * perPage;
+  const currentStaffs = dataView.slice(startIndex, startIndex + perPage);
+  // end Pagination 
   const handleCancelAdd = () => {
     onCreateOrUpdate(false);
     setItemUpdate(null);
@@ -69,11 +80,12 @@ const LayoutStaff = () => {
         {/* TODO: advanced */}
       <Advanced />
       {/* TODO: toolbar */}
-      <Toolbar quantity={dataView.length} title='tài khoản nhân viên' />
+      <Toolbar quantity={dataView.length} title='tài khoản nhân viên'
+        currentPage={currentPage} totalPages={totalPages} onNextPage={handleNextPage} onPreviousPage={handlePreviousPage} />
 
       {/* List Staff */}
       <ListStaff
-        filteredViewStaff={dataView}
+        filteredViewStaff={currentStaffs}
         isCreateOrUpdate={isCreateOrUpdate}
         onEdit={handleEditStaff}
       />
@@ -81,5 +93,3 @@ const LayoutStaff = () => {
     </div>
   )
 }
-
-export default LayoutStaff

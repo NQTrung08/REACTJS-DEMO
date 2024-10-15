@@ -21,26 +21,26 @@ export const SortDropdown = () => {
         className='flex items-center cursor-pointer'
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <Icon path={mdiSortAscending} size={1} />
-        <span className='ml-2'>Sắp xếp: {filter.sort === 'asc' ? 'A > Z' : 'Z > A'}</span>
-        <Icon path={mdiChevronDown} size={1} className='ml-1' />
+        <Icon path={mdiSortAscending} className='w-4 h-4' />
+        <span className='ml-2 text-md'>Sắp xếp theo tên: {filter.sort === 'asc' ? 'A > Z' : 'Z > A'}</span>
+        <Icon path={mdiChevronDown} className='ml-1 w-4 h-4' />
       </div>
       {isDropdownOpen && (
         <div className='absolute mt-2 bg-white border shadow rounded'>
           <div>
             <div
-              className='p-2 flex cursor-pointer hover:bg-gray-100'
+              className='p-2 flex cursor-pointer hover:bg-gray-100 text-md'
               onClick={() => handleSortChange('asc')}
             >
-              <Icon path={mdiSortAscending} size={1} />
-              <span className='ml-2'>Sắp xếp: A &gt; Z</span>
+              <Icon path={mdiSortAscending} className='w-4 h-4' />
+              <span className='ml-2'>Sắp xếp theo tên: A &gt; Z</span>
             </div>
             <div
-              className='p-2 flex cursor-pointer hover:bg-gray-100'
+              className='p-2 flex cursor-pointer hover:bg-gray-100 text-md'
               onClick={() => handleSortChange('desc')}
             >
-              <Icon path={mdiSortDescending} size={1} />
-              <span className='ml-2'>Sắp xếp: Z &gt; A</span>
+              <Icon path={mdiSortDescending} className='w-4 h-4' />
+              <span className='ml-2'>Sắp xếp theo tên: Z &gt; A</span>
             </div>
           </div>
         </div>

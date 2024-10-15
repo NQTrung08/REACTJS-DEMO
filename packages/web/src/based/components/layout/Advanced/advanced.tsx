@@ -1,6 +1,6 @@
 
 import { useStaffContext } from 'core-modules';
-import Search from '../../common/Search';
+import { Search } from '../../common/Search';
 import {
   SortDropdown
 } from '../../common/sort';

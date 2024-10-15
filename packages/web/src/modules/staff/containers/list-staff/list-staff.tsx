@@ -1,5 +1,5 @@
 import { StaffModel } from 'core-model';
-import ItemStaff from '../../components/list-staff/item-staff';
+import { ItemStaff } from '../../components/list-staff/item-staff';
 
 interface ListStaffProps {
   filteredViewStaff: StaffModel[];
@@ -7,7 +7,7 @@ interface ListStaffProps {
   onEdit: (staff: StaffModel) => void;
 }
 
-const ListStaff = ({ filteredViewStaff, isCreateOrUpdate, onEdit }: ListStaffProps) => {
+export const ListStaff = ({ filteredViewStaff, isCreateOrUpdate, onEdit }: ListStaffProps) => {
   return (
     <div className='overflow-y-auto h-full pb-28'>
       {filteredViewStaff.length > 0 ? (
@@ -20,5 +20,3 @@ const ListStaff = ({ filteredViewStaff, isCreateOrUpdate, onEdit }: ListStaffPro
     </div>
   );
 };
-
-export default ListStaff;

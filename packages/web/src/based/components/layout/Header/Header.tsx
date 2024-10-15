@@ -8,7 +8,7 @@ import {
 import Icon from '@mdi/react';
 import { } from 'react';
 
-const Header = () => {
+export const Header = () => {
 
 
   return (
@@ -60,4 +60,3 @@ const Header = () => {
   );
 };
 
-export default Header;

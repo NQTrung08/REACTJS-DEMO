@@ -3,14 +3,14 @@ import {
   useStaffContext
 } from 'core-modules';
 
-import ButtonAdd from 'src/based/components/common/ButtonAdd';
+import { ButtonAdd } from 'src/based/components/common/ButtonAdd';
 
 interface HeaderListProps {
   initialData?: StaffModel | null; 
 
 }
 
-const HeaderListStaff = ({
+export const HeaderListStaff = ({
   initialData,
 } : HeaderListProps) => {
   const {
@@ -31,5 +31,3 @@ const HeaderListStaff = ({
     </div>
   )
 }
-
-export default HeaderListStaff

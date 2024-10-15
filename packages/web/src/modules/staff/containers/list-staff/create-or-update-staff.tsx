@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { mdiTrayArrowUp } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useCreateOrUpdateContext, useStaffContext } from 'core-modules';
-import ButtonAdd from 'src/based/components/common/ButtonAdd';
+import { ButtonAdd } from 'src/based/components/common/ButtonAdd';
 
 
 interface FormStaffProps {
@@ -30,7 +30,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
   useEffect(() => {
     if (initialData) {
       setFormData({
-        ...initialData,        
+        ...initialData,
       });
     } else {
       resetFormData();

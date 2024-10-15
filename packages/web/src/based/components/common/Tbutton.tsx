@@ -5,7 +5,7 @@ interface Props {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;  // Hàm nhận một sự kiện chuột
 }
 
-const Tbutton: React.FC<Props> = ({ title = '', onClick }) => {
+export const Tbutton: React.FC<Props> = ({ title = '', onClick }) => {
   return (
     <div className="mt-12">
       <button
@@ -18,5 +18,3 @@ const Tbutton: React.FC<Props> = ({ title = '', onClick }) => {
     </div>
   );
 }
-
-export default Tbutton;

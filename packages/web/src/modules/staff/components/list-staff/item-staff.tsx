@@ -14,7 +14,7 @@ import { StaffModel } from 'core-model';
 import { useStaffContext } from 'core/src/modules/staff';
 
 
-const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void }) => {
+export const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void }) => {
   const { staffs,
     updateStaff,
     deleteStaff,
@@ -56,15 +56,15 @@ const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void })
           <div className="font-medium text-black text-md">{staff.fullName} ({staff.middleName})</div>
           <div className="flex gap-2 mt-1 text-xs">
             <div className="flex items-center gap-1">
-              <Icon path={mdiPhoneInTalkOutline} className='w-[12px] h-[12px]' />
+              <Icon path={mdiPhoneInTalkOutline} className='w-3 h-3' />
               <span>{staff.phone}</span>
             </div>
             <div className="flex items-center gap-1">
-              <Icon path={mdiEmailOutline} className='w-[12px] h-[12px]' />
+              <Icon path={mdiEmailOutline} className='w-3 h-3' />
               <span>{staff.email}</span>
             </div>
             <div className="flex items-center gap-1">
-              <Icon path={mdiAccountOutline} className='w-[12px] h-[12px]' />
+              <Icon path={mdiAccountOutline} className='w-3 h-3' />
               <span>{staff.role}</span>
             </div>
           </div>
@@ -81,12 +81,13 @@ const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void })
 
 
       <div className='min-w-[196px] w-[15%] items-center justify-center flex'>
-        <button className="hidden border-[#ECEDEF] group-hover:flex border font-medium items-center px-[12px] py-[8px] rounded-[2px] mr-2
-        "
+        <button className="hidden border-[#ECEDEF] group-hover:flex border font-medium items-center px-3 py-2 rounded-sm"
           onClick={onEdit}
         >
-          <Icon path={mdiPencil} className="mr-2 w-[16px] h-[16px]" />
-          Cập nhật
+          <Icon path={mdiPencil} className="mr-2 w-4 h-4" />
+          <span className='text-md'>
+            Cập nhật
+          </span>
         </button>
 
       </div>
@@ -111,5 +112,3 @@ const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void })
     </div>
   );
 };
-
-export default ItemStaff;
