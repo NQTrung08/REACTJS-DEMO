@@ -1,29 +1,22 @@
-import React from 'react'
-import Icon from '@mdi/react';
 import {
-  mdiMagnify,
-  mdiSortAscending,
-  mdiChevronDown
-} from '@mdi/js'
+  mdiMagnify
+} from '@mdi/js';
+import Icon from '@mdi/react';
 import { ISearch } from 'core-model';
+import React from 'react';
 
-
-const Search = <T extends object> ({
-  data,
-  searchField,
+const Search = ({
   placeholder = 'Tìm kiếm',
-  onResults
-}: ISearch<T>) => {
-  const [query, setQuery] = React.useState<string>('');
-  const handleSearch = (q: string) => {
-    setQuery(q);
-    const filteredData = data.filter((item) => {
-      const field = item[searchField] as string;
-      return field.toLowerCase().includes(q.toLowerCase());
-    })
+  filter,
+  setFilter,
+}: ISearch) => {
 
-    onResults(filteredData);
-  }
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter((prev) => ({
+      ...prev,
+      keyword: e.target.value,
+    }));
+  };
 
   return (
     <div className='flex border rounded-md p-2 max-w-[480px] w-full'>
@@ -32,8 +25,8 @@ const Search = <T extends object> ({
         type="text"
         placeholder={placeholder}
         className='focus:outline-none px-2 flex-grow'
-        value={query}
-        onChange={e => handleSearch(e.target.value)}
+        value={filter.keyword}
+        onChange={handleSearch}
       />
     </div>
   )

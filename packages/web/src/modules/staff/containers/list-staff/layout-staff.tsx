@@ -23,18 +23,8 @@ const LayoutStaff = () => {
     setItemUpdate,
     filter,
     dataView,
-    setDataView,
-    setFilter,
-    filterStaff,
-    searchStaff,
-    deleteStaff
-
   } = useStaffContext();
 
-
-  // useEffect(() => {
-  //   setfilteredViewStaff(staffs);
-  // }, [staffs]);
 
   const handleCancelAdd = () => {
     onCreateOrUpdate(false);
@@ -72,7 +62,6 @@ const LayoutStaff = () => {
             initialData={itemUpdate}
           />
         )}
-
       </CreateOrUpdateProvider>
 
 

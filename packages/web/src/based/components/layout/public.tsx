@@ -7,12 +7,12 @@ import SubNavigation from "./Navigation/subNavigation";
 
 export const PublicLayout = observer(() => {
     return (
-        <div className='flex h-full'>
+        <div className='flex h-screen'>
             <MainNavigation />
-            <div className='flex flex-col w-full'>
+            <div className='flex flex-col w-full h-full'>
                 <Header />
                 <BreadCrumb />
-                <div className='flex'>
+                <div className='flex h-full w-full'>
                     <SubNavigation />
                     <Outlet />
 

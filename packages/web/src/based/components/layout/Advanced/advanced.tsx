@@ -1,50 +1,25 @@
 
 import { useStaffContext } from 'core-modules';
-import Filter from '../../common/Filter';
 import Search from '../../common/Search';
+import {
+  SortDropdown
+} from '../../common/sort';
 
-import { mdiFilterMultipleOutline } from '@mdi/js';
-import Icon from '@mdi/react';
+import { StatusFilter } from '../../common/status-filter';
 
-export const Advanced = ({
-}: any) => {
-  const {
-    staffs,
-    filter,
-    setFilter,
-    dataView,
-    setDataView,
-    filterStaff,
-  } = useStaffContext();
+export const Advanced = () => {
 
-  console.log('dataView', dataView)
-
-  
+  const { filter, setFilter } = useStaffContext();
   return (
     <div>
       <div className='border-y p-2 flex justify-between items-center'>
-        <Search
-          data={staffs}
-          placeholder='Tìm kiếm nhân viên...'
-          searchField='fullName'
-          onResults={(results) => setDataView(results)}
-        />
+        <Search placeholder='Tìm kiếm nhân viên' filter={filter} setFilter={setFilter} />
         {/* Filter */}
-        <Filter />
+        <SortDropdown />
       </div>
 
-      <div className='flex gap-2 p-2 items-center text-xs'>
-        <Icon path={mdiFilterMultipleOutline} className='size-4' />
-        <span className='text-[#000] font-[460]'>
-          Trạng thái:
-        </span>
-        <div className='bg-gray-200 py-1 px-2 rounded-[24px]'>
-          <span>Hoạt động</span>
-        </div>
-        <div className='bg-blue-100 py-1 px-2 rounded-[24px]'>
-          <span className='text-blue-600 font-[550]'>Ngừng hoạt động</span>
-        </div>
-      </div>
+      <StatusFilter />
+
     </div>
 
   )

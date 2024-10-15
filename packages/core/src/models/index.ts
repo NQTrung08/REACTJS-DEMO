@@ -1,2 +1,2 @@
-export * from "./staff-model"
 export * from "./search-model"
+export * from "./staff-model"

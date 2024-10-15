@@ -15,7 +15,7 @@ const App = observer(() => {
     initCoreStores();
   }, [])
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full relative flex-1">
       <Suspense fallback={<div>Loading... </div>}>
         <ConfigProvider locale={viVN}>
           <RouteApp />

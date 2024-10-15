@@ -29,7 +29,11 @@ const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void })
   }
 
   const onChange = (checked: boolean) => {
-    console.log(`switch to ${checked}`);
+    if (checked) {
+      updateStaff(staff.id, { ...staff, status: 'active' });
+    } else {
+      updateStaff(staff.id, { ...staff, status: 'inactive' });
+    }
   };
 
 
@@ -91,7 +95,10 @@ const ItemStaff = ({ staff, onEdit }: { staff: StaffModel, onEdit: () => void })
       <div className="flex justify-end items-center min-w-[196px] w-[15%]">
         <div className='flex items-center gap-12'>
           <div className='flex items-center justify-center w-[20px] h-[12px]'>
-            <Switch onChange={onChange} size="small"/>
+
+            <Switch onChange={onChange} size="small"
+              checked={staff.status === 'active'} />
+
           </div>
           <button className="flex items-center justify-center w-[40px] h-[40px]"
             onClick={handleDeleteStaff}>
