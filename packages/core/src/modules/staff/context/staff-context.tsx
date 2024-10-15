@@ -1,11 +1,17 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { StaffModel } from '../../../models/staff-model';
 import { staffsData } from './data-staff';
 
+
+class FilterStaff {
+  keyword: string = '';
+  status: 'active' | 'inactive' = 'active';
+  sort: 'asc' | 'desc' = 'asc';
+}
 interface StaffContextType {
   staffs: StaffModel[];
-  selectedStaff: StaffModel | null;
-  setSelectedStaff: (staff: StaffModel | null) => void;
+  itemUpdate: StaffModel | null;
+  setItemUpdate: (staff: StaffModel | null) => void;
   addStaff: (staff: StaffModel) => void;
   updateStaff: (id: number, staff: StaffModel) => void;
   deleteStaff: (id: number) => void;
@@ -13,30 +19,60 @@ interface StaffContextType {
   filterStaff: (filterValue: string) => StaffModel[];
   onCreateOrUpdate: (value: boolean) => void;
   isCreateOrUpdate: boolean;
+  filter: FilterStaff,
+  dataView: StaffModel[],
+  setDataView: React.Dispatch<React.SetStateAction<StaffModel[]>>
+  setFilter: React.Dispatch<React.SetStateAction<FilterStaff>>
 }
 
 const StaffContext = createContext<StaffContextType>({
   staffs: [],
-  selectedStaff: null,
-  setSelectedStaff: () => {},
-  addStaff: () => {},
-  updateStaff: () => {},
-  deleteStaff: () => {},
-  onCreateOrUpdate: () => {},
+  itemUpdate: null,
+  setItemUpdate: () => { },
+  addStaff: () => { },
+  updateStaff: () => { },
+  deleteStaff: () => { },
+  onCreateOrUpdate: () => { },
   isCreateOrUpdate: false,
   searchStaff: () => [],
   filterStaff: () => [],
+  filter: new FilterStaff(),
+  dataView: [],
+  setDataView: () => { },
+  setFilter: () => { }
 });
 
 interface IProps {
   children: ReactNode;
 }
 
+
 const ListStaffProvider = ({ children }: IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
   const [staffs, setStaffs] = useState<StaffModel[]>(staffsData);
   // todo: item update
-  const [selectedStaff, setSelectedStaff] = useState<StaffModel | null>(null);
+  const [itemUpdate, setItemUpdate] = useState<StaffModel | null>(null);
+  const [filter, setFilter] = useState<FilterStaff>(new FilterStaff());
+  const [dataView, setDataView] = useState<StaffModel[]>([]);
+
+  useEffect(() => {
+    let dataTemp: StaffModel[] = [];
+
+    dataTemp = staffs.filter((staff) => staff.status === filter.status);
+    if (filter.keyword) {
+      dataTemp = dataTemp.filter((staff) =>
+        staff.fullName.toLowerCase().includes(filter.keyword.toLowerCase())
+      );
+    }
+    if (filter.sort === 'asc') {
+      dataTemp = dataTemp.sort((a, b) => a.fullName.localeCompare(b.fullName));
+    } else if (filter.sort === 'desc') {
+      dataTemp = dataTemp.sort((a, b) => b.fullName.localeCompare(a.fullName));
+
+    }
+    
+    setDataView(dataTemp);
+  }, [filter.keyword, filter.status, filter.sort, staffs]);
 
   const addStaff = (staff: StaffModel) => {
     setStaffs((prevStaffs) => [...prevStaffs, staff]);
@@ -71,8 +107,8 @@ const ListStaffProvider = ({ children }: IProps) => {
   return (
     <StaffContext.Provider value={{
       staffs,
-      selectedStaff,
-      setSelectedStaff,
+      itemUpdate,
+      setItemUpdate,
       addStaff,
       updateStaff,
       deleteStaff,
@@ -80,6 +116,10 @@ const ListStaffProvider = ({ children }: IProps) => {
       filterStaff,
       isCreateOrUpdate,
       onCreateOrUpdate,
+      filter,
+      dataView,
+      setDataView,
+      setFilter
     }}>
       {children}
     </StaffContext.Provider>

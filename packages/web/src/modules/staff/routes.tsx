@@ -2,7 +2,9 @@ import { observer } from 'mobx-react';
 import {
     Route, Routes
 } from "react-router-dom";
-import StaffScreen from './screens/staff';
+import {
+    StaffScreen
+} from './screens/staff';
 
 export const StaffRoutes = observer(() => {
 

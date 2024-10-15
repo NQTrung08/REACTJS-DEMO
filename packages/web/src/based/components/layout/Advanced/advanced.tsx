@@ -6,12 +6,19 @@ import Search from '../../common/Search';
 import { mdiFilterMultipleOutline } from '@mdi/js';
 import Icon from '@mdi/react';
 
-const Advanced = ({
-  setfilteredViewStaff
+export const Advanced = ({
 }: any) => {
   const {
-    staffs
+    staffs,
+    filter,
+    setFilter,
+    dataView,
+    setDataView,
+    filterStaff,
   } = useStaffContext();
+
+  console.log('dataView', dataView)
+
   
   return (
     <div>
@@ -20,7 +27,7 @@ const Advanced = ({
           data={staffs}
           placeholder='Tìm kiếm nhân viên...'
           searchField='fullName'
-          onResults={(results) => setfilteredViewStaff(results)}
+          onResults={(results) => setDataView(results)}
         />
         {/* Filter */}
         <Filter />
@@ -42,5 +49,3 @@ const Advanced = ({
 
   )
 }
-
-export default Advanced

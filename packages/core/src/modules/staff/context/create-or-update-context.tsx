@@ -4,15 +4,7 @@ import { useStaffContext } from './staff-context';
 
 interface CreateOrUpdateContextType {
   // 
-  formData: {
-    fullName: string;
-    email: string;
-    phone: string;
-    username: string;
-    password: string;
-    confirmPassword: string;
-    status: string;
-  };
+  formData: StaffModel & { confirmPassword: string };
   setFormData: React.Dispatch<React.SetStateAction<any>>;
   resetFormData: () => void;
   validateForm: () => { isValid: boolean; error?: string };
@@ -23,12 +15,17 @@ interface CreateOrUpdateContextType {
 
 const CreateOrUpdateContext = createContext<CreateOrUpdateContextType>({
   formData: {
+    id: 0,
     fullName: '',
-    email: '',
-    phone: '',
+    middleName: '',
     username: '',
     password: '',
     confirmPassword: '',
+    phone: '',
+    email: '',
+    role: 'staff',
+    manager: '',
+    avatar: '',
     status: 'active',
   },
   setFormData: () => {},
@@ -44,48 +41,54 @@ interface IProps {
 }
 
 const CreateOrUpdateProvider = ({ children }: IProps) => {
-  const { selectedStaff, addStaff, updateStaff } = useStaffContext();
+  const { itemUpdate, addStaff, updateStaff } = useStaffContext();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<StaffModel & { confirmPassword: string }>({
+    id: 0,
     fullName: '',
-    email: '',
-    phone: '',
+    middleName: '',
     username: '',
     password: '',
     confirmPassword: '',
+    phone: '',
+    email: '',
+    role: 'staff',
+    manager: '',
+    avatar: '',
     status: 'active',
   });
 
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    // Khi selectedStaff thay đổi, cập nhật formData nếu có selectedStaff
-    if (selectedStaff) {
+    if (itemUpdate) {
       setFormData({
-        fullName: selectedStaff.fullName,
-        email: selectedStaff.email,
-        phone: selectedStaff.phone,
-        username: selectedStaff.username,
+        ...itemUpdate,
         password: '', // Không hiển thị mật khẩu
-        confirmPassword: '',
-        status: selectedStaff.status,
+        confirmPassword: '', // Chỉ sử dụng khi xác nhận mật khẩu
       });
     } else {
       resetFormData();
     }
-  }, [selectedStaff]);
+  }, [itemUpdate]);
 
   const resetFormData = () => {
     setFormData({
+      id: 0,
       fullName: '',
-      email: '',
-      phone: '',
+      middleName: '',
       username: '',
       password: '',
       confirmPassword: '',
+      phone: '',
+      email: '',
+      role: 'staff', // Default role
+      manager: '',
+      avatar: '',
       status: 'active',
     });
   };
+
 
   const validateForm = () => {
     let isValid = true;
@@ -96,7 +99,7 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       isValid = false;
     }
 
-    if (!selectedStaff && !formData.password) {
+    if (!itemUpdate && !formData.password) {
       error = 'Password is required for new staff.';
       isValid = false;
     }
@@ -112,7 +115,7 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       isValid = false;
     }
 
-    const phoneRegex = /^\d{10}$/; // Assuming phone numbers are 10 digits
+    const phoneRegex = /^\d{10}$/;
     if (!phoneRegex.test(formData.phone)) {
       error = 'Please enter a valid phone number.';
       isValid = false;
@@ -121,7 +124,7 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
     if (error) {
       setErrorMessage(error);
     } else {
-      setErrorMessage(''); // Clear error message if valid
+      setErrorMessage('');
     }
 
     return { isValid, error };
@@ -130,32 +133,23 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
   const handleSubmit = () => {
     const { isValid, error } = validateForm();
     if (!isValid) {
-      console.error(error); // Handle error, e.g., show a toast notification
+      console.error(error);
       return false;
     }
 
     const newStaff: StaffModel = {
-      id: selectedStaff ? selectedStaff.id : Date.now(), // Generate new ID if adding
-      fullName: formData.fullName,
-      phone: formData.phone,
-      email: formData.email,
-      username: formData.username,
-      password: selectedStaff ? selectedStaff.password : formData.password, // Keep existing password when editing
-      status: formData.status,
-      middleName: '', // Add default value for unused fields
-      role: 'staff',
-      manager: '',
-      avatar: '',
+      ...formData,
+      password: itemUpdate ? itemUpdate.password : formData.password, // Keep existing password when editing
     };
 
-    if (selectedStaff) {
+    if (itemUpdate) {
       updateStaff(newStaff.id, newStaff); // Update staff
     } else {
       addStaff(newStaff); // Add new staff
     }
 
-    resetFormData(); // Clear form after submission
-    return true; // Return true to indicate successful submission
+    resetFormData(); 
+    return true; 
   };
 
 

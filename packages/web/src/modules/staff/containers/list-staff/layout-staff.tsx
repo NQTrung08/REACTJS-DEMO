@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
 
 
 import { StaffModel } from "core-model";
 import { CreateOrUpdateProvider, useStaffContext } from 'core-modules';
 import Toolbar from 'src/based/components/common/Toolbar';
-import Advanced from 'src/based/components/layout/Advanced/advanced';
+import {
+  Advanced
+} from 'src/based/components/layout/Advanced/advanced';
 import HeaderListStaff from '../../components/list-staff/header';
 import {
   CreateOrUpdateStaffContainer
@@ -12,31 +13,38 @@ import {
 import ListStaff from './list-staff';
 const LayoutStaff = () => {
 
-  const [filteredViewStaff, setfilteredViewStaff] = useState<StaffModel[]>([]);
+  // const [filteredViewStaff, setfilteredViewStaff] = useState<StaffModel[]>([]);
   const { staffs,
     addStaff,
     updateStaff,
     isCreateOrUpdate,
     onCreateOrUpdate,
-    selectedStaff,
-    setSelectedStaff
+    itemUpdate,
+    setItemUpdate,
+    filter,
+    dataView,
+    setDataView,
+    setFilter,
+    filterStaff,
+    searchStaff,
+    deleteStaff
 
   } = useStaffContext();
 
 
-  useEffect(() => {
-    setfilteredViewStaff(staffs);
-  }, [staffs]);
+  // useEffect(() => {
+  //   setfilteredViewStaff(staffs);
+  // }, [staffs]);
 
   const handleCancelAdd = () => {
     onCreateOrUpdate(false);
-    setSelectedStaff(null);
+    setItemUpdate(null);
   }
 
   const handleCreateOrUpdateStaff = (staff: StaffModel) => {
-    if (selectedStaff) {
-      updateStaff(selectedStaff.id, staff);
-      setSelectedStaff(null);
+    if (itemUpdate) {
+      updateStaff(itemUpdate.id, staff);
+      setItemUpdate(null);
 
     } else {
       addStaff(staff);
@@ -46,7 +54,7 @@ const LayoutStaff = () => {
   };
 
   const handleEditStaff = (staff: StaffModel) => {
-    setSelectedStaff(staff);
+    setItemUpdate(staff);
     onCreateOrUpdate(true);
   };
 
@@ -54,14 +62,14 @@ const LayoutStaff = () => {
     <div className='w-full h-full py-1'>
 
       {/*TODO: Header */}
-      <HeaderListStaff initialData={selectedStaff} />
+      <HeaderListStaff initialData={itemUpdate} />
       {/* header end */}
 
       <CreateOrUpdateProvider>
         {isCreateOrUpdate && (
           <CreateOrUpdateStaffContainer onCancel={handleCancelAdd}
             onSubmit={handleCreateOrUpdateStaff}
-            initialData={selectedStaff}
+            initialData={itemUpdate}
           />
         )}
 
@@ -69,13 +77,13 @@ const LayoutStaff = () => {
 
 
       {/* TODO: advanced */}
-      <Advanced setfilteredViewStaff={setfilteredViewStaff} />
+      <Advanced />
       {/* TODO: toolbar */}
-      <Toolbar quantity={filteredViewStaff.length} title='Tài khoản nhân viên' />
+      <Toolbar quantity={dataView.length} title='tài khoản nhân viên' />
 
       {/* List Staff */}
       <ListStaff
-        filteredViewStaff={filteredViewStaff}
+        filteredViewStaff={dataView}
         isCreateOrUpdate={isCreateOrUpdate}
         onEdit={handleEditStaff}
       />

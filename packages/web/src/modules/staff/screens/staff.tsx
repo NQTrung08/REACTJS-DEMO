@@ -1,7 +1,7 @@
-import { ListStaffProvider } from '../../../../../core/src/modules/staff';
+import { ListStaffProvider } from 'core-modules';
 import LayoutStaff from '../containers/list-staff/layout-staff';
 
-const StaffScreen = () => {
+export const StaffScreen = () => {
   return (
     <ListStaffProvider>
         <LayoutStaff />
@@ -11,4 +11,3 @@ const StaffScreen = () => {
 
 }
 
-export default StaffScreen
