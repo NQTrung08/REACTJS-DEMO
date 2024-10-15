@@ -49,7 +49,7 @@ const LayoutStaff = () => {
   };
 
   return (
-    <div className='w-full h-full py-1'>
+    <div className='w-full h-full py-1 overflow-y-auto relative'>
 
       {/*TODO: Header */}
       <HeaderListStaff initialData={itemUpdate} />
@@ -65,7 +65,8 @@ const LayoutStaff = () => {
       </CreateOrUpdateProvider>
 
 
-      {/* TODO: advanced */}
+      <div className="flex flex-col w-full h-full">
+        {/* TODO: advanced */}
       <Advanced />
       {/* TODO: toolbar */}
       <Toolbar quantity={dataView.length} title='tài khoản nhân viên' />
@@ -76,6 +77,7 @@ const LayoutStaff = () => {
         isCreateOrUpdate={isCreateOrUpdate}
         onEdit={handleEditStaff}
       />
+      </div>
     </div>
   )
 }

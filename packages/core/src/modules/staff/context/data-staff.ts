@@ -124,6 +124,90 @@ export const staffsData: StaffModel[] = [
     manager: 'SM Nghĩa Trần',
     avatar: '',
     status: 'active'
+  },{
+    id: 11,
+    fullName: 'Đặng Thị Chinh',
+    middleName: 'chinh dt',
+    phone: '0123456789',
+    username: 'chinhdt',
+    password: '123456',
+    email: 'chinhdt',
+    role: 'Nhân viên Sale',
+    manager: 'SM Nghĩa Trần',
+    avatar: '',
+    status: 'active'
+  }, {
+    id: 12,
+    fullName: 'Đặng Thị Chinh',
+    middleName: 'chinh dt',
+    phone: '0123456789',
+    username: 'chinhdt',
+    password: '123456',
+    email: 'chinhdt',
+    role: 'Nhân viên Sale',
+    manager: 'SM Nghĩa Trần',
+    avatar: '',
+    status: 'active'
+  }, {
+    id: 13,
+    fullName: 'Đặng Thị Chinh',
+    middleName: 'chinh dt',
+    phone: '0123456789',
+    username: 'chinhdt',
+    password: '123456',
+    email: 'chinhdt',
+    role: 'Nhân viên Sale',
+    manager: 'SM Nghĩa Trần',
+    avatar: '',
+    status: 'active'
+  }, {
+    id: 14,
+    fullName: 'Đặng Thị Chinh',
+    middleName: 'chinh dt',
+    phone: '0123456789',
+    username: 'chinhdt',
+    password: '123456',
+    email: 'chinhdt',
+    role: 'Nhân viên Sale',
+    manager: 'SM Nghĩa Trần',
+    avatar: '',
+    status: 'active'
+  }, {
+    id: 15,
+    fullName: 'Đặng Thị Chinh',
+    middleName: 'chinh dt',
+    phone: '0123456789',
+    username: 'chinhdt',
+    password: '123456',
+    email: 'chinhdt',
+    role: 'Nhân viên Sale',
+    manager: 'SM Nghĩa Trần',
+    avatar: '',
+    status: 'active'
+  }, {
+    id: 16,
+    fullName: 'Đặng Thị Chinh',
+    middleName: 'chinh dt',
+    phone: '0123456789',
+    username: 'chinhdt',
+    password: '123456',
+    email: 'chinhdt',
+    role: 'Nhân viên Sale',
+    manager: 'SM Nghĩa Trần',
+    avatar: '',
+    status: 'active'
+  }, {
+    id: 17,
+    fullName: 'Đặng Thị Chinh',
+    middleName: 'chinh dt',
+    phone: '0123456789',
+    username: 'chinhdt',
+    password: '123456',
+    email: 'chinhdt',
+    role: 'Nhân viên Sale',
+    manager: 'SM Nghĩa Trần',
+    avatar: '',
+    status: 'active'
   }
 
 ]

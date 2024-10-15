@@ -9,7 +9,7 @@ interface ListStaffProps {
 
 const ListStaff = ({ filteredViewStaff, isCreateOrUpdate, onEdit }: ListStaffProps) => {
   return (
-    <div className='overflow-y-auto'>
+    <div className='overflow-y-auto h-full pb-28'>
       {filteredViewStaff.length > 0 ? (
         filteredViewStaff.map((staff) => (
           <ItemStaff key={staff.id} staff={staff} onEdit={() => onEdit(staff)} />

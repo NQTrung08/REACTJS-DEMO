@@ -30,9 +30,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
   useEffect(() => {
     if (initialData) {
       setFormData({
-        ...initialData,
-        status: initialData.status,
-        
+        ...initialData,        
       });
     } else {
       resetFormData();
@@ -42,6 +40,7 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
   
   useEffect(() => {
     const isFormChanged =
+      formData.avatar !== (initialData?.avatar || '') ||
       formData.fullName !== (initialData?.fullName || '') ||
       formData.email !== (initialData?.email || '') ||
       formData.phone !== (initialData?.phone || '') ||
@@ -58,7 +57,21 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
       onCancel(); // Close form if submission is successful
     }
   };
-  
+
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prevData : any) => ({
+          ...prevData,
+          avatar: reader.result as string, // Lưu trữ URL ảnh vào formData
+        }));
+      };
+      reader.readAsDataURL(file); // Đọc file dưới dạng URL
+    }
+  };
 
   return (
     <div className="p-4">
@@ -72,12 +85,16 @@ const CreateOrUpdateStaffContainer = ({ initialData, onCancel, onSubmit }: FormS
                   id="avatar"
                   name="avatar"
                   className="opacity-0 cursor-pointer absolute"
+                  onChange={handleFileChange}
                 />
+                {formData.avatar ? (
+                <img src={formData.avatar} alt="Avatar" className="w-full h-full rounded-full object-cover" />
+              ) : (
                 <div className='flex flex-col items-center'>
                   <Icon path={mdiTrayArrowUp} size={1} className="text-gray-500" />
                   <span className="text-center text-xs text-blue-600">Chọn ảnh</span>
-
                 </div>
+              )}
               </div>
             </div>
 

@@ -10,6 +10,8 @@ import {
 
 
 
+
+
   mdiCreditCardOutline,
   mdiFormatListBulleted,
   mdiInvoiceTextMultipleOutline,
@@ -38,7 +40,7 @@ const MainNavigation = () => {
 
   return (
     <div className='bg-[#EEF3FE] py-4 flex flex-col text-xs font-medium px-2'>
-      <div className='flex-1'>
+      <div className='flex flex-col items-center flex-1'>
         {navigationItems.map((item, index) => (
           <div key={index} className='flex flex-col items-center mb-4'>
             <Icon path={item.icon} size={1} />

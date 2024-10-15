@@ -1,13 +1,11 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import {
+  FilterStaff
+} from '../../../models/filter-staff';
 import { StaffModel } from '../../../models/staff-model';
 import { staffsData } from './data-staff';
 
 
-class FilterStaff {
-  keyword: string = '';
-  status: 'active' | 'inactive' = 'active';
-  sort: 'asc' | 'desc' = 'asc';
-}
 interface StaffContextType {
   staffs: StaffModel[];
   itemUpdate: StaffModel | null;
