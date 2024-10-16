@@ -17,14 +17,14 @@ interface CreateOrUpdateContextType {
 
 const CreateOrUpdateContext = createContext<CreateOrUpdateContextType>({
   formData: new StaffModel(),
-  setFormData: () => {},
+  setFormData: () => { },
   resetFormData: () => { },
   handleSubmit: () => false,
   errorMessage: '',
   setErrorMessage: () => { },
   validateForm: () => ({ isValid: true }),
   isSubmitDisabled: true,
-  handleCancel: () => { }
+  handleCancel: () => { },
 });
 
 interface IProps {
@@ -148,9 +148,12 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       addStaff(newStaff); // Add new staff
     }
 
-    resetFormData(); 
-    return true; 
+    resetFormData();
+    return true;
   };
+
+
+  
 
 
 
@@ -164,7 +167,8 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       errorMessage,
       setErrorMessage,
       isSubmitDisabled,
-      handleCancel
+      handleCancel,
+
     }}>
       {children}
     </CreateOrUpdateContext.Provider>

@@ -34,18 +34,25 @@ const CreateOrUpdateStaffContainer = () => {
     }
   };
 
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // Lấy file đầu tiên từ input
+    const file = event.target.files?.[0];
     if (file) {
-      // Lưu trữ file vào formData
-      setFormData((prevData: any) => ({
-        ...prevData,
-        avatar: file, // Lưu trữ file, không phải URL
-      }));
+      const reader = new FileReader();
+      reader.onload = () => {
+        // Lưu trữ file vào formData
+        if (reader.result) {
+          setFormData((prevData: any) => ({
+            ...prevData,
+            avatar: reader.result as string, // Chuyển đổi result thành string
+          }));
+        }
+      };
+      reader.readAsDataURL(file); // Đọc file dưới dạng URL
     }
+    console.log(file);
   };
   
+
 
   return (
     <div className={classNames("p-4", {
