@@ -1,23 +1,21 @@
+import { observer } from 'mobx-react-lite';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { StaffModel } from '../../../models/staff-model';
 import { useStaffContext } from './staff-context';
 
 interface CreateOrUpdateContextType {
-  // 
   formData: StaffModel;
-  setFormData: React.Dispatch<React.SetStateAction<any>>;
   resetFormData: () => void;
   validateForm: () => { isValid: boolean; error?: string };
   handleSubmit: () => boolean;
   errorMessage: string;
-  setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+  setErrorMessage: (message: string) => void;
   isSubmitDisabled: boolean;
   handleCancel: () => void;
 }
 
 const CreateOrUpdateContext = createContext<CreateOrUpdateContextType>({
   formData: new StaffModel(),
-  setFormData: () => { },
   resetFormData: () => { },
   handleSubmit: () => false,
   errorMessage: '',
@@ -31,64 +29,52 @@ interface IProps {
   children: ReactNode;
 }
 
-const CreateOrUpdateProvider = ({ children }: IProps) => {
+const CreateOrUpdateProvider = observer(({ children }: IProps) => {
   const { itemUpdate, addStaff, updateStaff, onCreateOrUpdate, setItemUpdate } = useStaffContext();
-
-  const [formData, setFormData] = useState<StaffModel & { confirmPassword: string }>(new StaffModel());
+  const formData = new StaffModel(); // Khởi tạo đối tượng StaffModel
 
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (itemUpdate) {
-      setFormData({
-        ...itemUpdate,
-        password: '', // Không hiển thị mật khẩu
-        confirmPassword: '', // Chỉ sử dụng khi xác nhận mật khẩu
-      });
+      // Nếu có itemUpdate, cập nhật formData từ itemUpdate
+      formData.setAll(itemUpdate);
     } else {
       resetFormData();
     }
-  }, [itemUpdate]);
+  }, [itemUpdate, formData]);
 
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  // vứt vào context
+
   const handleCancel = () => {
     onCreateOrUpdate(false);
     setItemUpdate(null);
     resetFormData();
-  }
-
-  // vứt hết vào context
-  useEffect(() => {
-    const isFormChanged =
-      formData.avatar !== (itemUpdate?.avatar || '') ||
-      formData.fullName !== (itemUpdate?.fullName || '') ||
-      formData.email !== (itemUpdate?.email || '') ||
-      formData.phone !== (itemUpdate?.phone || '') ||
-      formData.username !== (itemUpdate?.username || '') ||
-      formData.status !== (itemUpdate?.status || 'active') ||
-      (!itemUpdate && (formData.password || formData.confirmPassword)); // Trong trường hợp thêm mới
-
-    setIsSubmitDisabled(!isFormChanged);
-  }, [formData, itemUpdate]);
-
-  const resetFormData = () => {
-    setFormData({
-      id: 0,
-      fullName: '',
-      middleName: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
-      phone: '',
-      email: '',
-      role: 'staff', // Default role
-      manager: '',
-      avatar: '',
-      status: 'active',
-    });
   };
 
+  useEffect(() => {
+    const isFormChanged =
+      formData.fullName ||
+      formData.email ||
+      formData.phone ||
+      formData.username ||
+      formData.status !== 'active';
+
+    setIsSubmitDisabled(!isFormChanged);
+  }, [formData]);
+
+  const resetFormData = () => {
+    formData.setFullName('');
+    formData.setMiddleName('');
+    formData.setUsername('');
+    formData.setPassword('');
+    formData.setConfirmPassword('');
+    formData.setPhone('');
+    formData.setEmail('');
+    formData.setManager('');
+    formData.setAvatar('');
+    formData.setStatus('active');
+  };
 
   const validateForm = () => {
     let isValid = true;
@@ -137,30 +123,34 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       return false;
     }
 
-    const newStaff: StaffModel = {
-      ...formData,
-      password: itemUpdate ? itemUpdate.password : formData.password, // Keep existing password when editing
-    };
+    const newStaff = new StaffModel({
+      id: itemUpdate ? itemUpdate.id : 0,
+      fullName: formData.fullName,
+      middleName: formData.middleName,
+      username: formData.username,
+      password: itemUpdate ? itemUpdate.password : formData.password,
+      phone: formData.phone,
+      email: formData.email,
+      role: formData.role,
+      manager: formData.manager,
+      avatar: formData.avatar,
+      status: formData.status,
+      confirmPassword: formData.confirmPassword,
+    });
 
     if (itemUpdate) {
-      updateStaff(newStaff.id, newStaff); // Update staff
+      updateStaff(newStaff.id, newStaff);
     } else {
-      addStaff(newStaff); // Add new staff
+      addStaff(newStaff);
     }
 
     resetFormData();
     return true;
   };
 
-
-  
-
-
-
   return (
     <CreateOrUpdateContext.Provider value={{
       formData,
-      setFormData,
       resetFormData,
       validateForm,
       handleSubmit,
@@ -168,12 +158,11 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       setErrorMessage,
       isSubmitDisabled,
       handleCancel,
-
     }}>
       {children}
     </CreateOrUpdateContext.Provider>
   );
-};
+});
 
 const useCreateOrUpdateContext = () => {
   return useContext(CreateOrUpdateContext);

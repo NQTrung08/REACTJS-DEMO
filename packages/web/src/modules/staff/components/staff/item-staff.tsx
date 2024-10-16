@@ -9,12 +9,13 @@ import Icon from '@mdi/react';
 import { Switch } from 'antd';
 import React from 'react';
 
-import { IStaff } from 'core-model';
+import { IStaff, StaffModel } from 'core-model';
 
 import { useStaffContext } from 'core/src/modules/staff';
+import { observer } from 'mobx-react';
 
 
-export const ItemStaff = ({ staff}: { staff: IStaff}) => {
+export const ItemStaff = observer(({ staff}: { staff: StaffModel}) => {
   const { staffs,
     updateStaff,
     deleteStaff,
@@ -31,7 +32,9 @@ export const ItemStaff = ({ staff}: { staff: IStaff}) => {
   }
 
   const onChange = (checked: boolean) => {
-    updateStaff(staff.id, { ...staff, status: checked ? 'active' : 'inactive' });
+    // Cập nhật trạng thái của nhân viên bằng phương thức setStatus
+    staff.setStatus(checked ? 'active' : 'inactive');
+    // Cập nhật danh sách nhân viên thông qua context
   };
 
   const handleEditStaff = (staff: IStaff) => {
@@ -57,7 +60,7 @@ export const ItemStaff = ({ staff}: { staff: IStaff}) => {
         {/* Avatar */}
         <div className="flex items-center">
           <img
-            src={staff?.avatar ? URL.createObjectURL(staff.avatar) : 'https://via.placeholder.com/50'}
+            src={staff?.avatar || 'https://via.placeholder.com/50'}
             alt={`${staff.fullName} avatar`}
             className="rounded-full w-8 h-8 mr-4"
           />
@@ -123,4 +126,4 @@ export const ItemStaff = ({ staff}: { staff: IStaff}) => {
       </div>
     </div>
   );
-};
+});

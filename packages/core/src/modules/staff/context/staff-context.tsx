@@ -2,22 +2,22 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 import {
   FilterStaff
 } from '../../../models/filter-staff';
-import { IStaff } from '../../../models/staff-model';
+import { StaffModel } from '../../../models/staff-model';
 import { staffsData } from './data-staff';
 
 
 interface StaffContextType {
-  staffs: IStaff[];
-  itemUpdate: IStaff | null;
-  setItemUpdate: (staff: IStaff | null) => void;
-  addStaff: (staff: IStaff) => void;
-  updateStaff: (id: number, staff: IStaff) => void;
+  staffs: StaffModel[];
+  itemUpdate: StaffModel | null;
+  setItemUpdate: (staff: StaffModel | null) => void;
+  addStaff: (staff: StaffModel) => void;
+  updateStaff: (id: number, staff: StaffModel) => void;
   deleteStaff: (id: number) => void
   onCreateOrUpdate: (value: boolean) => void;
   isCreateOrUpdate: boolean;
   filter: FilterStaff,
-  dataView: IStaff[],
-  setDataView: React.Dispatch<React.SetStateAction<IStaff[]>>
+  dataView: StaffModel[],
+  setDataView: React.Dispatch<React.SetStateAction<StaffModel[]>>
   setFilter: React.Dispatch<React.SetStateAction<FilterStaff>>
 
   currentPage: number; 
@@ -25,7 +25,7 @@ interface StaffContextType {
   totalPages: number; 
   handleNextPage: () => void; 
   handlePreviousPage: () => void; 
-  currentStaffs: IStaff[];
+  currentStaffs: StaffModel[];
 }
 
 const StaffContext = createContext<StaffContextType>({
@@ -56,17 +56,17 @@ interface IProps {
 
 const ListStaffProvider = ({ children }: IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
-  const [staffs, setStaffs] = useState<IStaff[]>(staffsData);
+  const [staffs, setStaffs] = useState<StaffModel[]>(staffsData);
   // todo: item update
-  const [itemUpdate, setItemUpdate] = useState<IStaff | null>(null);
+  const [itemUpdate, setItemUpdate] = useState<StaffModel | null>(null);
   const [filter, setFilter] = useState<FilterStaff>(new FilterStaff());
-  const [dataView, setDataView] = useState<IStaff[]>([]);
+  const [dataView, setDataView] = useState<StaffModel[]>([]);
 
   const [currentPage, setCurrentPage] = useState(0);
   const perPage = 10; 
 
   useEffect(() => {
-    let dataTemp: IStaff[] = [];
+    let dataTemp: StaffModel[] = [];
 
     dataTemp = staffs.filter((staff) => staff.status === filter.status);
     if (filter.keyword) {
@@ -95,11 +95,11 @@ const ListStaffProvider = ({ children }: IProps) => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
   
-  const addStaff = (staff: IStaff) => {
+  const addStaff = (staff: StaffModel) => {
     setStaffs((prevStaffs) => [...prevStaffs, staff]);
   };
 
-  const updateStaff = (id: number, updatedStaff: IStaff) => {
+  const updateStaff = (id: number, updatedStaff: StaffModel) => {
     setStaffs((prevStaffs) =>
       prevStaffs.map((staff) => (staff.id === id ? updatedStaff : staff))
     );
