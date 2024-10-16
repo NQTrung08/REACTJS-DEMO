@@ -1,3 +1,4 @@
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { StaffModel } from '../../../models/staff-model';
@@ -31,14 +32,16 @@ interface IProps {
 
 const CreateOrUpdateProvider = observer(({ children }: IProps) => {
   const { itemUpdate, addStaff, updateStaff, onCreateOrUpdate, setItemUpdate } = useStaffContext();
-  const formData = new StaffModel(); // Khởi tạo đối tượng StaffModel
+  const [formData, setFormData] = useState<StaffModel>(new StaffModel());
 
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (itemUpdate) {
       // Nếu có itemUpdate, cập nhật formData từ itemUpdate
-      formData.setAll(itemUpdate);
+      runInAction(() => {
+        formData.setAll(itemUpdate);
+      });
     } else {
       resetFormData();
     }
@@ -53,27 +56,36 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
   };
 
   useEffect(() => {
-    const isFormChanged =
-      formData.fullName ||
-      formData.email ||
-      formData.phone ||
-      formData.username ||
-      formData.status !== 'active';
+      console.log('formData', formData);
+  
+      const isFormChanged = formData.fullName ||
+        formData.middleName ||
+        formData.username ||
+        formData.password ||
+        formData.confirmPassword ||
+        formData.phone ||
+        formData.email ||
+        formData.manager ||
+        formData.avatar ||
+        formData.status !== 'active';
+  
+      setIsSubmitDisabled(!isFormChanged);
+  }, [formData.fullName, formData.middleName, formData.username, formData.password, formData.confirmPassword, formData.phone, formData.email, formData.manager, formData.avatar, formData.status]);
 
-    setIsSubmitDisabled(!isFormChanged);
-  }, [formData]);
 
   const resetFormData = () => {
-    formData.setFullName('');
-    formData.setMiddleName('');
-    formData.setUsername('');
-    formData.setPassword('');
-    formData.setConfirmPassword('');
-    formData.setPhone('');
-    formData.setEmail('');
-    formData.setManager('');
-    formData.setAvatar('');
-    formData.setStatus('active');
+    runInAction(() => {
+      formData.setFullName('');
+      formData.setMiddleName('');
+      formData.setUsername('');
+      formData.setPassword('');
+      formData.setConfirmPassword('');
+      formData.setPhone('');
+      formData.setEmail('');
+      formData.setManager('');
+      formData.setAvatar('');
+      formData.setStatus('active');
+    });
   };
 
   const validateForm = () => {
@@ -142,6 +154,7 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
       updateStaff(newStaff.id, newStaff);
     } else {
       addStaff(newStaff);
+
     }
 
     resetFormData();

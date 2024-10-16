@@ -3,7 +3,6 @@ import {
   FilterStaff
 } from '../../../models/filter-staff';
 import { StaffModel } from '../../../models/staff-model';
-import { staffsData } from './data-staff';
 
 
 interface StaffContextType {
@@ -56,7 +55,7 @@ interface IProps {
 
 const ListStaffProvider = ({ children }: IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
-  const [staffs, setStaffs] = useState<StaffModel[]>(staffsData);
+  const [staffs, setStaffs] = useState<StaffModel[]>([]);
   // todo: item update
   const [itemUpdate, setItemUpdate] = useState<StaffModel | null>(null);
   const [filter, setFilter] = useState<FilterStaff>(new FilterStaff());

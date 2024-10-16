@@ -121,5 +121,58 @@ export class StaffModel implements IStaff {
     Object.assign(this, data);
   }
 
+  // Getter để trả về tên đầy đủ bao gồm cả middleName
+  get fullNameWithMiddle() {
+    return `${this.fullName} ${this.middleName}`.trim();
+  }
+
+  
+
+  // Getter để kiểm tra xem nhân viên có vai trò là quản lý không
+  get isManager() {
+    return this.role === 'manager';
+  }
+
+  // Getter để kiểm tra mật khẩu và confirmPassword có trùng nhau không
+  get isPasswordConfirmed() {
+    return this.password === this.confirmPassword;
+  }
+
+  // Getter để trả về thông tin ngắn gọn của nhân viên
+  get shortInfo() {
+    return `${this.fullNameWithMiddle} (${this.username}), ${this.phone}`;
+  }
+
+  // Getter để kiểm tra nhân viên có trạng thái hoạt động không
+  get isActive() {
+    return this.status === 'active';
+  }
+
+  // Getter để kiểm tra email có hợp lệ không
+  get isEmailValid() {
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    return emailRegex.test(this.email);
+  }
+
+  // Getter để kiểm tra số điện thoại có hợp lệ không
+  get isPhoneValid() {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(this.phone);
+  }
+
+  // Getter để trả về thông tin chi tiết của nhân viên
+  get detailedInfo() {
+    return {
+      id: this.id,
+      fullName: this.fullNameWithMiddle,
+      username: this.username,
+      phone: this.phone,
+      email: this.email,
+      role: this.role,
+      status: this.status,
+      manager: this.manager,
+    };
+  }
+
 
 }

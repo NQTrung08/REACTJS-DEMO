@@ -9,7 +9,7 @@ import Icon from '@mdi/react';
 import { Switch } from 'antd';
 import React from 'react';
 
-import { IStaff, StaffModel } from 'core-model';
+import { StaffModel } from 'core-model';
 
 import { useStaffContext } from 'core/src/modules/staff';
 import { observer } from 'mobx-react';
@@ -32,12 +32,12 @@ export const ItemStaff = observer(({ staff}: { staff: StaffModel}) => {
   }
 
   const onChange = (checked: boolean) => {
-    // Cập nhật trạng thái của nhân viên bằng phương thức setStatus
-    staff.setStatus(checked ? 'active' : 'inactive');
-    // Cập nhật danh sách nhân viên thông qua context
+    staff.status = checked ? 'active' : 'inactive';
+    // cập nhật lại context
+    updateStaff(staff.id, staff);
   };
 
-  const handleEditStaff = (staff: IStaff) => {
+  const handleEditStaff = (staff: StaffModel) => {
     setItemUpdate(staff);
     onCreateOrUpdate(true);
     const targetElement = document.querySelector('#create-or-update'); // ID của phần tử bạn muốn cuộn đến

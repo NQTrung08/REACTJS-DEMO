@@ -49,6 +49,8 @@ const CreateOrUpdateStaffContainer = observer(() => {
     console.log(file);
   };
 
+  console.log('isSubmitDisabled', isSubmitDisabled);
+
   return (
     <div className={classNames("p-4", {
       "block": isCreateOrUpdate,
