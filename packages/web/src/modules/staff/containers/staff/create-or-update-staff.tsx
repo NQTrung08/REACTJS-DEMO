@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 
 import { mdiTrayArrowUp } from '@mdi/js';
 import Icon from '@mdi/react';
@@ -22,51 +21,31 @@ const CreateOrUpdateStaffContainer = () => {
     resetFormData,
     validateForm,
     errorMessage,
-    handleSubmit
+    handleSubmit,
+    isSubmitDisabled,
+    handleCancel,
   } = useCreateOrUpdateContext();
 
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  // vứt vào context
-  const handleCancel = () => {
-    onCreateOrUpdate(false);
-    setItemUpdate(null);
-  }
-
-  // vứt hết vào context
-  useEffect(() => {
-    const isFormChanged =
-      formData.avatar !== (itemUpdate?.avatar || '') ||
-      formData.fullName !== (itemUpdate?.fullName || '') ||
-      formData.email !== (itemUpdate?.email || '') ||
-      formData.phone !== (itemUpdate?.phone || '') ||
-      formData.username !== (itemUpdate?.username || '') ||
-      formData.status !== (itemUpdate?.status || 'active') ||
-      (!itemUpdate && (formData.password || formData.confirmPassword)); // Trong trường hợp thêm mới
-
-    setIsSubmitDisabled(!isFormChanged);
-  }, [formData, itemUpdate]);
 
   const handleFormSubmit = () => {
     const isSubmitted = handleSubmit();
     if (isSubmitted) {
-      handleCancel(); // Close form if submission is successful
+      handleCancel(); // đóng form khi xử lý thành công
     }
   };
 
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const file = event.target.files?.[0]; // Lấy file đầu tiên từ input
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData : any) => ({
-          ...prevData,
-          avatar: reader.result as string, // Lưu trữ URL ảnh vào formData
-        }));
-      };
-      reader.readAsDataURL(file); // Đọc file dưới dạng URL
+      // Lưu trữ file vào formData
+      setFormData((prevData: any) => ({
+        ...prevData,
+        avatar: file, // Lưu trữ file, không phải URL
+      }));
     }
   };
+  
 
   return (
     <div className={classNames("p-4", {
@@ -86,7 +65,7 @@ const CreateOrUpdateStaffContainer = () => {
                   onChange={handleFileChange}
                 />
                 {formData.avatar ? (
-                <img src={formData.avatar} alt="Avatar" className="w-full h-full rounded-full object-cover" />
+                <img src={URL.createObjectURL(formData.avatar)} alt="Avatar" className="w-full h-full rounded-full object-cover" />
               ) : (
                 <div className='flex flex-col items-center'>
                   <Icon path={mdiTrayArrowUp} size={1} className="text-gray-500" />

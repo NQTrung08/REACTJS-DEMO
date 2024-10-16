@@ -11,6 +11,8 @@ interface CreateOrUpdateContextType {
   handleSubmit: () => boolean;
   errorMessage: string;
   setErrorMessage: React.Dispatch<React.SetStateAction<string>>;
+  isSubmitDisabled: boolean;
+  handleCancel: () => void;
 }
 
 const CreateOrUpdateContext = createContext<CreateOrUpdateContextType>({
@@ -21,6 +23,8 @@ const CreateOrUpdateContext = createContext<CreateOrUpdateContextType>({
   errorMessage: '',
   setErrorMessage: () => { },
   validateForm: () => ({ isValid: true }),
+  isSubmitDisabled: true,
+  handleCancel: () => { }
 });
 
 interface IProps {
@@ -28,7 +32,7 @@ interface IProps {
 }
 
 const CreateOrUpdateProvider = ({ children }: IProps) => {
-  const { itemUpdate, addStaff, updateStaff } = useStaffContext();
+  const { itemUpdate, addStaff, updateStaff, onCreateOrUpdate, setItemUpdate } = useStaffContext();
 
   const [formData, setFormData] = useState<StaffModel & { confirmPassword: string }>(new StaffModel());
 
@@ -45,6 +49,28 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       resetFormData();
     }
   }, [itemUpdate]);
+
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  // vứt vào context
+  const handleCancel = () => {
+    onCreateOrUpdate(false);
+    setItemUpdate(null);
+    resetFormData();
+  }
+
+  // vứt hết vào context
+  useEffect(() => {
+    const isFormChanged =
+      formData.avatar !== (itemUpdate?.avatar || '') ||
+      formData.fullName !== (itemUpdate?.fullName || '') ||
+      formData.email !== (itemUpdate?.email || '') ||
+      formData.phone !== (itemUpdate?.phone || '') ||
+      formData.username !== (itemUpdate?.username || '') ||
+      formData.status !== (itemUpdate?.status || 'active') ||
+      (!itemUpdate && (formData.password || formData.confirmPassword)); // Trong trường hợp thêm mới
+
+    setIsSubmitDisabled(!isFormChanged);
+  }, [formData, itemUpdate]);
 
   const resetFormData = () => {
     setFormData({
@@ -136,7 +162,9 @@ const CreateOrUpdateProvider = ({ children }: IProps) => {
       validateForm,
       handleSubmit,
       errorMessage,
-      setErrorMessage
+      setErrorMessage,
+      isSubmitDisabled,
+      handleCancel
     }}>
       {children}
     </CreateOrUpdateContext.Provider>

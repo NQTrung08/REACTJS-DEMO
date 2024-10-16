@@ -57,7 +57,7 @@ export const ItemStaff = ({ staff}: { staff: IStaff}) => {
         {/* Avatar */}
         <div className="flex items-center">
           <img
-            src={staff?.avatar || 'https://via.placeholder.com/50'}
+            src={staff?.avatar ? URL.createObjectURL(staff.avatar) : 'https://via.placeholder.com/50'}
             alt={`${staff.fullName} avatar`}
             className="rounded-full w-8 h-8 mr-4"
           />
