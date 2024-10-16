@@ -30,7 +30,7 @@ export class StaffModel implements IStaff {
   @observable confirmPassword: string
 
   constructor({
-    id = 0,
+    id = Date.now(),
     fullName = '',
     middleName = '',
     username = '',

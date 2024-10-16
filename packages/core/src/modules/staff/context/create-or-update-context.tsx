@@ -1,4 +1,3 @@
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { StaffModel } from '../../../models/staff-model';
@@ -39,9 +38,8 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
   useEffect(() => {
     if (itemUpdate) {
       // Nếu có itemUpdate, cập nhật formData từ itemUpdate
-      runInAction(() => {
-        formData.setAll(itemUpdate);
-      });
+
+      formData.setAll(itemUpdate);
     } else {
       resetFormData();
     }
@@ -56,36 +54,35 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
   };
 
   useEffect(() => {
-      console.log('formData', formData);
-  
-      const isFormChanged = formData.fullName ||
-        formData.middleName ||
-        formData.username ||
-        formData.password ||
-        formData.confirmPassword ||
-        formData.phone ||
-        formData.email ||
-        formData.manager ||
-        formData.avatar ||
-        formData.status !== 'active';
-  
-      setIsSubmitDisabled(!isFormChanged);
+    console.log('formData', formData);
+
+    const isFormChanged = formData.fullName ||
+      formData.middleName ||
+      formData.username ||
+      formData.password ||
+      formData.confirmPassword ||
+      formData.phone ||
+      formData.email ||
+      formData.manager ||
+      formData.avatar ||
+      formData.status !== 'active';
+
+    setIsSubmitDisabled(!isFormChanged);
   }, [formData.fullName, formData.middleName, formData.username, formData.password, formData.confirmPassword, formData.phone, formData.email, formData.manager, formData.avatar, formData.status]);
 
 
   const resetFormData = () => {
-    runInAction(() => {
-      formData.setFullName('');
-      formData.setMiddleName('');
-      formData.setUsername('');
-      formData.setPassword('');
-      formData.setConfirmPassword('');
-      formData.setPhone('');
-      formData.setEmail('');
-      formData.setManager('');
-      formData.setAvatar('');
-      formData.setStatus('active');
-    });
+
+    formData.setFullName('');
+    formData.setMiddleName('');
+    formData.setUsername('');
+    formData.setPassword('');
+    formData.setConfirmPassword('');
+    formData.setPhone('');
+    formData.setEmail('');
+    formData.setManager('');
+    formData.setAvatar('');
+    formData.setStatus('active');
   };
 
   const validateForm = () => {
@@ -136,7 +133,7 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
     }
 
     const newStaff = new StaffModel({
-      id: itemUpdate ? itemUpdate.id : 0,
+      id: itemUpdate ? itemUpdate.id : Date.now(),
       fullName: formData.fullName,
       middleName: formData.middleName,
       username: formData.username,
