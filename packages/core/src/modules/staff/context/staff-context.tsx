@@ -20,12 +20,12 @@ interface StaffContextType {
   setDataView: React.Dispatch<React.SetStateAction<IStaff[]>>
   setFilter: React.Dispatch<React.SetStateAction<FilterStaff>>
 
-  currentPage: number; // Thêm biến trạng thái cho trang hiện tại
-  perPage: number; // Số lượng bản ghi trên mỗi trang
-  totalPages: number; // Tổng số trang
-  handleNextPage: () => void; // Hàm để chuyển sang trang tiếp theo
-  handlePreviousPage: () => void; // Hàm để quay lại trang trước
-  currentStaffs: IStaff[]; // Danh sách nhân viên hiển thị trên trang hiện tại
+  currentPage: number; 
+  perPage: number; 
+  totalPages: number; 
+  handleNextPage: () => void; 
+  handlePreviousPage: () => void; 
+  currentStaffs: IStaff[];
 }
 
 const StaffContext = createContext<StaffContextType>({

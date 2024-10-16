@@ -65,7 +65,7 @@ const CreateOrUpdateStaffContainer = () => {
                   onChange={handleFileChange}
                 />
                 {formData.avatar ? (
-                <img src={URL.createObjectURL(formData.avatar)} alt="Avatar" className="w-full h-full rounded-full object-cover" />
+                <img src={formData.avatar} alt="Avatar" className="w-full h-full rounded-full object-cover" />
               ) : (
                 <div className='flex flex-col items-center'>
                   <Icon path={mdiTrayArrowUp} size={1} className="text-gray-500" />
