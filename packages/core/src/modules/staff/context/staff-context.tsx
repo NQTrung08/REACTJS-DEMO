@@ -2,11 +2,29 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 // import {
 //   FilterStaff
 // } from '../../../models/filter-staff';
+import { makeAutoObservable, observable } from 'mobx';
 import { StaffModel } from '../../../models/staff-model';
 class FilterStaff {
-  keyword: string = '';
-  status: 'active' | 'inactive' | 'all' = 'all';
-  sort: 'asc' | 'desc' = 'asc';
+  @observable keyword: string = '';
+  @observable status: 'active' | 'inactive' | 'all' = 'all';
+  @observable sort: 'asc' | 'desc' = 'asc';
+
+  constructor() {
+    makeAutoObservable(this);
+  }
+  setStatus(status: 'active' | 'inactive' | 'all') {
+    this.status = status;
+  }
+
+  // Thay đổi từ khóa tìm kiếm
+  setKeyword(keyword: string) {
+    this.keyword = keyword;
+  }
+
+  // Thay đổi kiểu sắp xếp
+  setSort(sort: 'asc' | 'desc') {
+    this.sort = sort;
+  }
 }
 
 interface StaffContextType {

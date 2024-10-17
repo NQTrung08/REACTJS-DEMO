@@ -103,19 +103,24 @@ const CreateOrUpdateStaffContainer = observer(() => {
         </div>
 
         <div className='-ml-11'>
-          <div className="mb-[6px] grid grid-cols-2 items-center gap-2 text-[16px]">
-            <label htmlFor="fullName" className="col-span-1 text-right text-lg font-medium text-[#000]">Họ và tên:</label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              className="mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500 font-medium"
-              placeholder="Nhập họ và tên"
-              value={formData.fullName}
-              onChange={(event) => formData.fullName = event.target.value}
+          <div className=''>
+            <div className="mb-[6px] grid grid-cols-2 items-center gap-2 text-[16px]">
+              <label htmlFor="fullName" className="col-span-1 text-right text-lg font-medium text-[#000]">Họ và tên:</label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                className="mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500 font-medium"
+                placeholder="Nhập họ và tên"
+                value={formData.fullName}
+                onChange={(event) => formData.fullName = event.target.value}
 
-            />
+              />
+            </div>
+              {/* // handle error */}
+              
           </div>
+
 
           <div className="mb-[2px] grid grid-cols-2 items-center gap-2">
             <label htmlFor="email" className="col-span-1 text-right text-md text-[#000]">Email:</label>
@@ -169,7 +174,7 @@ const CreateOrUpdateStaffContainer = observer(() => {
               className="mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500"
               placeholder="Nhập mật khẩu"
               value={formData.password}
-              onChange={(event) => 
+              onChange={(event) =>
                 formData.password = event.target.value}
 
             />
@@ -184,7 +189,7 @@ const CreateOrUpdateStaffContainer = observer(() => {
               className="mt-1 border-b col-span-1 border-gray-300 focus:outline-none focus:border-blue-500"
               placeholder="Nhập lại mật khẩu"
               value={formData.confirmPassword}
-              onChange={(event) => 
+              onChange={(event) =>
                 formData.confirmPassword = event.target.value}
 
             />
