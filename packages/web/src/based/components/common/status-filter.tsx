@@ -8,7 +8,7 @@ export const StatusFilter = () => {
   const handleStatusChange = (status: 'active' | 'inactive') => {
     setFilter((prev) => ({
       ...prev,
-      status,
+      status: prev.status === status ? 'all' : status,
     }));
   };
   <div className='flex gap-2 p-2 items-center text-xs'>

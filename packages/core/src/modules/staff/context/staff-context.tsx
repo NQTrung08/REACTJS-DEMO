@@ -1,9 +1,13 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
-import {
-  FilterStaff
-} from '../../../models/filter-staff';
+// import {
+//   FilterStaff
+// } from '../../../models/filter-staff';
 import { StaffModel } from '../../../models/staff-model';
-
+class FilterStaff {
+  keyword: string = '';
+  status: 'active' | 'inactive' | 'all' = 'all';
+  sort: 'asc' | 'desc' = 'asc';
+}
 
 interface StaffContextType {
   staffs: StaffModel[];
@@ -19,11 +23,11 @@ interface StaffContextType {
   setDataView: React.Dispatch<React.SetStateAction<StaffModel[]>>
   setFilter: React.Dispatch<React.SetStateAction<FilterStaff>>
 
-  currentPage: number; 
-  perPage: number; 
-  totalPages: number; 
-  handleNextPage: () => void; 
-  handlePreviousPage: () => void; 
+  currentPage: number;
+  perPage: number;
+  totalPages: number;
+  handleNextPage: () => void;
+  handlePreviousPage: () => void;
   currentStaffs: StaffModel[];
 }
 
@@ -62,12 +66,13 @@ const ListStaffProvider = ({ children }: IProps) => {
   const [dataView, setDataView] = useState<StaffModel[]>([]);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const perPage = 10; 
+  const perPage = 10;
 
   useEffect(() => {
-    let dataTemp: StaffModel[] = [];
-
-    dataTemp = staffs.filter((staff) => staff.status === filter.status);
+    let dataTemp: StaffModel[] = staffs;
+    if (filter.status !== 'all') {
+      dataTemp = staffs.filter((staff) => staff.status === filter.status);
+    }
     if (filter.keyword) {
       dataTemp = dataTemp.filter((staff) =>
         staff.fullName.toLowerCase().includes(filter.keyword.toLowerCase())
@@ -79,7 +84,7 @@ const ListStaffProvider = ({ children }: IProps) => {
       dataTemp = dataTemp.sort((a, b) => b.fullName.localeCompare(a.fullName));
 
     }
-    
+
     setDataView(dataTemp);
   }, [filter.keyword, filter.status, filter.sort, staffs]);
 
@@ -93,7 +98,7 @@ const ListStaffProvider = ({ children }: IProps) => {
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
-  
+
   const addStaff = (staff: StaffModel) => {
     setStaffs((prevStaffs) => [...prevStaffs, staff]);
   };

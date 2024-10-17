@@ -21,7 +21,6 @@ export const Toolbar = ({
     totalPages,
     handleNextPage,
     handlePreviousPage,
-
   } = useStaffContext();
   const quantity = dataView.length
   console.log(quantity)
