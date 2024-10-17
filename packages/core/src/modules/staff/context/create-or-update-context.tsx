@@ -6,10 +6,10 @@ import { useStaffContext } from './staff-context';
 interface CreateOrUpdateContextType {
   formData: StaffModel;
   resetFormData: () => void;
-  validateForm: () => { isValid: boolean; error?: string };
+  validateForm: () => { isValid: boolean; errors: Record<string, string> };
   handleSubmit: () => boolean;
-  errorMessage: string;
-  setErrorMessage: (message: string) => void;
+  errorMessages: Record<string, string>;
+  setErrorMessage: (field: string, message: string) => void;
   isSubmitDisabled: boolean;
   handleCancel: () => void;
 }
@@ -18,9 +18,9 @@ const CreateOrUpdateContext = createContext<CreateOrUpdateContextType>({
   formData: new StaffModel(),
   resetFormData: () => { },
   handleSubmit: () => false,
-  errorMessage: '',
+  errorMessages: {},
   setErrorMessage: () => { },
-  validateForm: () => ({ isValid: true }),
+  validateForm: () => ({ isValid: true, errors: {} }),
   isSubmitDisabled: true,
   handleCancel: () => { },
 });
@@ -33,12 +33,11 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
   const { itemUpdate, addStaff, updateStaff, onCreateOrUpdate, setItemUpdate } = useStaffContext();
   const [formData, setFormData] = useState<StaffModel>(new StaffModel());
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (itemUpdate) {
       // Nếu có itemUpdate, cập nhật formData từ itemUpdate
-
       formData.setAll(itemUpdate);
     } else {
       resetFormData();
@@ -54,8 +53,6 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
   };
 
   useEffect(() => {
-    console.log('formData', formData);
-
     const isFormChanged = formData.fullName ||
       formData.middleName ||
       formData.username ||
@@ -72,7 +69,6 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
 
 
   const resetFormData = () => {
-
     formData.setFullName('');
     formData.setMiddleName('');
     formData.setUsername('');
@@ -83,52 +79,56 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
     formData.setManager('');
     formData.setAvatar('');
     formData.setStatus('active');
+    setErrorMessages({});
   };
 
   const validateForm = () => {
     let isValid = true;
-    let error: string | undefined;
+    const errors: Record<string, string> = {};
 
-    if (!formData.fullName || !formData.email || !formData.phone || !formData.username) {
-      error = 'Please fill in all required fields.';
+    if (!formData.fullName) {
+      errors.fullName = 'Họ và tên không được để trống.';
       isValid = false;
     }
-
+    if (!formData.email) {
+      errors.email = 'Email không được để trống.';
+      isValid = false;
+    }
+    if (!formData.phone) {
+      errors.phone = 'Số điện thoại không được để trống.';
+      isValid = false;
+    }
+    if (!formData.username) {
+      errors.username = 'Tên đăng nhập không được để trống.';
+      isValid = false;
+    }
     if (!itemUpdate && !formData.password) {
-      error = 'Password is required for new staff.';
+      errors.password = 'Mật khẩu là bắt buộc cho nhân viên mới.';
       isValid = false;
     }
-
     if (formData.password !== formData.confirmPassword) {
-      error = 'Passwords do not match.';
+      errors.confirmPassword = 'Mật khẩu không khớp.';
       isValid = false;
     }
-
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    if (!emailRegex.test(formData.email)) {
-      error = 'Please enter a valid email.';
+    if (formData.email && !emailRegex.test(formData.email)) {
+      errors.email = 'Vui lòng nhập email hợp lệ.';
       isValid = false;
     }
 
     const phoneRegex = /^\d{10}$/;
-    if (!phoneRegex.test(formData.phone)) {
-      error = 'Please enter a valid phone number.';
+    if (formData.phone && !phoneRegex.test(formData.phone)) {
+      errors.phone = 'Vui lòng nhập số điện thoại hợp lệ.';
       isValid = false;
     }
 
-    if (error) {
-      setErrorMessage(error);
-    } else {
-      setErrorMessage('');
-    }
-
-    return { isValid, error };
+    setErrorMessages(errors);
+    return { isValid, errors };
   };
 
   const handleSubmit = () => {
-    const { isValid, error } = validateForm();
+    const { isValid } = validateForm();
     if (!isValid) {
-      console.error(error);
       return false;
     }
 
@@ -151,7 +151,6 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
       updateStaff(newStaff.id, newStaff);
     } else {
       addStaff(newStaff);
-
     }
 
     resetFormData();
@@ -164,8 +163,8 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
       resetFormData,
       validateForm,
       handleSubmit,
-      errorMessage,
-      setErrorMessage,
+      errorMessages,
+      setErrorMessage: (field, message) => setErrorMessages(prev => ({ ...prev, [field]: message })),
       isSubmitDisabled,
       handleCancel,
     }}>
