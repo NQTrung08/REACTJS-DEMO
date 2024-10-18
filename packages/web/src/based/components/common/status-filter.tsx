@@ -9,25 +9,13 @@ export const StatusFilter = observer(() => {
 
   const handleStatusChange = (status: 'active' | 'inactive') => {
     if (filter.status === status) {
-      filter.setStatus('all');
+      filter.status = 'all';
     } else {
-      filter.setStatus(status);
+      filter.status = status;
     }
-
-    
+    console.log(filter.status);
   };
-  <div className='flex gap-2 p-2 items-center text-xs'>
-    <Icon path={mdiFilterMultipleOutline} className='size-4' />
-    <span className='text-[#000] font-[460]'>
-      Trạng thái:
-    </span>
-    <div className='bg-gray-200 py-1 px-2 rounded-[24px]'>
-      <span>Hoạt động</span>
-    </div>
-    <div className='bg-blue-100 py-1 px-2 rounded-[24px]'>
-      <span className='text-blue-600 font-[550]'>Ngừng hoạt động</span>
-    </div>
-  </div>
+
 
   return (
     <div className='flex gap-2 p-2 items-center text-xs'>

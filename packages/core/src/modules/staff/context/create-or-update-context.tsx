@@ -47,9 +47,9 @@ const CreateOrUpdateProvider = observer(({ children }: IProps) => {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
 
   const handleCancel = () => {
-    onCreateOrUpdate(false);
-    setItemUpdate(null);
     resetFormData();
+    setItemUpdate(null);
+    onCreateOrUpdate(false);
   };
 
   useEffect(() => {

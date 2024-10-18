@@ -91,6 +91,11 @@ const CreateOrUpdateStaffContainer = observer(() => {
     }
   };
 
+  const handleCancelForm = () => {
+    setIsFirstSubmit(false);
+    handleCancel();
+  }
+
   return (
     <div className={classNames("p-4", {
       "block": isCreateOrUpdate,
@@ -275,7 +280,7 @@ const CreateOrUpdateStaffContainer = observer(() => {
       <div className="flex justify-end gap-2">
         <button
           type="button"
-          onClick={handleCancel}
+          onClick={handleCancelForm}
           className="px-4 py-2 text-md font-medium hover:bg-gray-50 rounded-md"
         >
           Hủy bỏ

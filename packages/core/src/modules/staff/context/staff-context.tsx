@@ -2,7 +2,8 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 // import {
 //   FilterStaff
 // } from '../../../models/filter-staff';
-import { makeAutoObservable, observable } from 'mobx';
+import { action, makeAutoObservable, observable } from 'mobx';
+import { observer } from 'mobx-react';
 import { StaffModel } from '../../../models/staff-model';
 class FilterStaff {
   @observable keyword: string = '';
@@ -12,16 +13,19 @@ class FilterStaff {
   constructor() {
     makeAutoObservable(this);
   }
+  @action
   setStatus(status: 'active' | 'inactive' | 'all') {
     this.status = status;
   }
 
   // Thay đổi từ khóa tìm kiếm
+  @action
   setKeyword(keyword: string) {
     this.keyword = keyword;
   }
 
   // Thay đổi kiểu sắp xếp
+  @action
   setSort(sort: 'asc' | 'desc') {
     this.sort = sort;
   }
@@ -75,12 +79,14 @@ interface IProps {
 }
 
 
-const ListStaffProvider = ({ children }: IProps) => {
+const ListStaffProvider = observer(({ children }: IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
   const [staffs, setStaffs] = useState<StaffModel[]>([]);
   // todo: item update
   const [itemUpdate, setItemUpdate] = useState<StaffModel | null>(null);
   const [filter, setFilter] = useState<FilterStaff>(new FilterStaff());
+  // const [_, setFilter] = useState<FilterStaff>(new FilterStaff());
+  // const filter = new FilterStaff();
   const [dataView, setDataView] = useState<StaffModel[]>([]);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -102,6 +108,8 @@ const ListStaffProvider = ({ children }: IProps) => {
       dataTemp = dataTemp.sort((a, b) => b.fullName.localeCompare(a.fullName));
 
     }
+    console.log('dataTemp', dataTemp);
+    // console.log(dataTemp);
 
     setDataView(dataTemp);
   }, [filter.keyword, filter.status, filter.sort, staffs]);
@@ -159,7 +167,7 @@ const ListStaffProvider = ({ children }: IProps) => {
       {children}
     </StaffContext.Provider>
   );
-};
+});
 
 const useStaffContext = (): StaffContextType => {
   return useContext(StaffContext);

@@ -1,18 +1,16 @@
 import { mdiChevronDown, mdiSortAscending, mdiSortDescending } from '@mdi/js';
 import Icon from '@mdi/react';
 import { useStaffContext } from 'core-modules';
+import { observer } from 'mobx-react';
 import { useState } from 'react';
 
-export const SortDropdown = () => {
+export const SortDropdown = observer(() => {
   const { filter, setFilter } = useStaffContext();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSortChange = (sortOrder: 'asc' | 'desc') => {
-    setFilter((prev) => ({
-      ...prev,
-      sort: sortOrder,
-    }));
-    setIsDropdownOpen(false);
+   filter.setSort(sortOrder);
+   setIsDropdownOpen(false);
   };
 
   return (
@@ -47,6 +45,6 @@ export const SortDropdown = () => {
       )}
     </div>
   );
-};
+});
 
 

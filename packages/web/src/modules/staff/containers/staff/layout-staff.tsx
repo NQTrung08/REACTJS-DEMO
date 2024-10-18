@@ -1,9 +1,9 @@
 
 
 import { CreateOrUpdateProvider } from 'core-modules';
-import { Toolbar } from 'src/based/components/common/Toolbar';
 import { Advanced } from 'src/based/components/layout/Advanced/advanced';
 import { HeaderListStaff } from '../../components/staff/header';
+import { ToolBarStaff } from '../../components/staff/tool-bar-staff';
 import { CreateOrUpdateStaffContainer } from './create-or-update-staff';
 import { ListStaff } from './list-staff';
 export const LayoutStaff = () => {
@@ -26,7 +26,7 @@ export const LayoutStaff = () => {
         <Advanced />
         {/* TODO: toolbar */}
         {/* // TODO : CREATE thêm toolbar for nhân viên */}
-        <Toolbar title='tài khoản nhân viên'/>
+        <ToolBarStaff/>
 
         {/* List Staff */}
         <ListStaff />

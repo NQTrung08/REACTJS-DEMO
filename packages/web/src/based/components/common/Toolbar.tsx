@@ -8,22 +8,25 @@ import { useStaffContext } from 'core-modules';
 // add inteface
 export interface IToolbar {
   title: string;
+  perPage?: number;
+  quantity?: number;
 }
 
 // add component
 export const Toolbar = ({
-  title
+  title,
+  perPage = 10,
+  quantity = 0,
+
 }: IToolbar) => {
   // TODO: render toolbar with quantity, title, currentPage, totalPages, handleNextPage, handlePreviousPage
   const {
-    dataView,
     currentPage,
-    totalPages,
     handleNextPage,
     handlePreviousPage,
+    totalPages,
   } = useStaffContext();
-  const quantity = dataView.length
-  console.log(quantity)
+
   return (
     <div className='bg-gray-200 py-1 px-2 flex items-center justify-between'>
       <span className='text-xs text-gray-500'>
