@@ -10,6 +10,7 @@ export interface IToolbar {
   title: string;
   perPage?: number;
   quantity?: number;
+  label?: string;
 }
 
 // add component
@@ -17,6 +18,7 @@ export const Toolbar = ({
   title,
   perPage = 10,
   quantity = 0,
+  label = ''
 
 }: IToolbar) => {
   // TODO: render toolbar with quantity, title, currentPage, totalPages, handleNextPage, handlePreviousPage
@@ -28,13 +30,13 @@ export const Toolbar = ({
   } = useStaffContext();
 
   return (
-    <div className='bg-gray-200 py-1 px-2 flex items-center justify-between'>
+    <div className='bg-[#F5F5F5] py-1 px-2 flex items-center justify-between'>
       <span className='text-xs text-gray-500'>
         Có tất cả {quantity} {title}
       </span>
       <div className='flex text-xs items-center gap-2'>
         <span className='text-[#333] font-normal'>
-          {currentPage * 10 + 1} - {Math.min((currentPage + 1) * 10, quantity)} của {quantity} tài khoản
+          {currentPage * 10 + 1} - {Math.min((currentPage + 1) * 10, quantity)} của {quantity} {label}
         </span>
         <div className='flex w-14 h-7 items-center justify-between'>
           <button className={`w-1/2 flex justify-center ${currentPage === 0 ? 'cursor text-gray-400' : 'text-black'}

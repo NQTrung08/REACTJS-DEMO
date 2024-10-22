@@ -1,10 +1,10 @@
 
 import { Search } from '../../common/Search';
 import {
-  SortDropdown
-} from '../../common/sort';
+  SortDropdownStaff
+} from '../../common/sort-staff';
 
-import { StatusFilter } from '../../common/status-filter';
+import { StatusFilterStaff } from '../../common/status-filter-staff';
 
 export const Advanced = () => {
 
@@ -13,10 +13,10 @@ export const Advanced = () => {
       <div className='border-y p-2 flex justify-between items-center'>
         <Search placeholder='Tìm kiếm nhân viên'/>
         {/* Filter */}
-        <SortDropdown />
+        <SortDropdownStaff />
       </div>
 
-      <StatusFilter />
+      <StatusFilterStaff />
 
     </div>
 

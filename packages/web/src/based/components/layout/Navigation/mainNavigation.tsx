@@ -3,19 +3,12 @@ import {
   mdiBullhornVariantOutline,
   mdiCarLiftedPickup,
   mdiChartBoxPlusOutline,
-  mdiCogOutline // settings
-  ,
-
-
-
-
-
-
-
-
+  mdiChatProcessingOutline,
+  mdiCogOutline,
   mdiCreditCardOutline,
   mdiFormatListBulleted,
   mdiInvoiceTextMultipleOutline,
+  mdiInvoiceTextPlus,
   mdiMonitorDashboard,
   mdiPackageVariantClosed,
   mdiPrinterPosEditOutline,
@@ -37,6 +30,9 @@ export const MainNavigation = () => {
     { icon: mdiAccountLockOutline, title: 'Nhân viên' },
     { icon: mdiPackageVariantClosed, title: 'Sản phẩm' },
     { icon: mdiInvoiceTextMultipleOutline, title: 'Đơn hàng' },
+    { icon: mdiChatProcessingOutline, title: 'Chat' },
+    { icon: mdiInvoiceTextPlus, title: 'Kế toán' },
+
   ];
 
   return (

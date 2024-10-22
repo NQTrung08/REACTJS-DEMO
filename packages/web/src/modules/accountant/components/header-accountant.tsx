@@ -4,7 +4,8 @@ import {
 
 import { ButtonAdd } from 'src/based/components/common/ButtonAdd';
 
-export const HeaderListStaff = ({
+export const HeaderAccountant = ({
+  title = ''
 }) => {
   const {
     isCreateOrUpdate,
@@ -16,9 +17,7 @@ export const HeaderListStaff = ({
     <div className='flex justify-between items-center py-2 px-3 border-b'>
       {/*  */}
       <span className='font-medium text-lg'>
-        {itemUpdate 
-          ? 'Cập nhật thông tin nhân viên' 
-          : (isCreateOrUpdate ? 'Thêm mới nhân viên' : 'Danh sách nhân viên')}
+        {title}
       </span>
       <ButtonAdd onClick={() => onCreateOrUpdate(!isCreateOrUpdate)}
         title={itemUpdate ? 'Cập nhật' : 'Thêm mới'} />

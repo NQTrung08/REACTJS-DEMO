@@ -26,3 +26,22 @@
    + upload: mdiTrayArrowUp
 3. tool bar, advange, breadcrumb
 4. Dùng react hook form
+5. Đề nghị thanh toán
+
+   - phiếu thu
+   - chi tiền
+   - chuyển/ rút tiền
+   - Hóa đơn VAT
+   - Tạm ứng/ hoàn ứng
+   - Đề nghị thanh toán
+   - Đặt cọc/ hoàn cọc
+   - Các đơn hàng
+   - Số nợ khách hàng
+   - Danh mục thu/ chi
+   - Hợp đồng
+   - Báo cáo dòng tiền
+   - Bảng cân đối kế toán
+   - Hệ thống tài khoản kế toán
+   - Pháp nhân/ tổ chức
+   - các tài khoản
+   - phương thức thanh toán

@@ -3,8 +3,9 @@ import {
     Route, Routes, useLocation
 } from "react-router-dom";
 import { PublicLayout } from './based/components/layout';
-import { PublicScreen } from './modules/home/public';
+import { AccountantRoutes } from './modules/accountant/router';
 import { LoginRoutes } from './modules/authenticate/routes';
+import { PublicScreen } from './modules/home/public';
 import { StaffRoutes } from './modules/staff/routes';
 
 
@@ -16,6 +17,7 @@ export const RouteApp = observer(() => {
                 <Route path="/" element={<PublicScreen />} />
                 <Route path="/login" element={<LoginRoutes />} />
                 <Route path="/staff" element={<StaffRoutes />} />
+                <Route path="/accountant/*" element={<AccountantRoutes />} />
             </Route>
         </Routes>
     );

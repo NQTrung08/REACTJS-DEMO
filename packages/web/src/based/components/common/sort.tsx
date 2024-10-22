@@ -1,50 +1,56 @@
-import { mdiChevronDown, mdiSortAscending, mdiSortDescending } from '@mdi/js';
+import { mdiChevronDown, mdiFilterOutline, mdiSortAscending } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useStaffContext } from 'core-modules';
 import { observer } from 'mobx-react';
 import { useState } from 'react';
 
-export const SortDropdown = observer(() => {
-  const { filter, setFilter } = useStaffContext();
+interface SortOption {
+  label: string; // Nhãn hiển thị cho mỗi tùy chọn
+  value: string; // Giá trị sắp xếp
+}
+
+interface SortDropdownProps {
+  title: string; // Tiêu đề chính của dropdown
+  sortOptions: SortOption[]; // Tùy chọn sắp xếp
+  filter: { sort: string; setSort: (sortOrder: string) => void }; // Nhận filter từ bên ngoài
+}
+
+export const SortDropdown = observer(({ title, sortOptions, filter }: SortDropdownProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleSortChange = (sortOrder: 'asc' | 'desc') => {
-   filter.setSort(sortOrder);
-   setIsDropdownOpen(false);
+  const handleSortChange = (sortOrder: string) => {
+    filter.setSort(sortOrder); // Gọi hàm setSort từ filter
+    setIsDropdownOpen(false);
   };
 
   return (
     <div className='relative'>
-      <div
-        className='flex items-center cursor-pointer'
-        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      >
-        <Icon path={mdiSortAscending} className='w-4 h-4' />
-        <span className='ml-2 text-md'>Sắp xếp theo tên: {filter.sort === 'asc' ? 'A > Z' : 'Z > A'}</span>
-        <Icon path={mdiChevronDown} className='ml-1 w-4 h-4' />
+      <div className='flex items-center gap-2'>
+
+        <div
+          className='flex items-center cursor-pointer'
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
+          <Icon path={mdiSortAscending} className='w-4 h-4' />
+          <span className='ml-2 text-md'>{title}</span>
+          <Icon path={mdiChevronDown} className='ml-1 w-4 h-4' />
+
+        </div>
+        <Icon path={mdiFilterOutline} className='ml-2 w-4 h-4' />
       </div>
       {isDropdownOpen && (
         <div className='absolute mt-2 bg-white border shadow rounded'>
-          <div>
+          {sortOptions.map((option) => (
             <div
+              key={option.value}
               className='p-2 flex cursor-pointer hover:bg-gray-100 text-md'
-              onClick={() => handleSortChange('asc')}
+              onClick={() => handleSortChange(option.value)}
             >
-              <Icon path={mdiSortAscending} className='w-4 h-4' />
-              <span className='ml-2'>Sắp xếp theo tên: A &gt; Z</span>
+              <span className='ml-2'>{option.label}</span>
             </div>
-            <div
-              className='p-2 flex cursor-pointer hover:bg-gray-100 text-md'
-              onClick={() => handleSortChange('desc')}
-            >
-              <Icon path={mdiSortDescending} className='w-4 h-4' />
-              <span className='ml-2'>Sắp xếp theo tên: Z &gt; A</span>
-            </div>
-          </div>
+          ))}
         </div>
       )}
+
     </div>
   );
 });
-
-
