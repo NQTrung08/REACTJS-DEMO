@@ -9,11 +9,11 @@ export const NewAdvanceScreen = () => {
       <AdvancedRefund />
       <ToolBarRefund />
       <div className="flex text-black font-medium p-3 border-b">
-        <span className="w-[18%]">Ngày ứng</span>
+        <span className="w-[10%]">Ngày ứng</span>
         <span className="w-[10%]">Hạn hoàn</span>
         <span className="w-[20%]">Người thụ hưởng</span>
         <span className="w-[25%]">Tài khoản hưởng thụ</span>
-        <span className="w-[20%] text-right">Số tiền đã ứng</span>
+        <span className="w-[15%] text-right">Số tiền tạm ứng</span>
         <span className="w-[15%]"></span>
       </div>
     </>

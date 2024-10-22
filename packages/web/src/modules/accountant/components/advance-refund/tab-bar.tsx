@@ -1,5 +1,6 @@
 import type { TabsProps } from 'antd';
 import { Tabs } from 'antd';
+import { observer } from "mobx-react";
 import React from 'react';
 import { AllAdvance } from '../../screens/all-advance';
 import { ConfirmAdvance } from '../../screens/confirm-advance';
@@ -10,7 +11,7 @@ import { Processing } from '../../screens/processing';
 import { Refund } from '../../screens/refund';
 import { Reject } from '../../screens/reject';
 
-export const TabBar: React.FC = () => {
+const TabBar: React.FC = observer(() => {
   const items: TabsProps['items'] = [
     {
       key: '1',
@@ -59,8 +60,8 @@ export const TabBar: React.FC = () => {
   };
 
   return (
-    <Tabs defaultActiveKey="1" items={items} onChange={onChange} className='' />
+    <Tabs defaultActiveKey="1" items={items} onChange={onChange} tabBarStyle={{ margin: 0 }} />
   );
-};
+});
 
-
+export { TabBar };

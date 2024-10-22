@@ -1,5 +1,7 @@
 import { action, makeAutoObservable, observable } from "mobx";
+import { observer } from "mobx-react";
 import { ReactNode, createContext, useContext, useState } from "react";
+import { AdvanceRefundFormModel } from "../../../models";
 
 class FilterStaff {
   @observable keyword: string = '';
@@ -33,25 +35,31 @@ class FilterStaff {
 }
 
 interface AdvanceRefundContextType {
+  advancePerson: AdvanceRefundFormModel[];
   filter: FilterStaff;
 }
 
 export const AdvanceRefundContext = createContext<AdvanceRefundContextType>({
+  advancePerson: [],
   filter: new FilterStaff(),
 })
+interface IProps {
+  children: ReactNode;
+}
 
-const AdvanceRefundContextProvider = ({ children }: { children: ReactNode }) => {
+
+const AdvanceRefundContextProvider: React.FC<IProps> = observer(({ children }) => {
   const [filter, setFilter] = useState<FilterStaff>(new FilterStaff());
+  const [advancePerson, setAdvancePerson] = useState<AdvanceRefundFormModel[]>([]);
   return (
-    <AdvanceRefundContext.Provider value={{ filter }}>
+    <AdvanceRefundContext.Provider value={{ filter, advancePerson }}>
       {children}
     </AdvanceRefundContext.Provider>
   )
-}
+})
 
 const useAdvanceRefundContext = () => {
   return useContext(AdvanceRefundContext);
-
-}
+};
 
 export { AdvanceRefundContextProvider, useAdvanceRefundContext };
