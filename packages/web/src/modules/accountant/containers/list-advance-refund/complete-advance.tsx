@@ -1,7 +1,7 @@
-import { AdvancedRefund } from "../components/advance-refund/advanced"
-import { ToolBarRefund } from "../components/advance-refund/toolbar-refund"
+import { AdvancedRefund } from "../../components/advance-refund/advanced"
+import { ToolBarRefund } from "../../components/advance-refund/toolbar-refund"
 
-export const ConfirmAdvance = () => {
+export const CompleteAdvance = () => {
   return (
     <>
       <AdvancedRefund />
@@ -10,7 +10,7 @@ export const ConfirmAdvance = () => {
         <span className="w-[10%]">Ngày ứng</span>
         <span className="w-[10%]">Hạn hoàn</span>
         <span className="w-[20%]">Người thụ hưởng</span>
-        <span className="w-[25%]">Tài khoản hưởng thụ</span>
+        <span className="w-[30%]">Tài khoản hưởng thụ</span>
         <span className="w-[15%] text-right">Số tiền tạm ứng</span>
         <span className="w-[15%]"></span>
       </div>

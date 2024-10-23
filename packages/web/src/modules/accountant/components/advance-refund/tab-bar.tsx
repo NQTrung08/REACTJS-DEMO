@@ -2,26 +2,26 @@ import type { TabsProps } from 'antd';
 import { Tabs } from 'antd';
 import { observer } from "mobx-react";
 import React from 'react';
-import { AllAdvance } from '../../screens/all-advance';
-import { ConfirmAdvance } from '../../screens/confirm-advance';
-import { Confirmed } from '../../screens/confirmed';
-import { DueAndOverdueScreen } from '../../screens/due-overdue';
-import { NewAdvanceScreen } from '../../screens/new-advance';
-import { Processing } from '../../screens/processing';
-import { Refund } from '../../screens/refund';
-import { Reject } from '../../screens/reject';
+import { AllAdvance } from '../../containers/list-advance-refund/all-advance';
+import { CompleteAdvance } from '../../containers/list-advance-refund/complete-advance';
+import { ConfirmAdvance } from '../../containers/list-advance-refund/confirm-advance';
+import { DueAndOverdue } from '../../containers/list-advance-refund/due-overdue';
+import { NewAdvance } from '../../containers/list-advance-refund/new-advance';
+import { Processing } from '../../containers/list-advance-refund/processing';
+import { Refund } from '../../containers/list-advance-refund/refund';
+import { Reject } from '../../containers/list-advance-refund/reject';
 
 const TabBar: React.FC = observer(() => {
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: 'Sắp đến hạn và quá hạn hoàn ứng',
-      children: <DueAndOverdueScreen />,
+      children: <DueAndOverdue />,
     },
     {
       key: '2',
       label: 'Tạm ứng mới',
-      children: <NewAdvanceScreen />,
+      children: <NewAdvance />,
     },
     {
       key: '3',
@@ -31,7 +31,7 @@ const TabBar: React.FC = observer(() => {
     {
       key: '4',
       label: 'Đồng ý thanh toán',
-      children: <Confirmed />,
+      children: <CompleteAdvance />,
     },
     {
       key: '5',

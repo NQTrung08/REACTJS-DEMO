@@ -5,7 +5,7 @@ import { AdvanceRefundFormModel } from "../../../models";
 
 class FilterStaff {
   @observable keyword: string = '';
-  @observable status: 'not_collected' | 'overdue' | 'all' = 'all';
+  @observable status: 'not_collected' | 'overdue' | 'completed' | 'all' = 'all';
   @observable sort: 'date_asc' | 'date_desc' = 'date_asc';
 
   constructor() {
@@ -37,11 +37,15 @@ class FilterStaff {
 interface AdvanceRefundContextType {
   advancePerson: AdvanceRefundFormModel[];
   filter: FilterStaff;
+  isCreateOrUpdate: boolean;
+  onCreateOrUpdate: (value: boolean) => void
 }
 
 export const AdvanceRefundContext = createContext<AdvanceRefundContextType>({
   advancePerson: [],
   filter: new FilterStaff(),
+  isCreateOrUpdate: false,
+  onCreateOrUpdate: () => { }
 })
 interface IProps {
   children: ReactNode;
@@ -51,8 +55,13 @@ interface IProps {
 const AdvanceRefundContextProvider: React.FC<IProps> = observer(({ children }) => {
   const [filter, setFilter] = useState<FilterStaff>(new FilterStaff());
   const [advancePerson, setAdvancePerson] = useState<AdvanceRefundFormModel[]>([]);
+  const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
+
+  const onCreateOrUpdate = (value: boolean) => {
+    setIsCreateOrUpdate(value);
+  };
   return (
-    <AdvanceRefundContext.Provider value={{ filter, advancePerson }}>
+    <AdvanceRefundContext.Provider value={{ filter, advancePerson, isCreateOrUpdate, onCreateOrUpdate }}>
       {children}
     </AdvanceRefundContext.Provider>
   )

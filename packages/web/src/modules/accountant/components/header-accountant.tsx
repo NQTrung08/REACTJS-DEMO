@@ -1,5 +1,5 @@
 import {
-  useStaffContext
+  useAdvanceRefundContext
 } from 'core-modules';
 
 import { ButtonAdd } from 'src/based/components/common/ButtonAdd';
@@ -10,8 +10,8 @@ export const HeaderAccountant = ({
   const {
     isCreateOrUpdate,
     onCreateOrUpdate,
-    itemUpdate,
-  } = useStaffContext();
+    // itemUpdate,
+  } = useAdvanceRefundContext();
 
   return (
     <div className='flex justify-between items-center py-2 px-3 border-b'>
@@ -20,7 +20,7 @@ export const HeaderAccountant = ({
         {title}
       </span>
       <ButtonAdd onClick={() => onCreateOrUpdate(!isCreateOrUpdate)}
-        title={itemUpdate ? 'Cập nhật' : 'Thêm mới'} />
+        title={false ? 'Cập nhật' : 'Thêm mới'} />
     </div>
   )
 }

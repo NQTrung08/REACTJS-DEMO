@@ -9,8 +9,8 @@ export const ContentCreateAdvance = observer(() => {
         <label className="text-gray-900 w-24 text-md text-right">Số tiền (VND):</label>
         <input
           type="number"
-          value={formData.amount}
-          onChange={(e) => formData.amount == parseFloat(e.target.value) || 0}
+          value={formData.advanceAmount}
+          onChange={(e) => formData.advanceAmount == parseFloat(e.target.value) || 0}
           className="border-b w-[331px]"
         />
       </div>

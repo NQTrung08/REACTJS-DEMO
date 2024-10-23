@@ -1,8 +1,7 @@
-import { AdvancedRefund } from "../components/advance-refund/advanced"
-import { ToolBarRefund } from "../components/advance-refund/toolbar-refund"
+import { AdvancedRefund } from "../../components/advance-refund/advanced"
+import { ToolBarRefund } from "../../components/advance-refund/toolbar-refund"
 
-export const Reject = () => {
-
+export const ConfirmAdvance = () => {
   return (
     <>
       <AdvancedRefund />
@@ -12,7 +11,7 @@ export const Reject = () => {
         <span className="w-[10%]">Hạn hoàn</span>
         <span className="w-[20%]">Người thụ hưởng</span>
         <span className="w-[25%]">Tài khoản hưởng thụ</span>
-        <span className="w-[15%] text-right">Số tiền đã ứng</span>
+        <span className="w-[15%] text-right">Số tiền tạm ứng</span>
         <span className="w-[15%]"></span>
       </div>
     </>

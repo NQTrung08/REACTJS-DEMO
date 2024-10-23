@@ -10,7 +10,7 @@ export class AdvanceRefundFormModel {
   @observable createAt: string = ""; // Ngày tạo
   @observable requestDate: string = ""; // Ngày tạm ứng
   @observable refundDeadline: string = ""; // Hạn hoàn
-  @observable amount: number = 0; // Số tiền tạm ứng
+  @observable advanceAmount: number = 0; // Số tiền tạm ứng
   @observable content: string = ""; // Nội dung tạm ứng
   @observable attachedDocuments: File[] = []; // Tài liệu đính kèm
 

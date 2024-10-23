@@ -1,5 +1,5 @@
-import { AdvancedRefund } from "../components/advance-refund/advanced"
-import { ToolBarRefund } from "../components/advance-refund/toolbar-refund"
+import { AdvancedRefund } from "../../components/advance-refund/advanced"
+import { ToolBarRefund } from "../../components/advance-refund/toolbar-refund"
 
 export const AllAdvance = () => {
   return (

@@ -17,6 +17,12 @@ export const StatusFilterAdvanceRefund = () => {
       bgColor: 'bg-[#FFEFED]',
       textColor: 'text-[#E85C4A]',
     },
+    {
+      label: 'Hoàn thành',
+      value: 'completed',
+      bgColor: 'bg-green-50',
+      textColor: 'text-green-600',
+    }
     // Thêm các tùy chọn khác nếu cần
   ];
 
