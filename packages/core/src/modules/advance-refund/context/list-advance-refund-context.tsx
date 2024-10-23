@@ -1,7 +1,7 @@
 import { action, makeAutoObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import { ReactNode, createContext, useContext, useState } from "react";
-import { AdvanceRefundFormModel } from "../../../models";
+import { AdvanceRefundModel } from "../../../models";
 
 class FilterStaff {
   @observable keyword: string = '';
@@ -34,41 +34,34 @@ class FilterStaff {
 
 }
 
-interface AdvanceRefundContextType {
-  advancePerson: AdvanceRefundFormModel[];
+interface ListAdvanceRefundContextType {
+  advancePerson: AdvanceRefundModel[];
   filter: FilterStaff;
-  isCreateOrUpdate: boolean;
-  onCreateOrUpdate: (value: boolean) => void
 }
 
-export const AdvanceRefundContext = createContext<AdvanceRefundContextType>({
+export const ListAdvanceRefundContext = createContext<ListAdvanceRefundContextType>({
   advancePerson: [],
   filter: new FilterStaff(),
-  isCreateOrUpdate: false,
-  onCreateOrUpdate: () => { }
+  
 })
 interface IProps {
   children: ReactNode;
 }
 
 
-const AdvanceRefundContextProvider: React.FC<IProps> = observer(({ children }) => {
+const ListAdvanceRefundProvider: React.FC<IProps> = observer(({ children }) => {
   const [filter, setFilter] = useState<FilterStaff>(new FilterStaff());
-  const [advancePerson, setAdvancePerson] = useState<AdvanceRefundFormModel[]>([]);
-  const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
+  const [advancePerson, setAdvancePerson] = useState<AdvanceRefundModel[]>([]);
 
-  const onCreateOrUpdate = (value: boolean) => {
-    setIsCreateOrUpdate(value);
-  };
   return (
-    <AdvanceRefundContext.Provider value={{ filter, advancePerson, isCreateOrUpdate, onCreateOrUpdate }}>
+    <ListAdvanceRefundContext.Provider value={{ filter, advancePerson}}>
       {children}
-    </AdvanceRefundContext.Provider>
+    </ListAdvanceRefundContext.Provider>
   )
 })
 
-const useAdvanceRefundContext = () => {
-  return useContext(AdvanceRefundContext);
+const useListAdvanceRefundContext = () => {
+  return useContext(ListAdvanceRefundContext);
 };
 
-export { AdvanceRefundContextProvider, useAdvanceRefundContext };
+export { ListAdvanceRefundProvider, useListAdvanceRefundContext };

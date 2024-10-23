@@ -1,8 +1,8 @@
-import { useAdvanceRefundContext } from 'core-modules';
+import { useListAdvanceRefundContext } from 'core-modules';
 import { StatusFilter } from 'src/based/components/common/status-filter';
 
 export const StatusFilterAdvanceRefund = () => {
-  const { filter } = useAdvanceRefundContext(); // Lấy filter từ context
+  const { filter } = useListAdvanceRefundContext(); // Lấy filter từ context
 
   const filterOptions = [
     {

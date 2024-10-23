@@ -1,14 +1,14 @@
 import { observer } from "mobx-react";
 import { ReactNode, createContext, useContext, useState } from "react";
-import { AdvanceRefundFormModel } from "../../../models";
+import { AdvanceRefundModel } from "../../../models";
 
 interface CreateAdvanceContextType {
-  formData: AdvanceRefundFormModel
+  formData: AdvanceRefundModel
   
 }
 
 export const CreateAdvanceContext = createContext<CreateAdvanceContextType>({
-  formData: new AdvanceRefundFormModel()
+  formData: new AdvanceRefundModel()
 })
 
 interface IProps {
@@ -16,7 +16,7 @@ interface IProps {
 }
 
 const CreateAdvanceProvider = observer(({ children }: IProps) => {
-  const [formData, setFormData] = useState<AdvanceRefundFormModel>(new AdvanceRefundFormModel());
+  const [formData, setFormData] = useState<AdvanceRefundModel>(new AdvanceRefundModel());
 
   return (
     <CreateAdvanceContext.Provider value={{ formData }}>

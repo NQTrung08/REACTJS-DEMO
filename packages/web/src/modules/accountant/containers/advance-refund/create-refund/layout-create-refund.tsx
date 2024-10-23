@@ -1,8 +1,8 @@
 import { Steps } from "antd";
 import classNames from "classnames";
-import { useAdvanceRefundContext, useCreateAdvanceContext } from "core-modules";
+import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
 import { useState } from "react";
-import { AdvanceRefundForm } from "./create-refund/advance-refund-form";
+import { AdvanceRefundForm } from "./advance-refund-form";
 
 
 const stepItems = [
@@ -26,7 +26,7 @@ const stepItems = [
 
 export const LayoutCreateRefund = () => {
   const { formData } = useCreateAdvanceContext();
-  const { isCreateOrUpdate } = useAdvanceRefundContext();
+  const { isCreateOrUpdate } = useManagerRefundContext();
 
   const [current, setCurrent] = useState(0);
 

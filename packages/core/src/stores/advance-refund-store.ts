@@ -9,7 +9,7 @@ class AdvanceRefundStore {
       refundDeadline: '22/03/2024',
       actualRefundDate: '',
       beneficiary: 'Lê Tuấn Khải',
-      amount: 1000000,
+      advanceAmount: 1000000,
       requestDate: '22/03/2024',
       beneficiaryAccount: {
         accountNumber: '123456789',
@@ -24,7 +24,7 @@ class AdvanceRefundStore {
       refundDeadline: '22/03/2024',
       actualRefundDate: '01/04/2024',
       beneficiary: 'Nguyễn Doãn Minh Giang',
-      amount: 20000000,
+      advanceAmount: 20000000,
       requestDate: '15/03/2024',
       beneficiaryAccount: {
         accountNumber: '987654321',
@@ -34,11 +34,11 @@ class AdvanceRefundStore {
     },
     {
       id: 3,
-      status: 'new',
+      status: 'completed',
       refundDeadline: '10/04/2024',
       requestDate: '01/04/2024',
       beneficiary: 'Hoàng Văn Nam',
-      amount: 5000000,
+      advanceAmount: 5000000,
       beneficiaryAccount: {
         accountNumber: '234567890',
         bank: 'Vietinbank',
@@ -65,6 +65,14 @@ class AdvanceRefundStore {
   }
 
   get proceedingAdvances() {
+    return this.advances
+  }
+
+  get completedAdvances() {
+    return this.advances
+  }
+
+  get rejectedAdvances() {
     return this.advances
   }
 

@@ -45,3 +45,7 @@
    - Pháp nhân/ tổ chức
    - các tài khoản
    - phương thức thanh toán
+
+6. managerRefundContext quản lý dữ liệu tổng thể.
+7. AdvanceRefundContextProvider quản lý dữ liệu cho từng tab.
+8. CreateRefundContext quản lý trạng thái cho form tạo tạm ứng.

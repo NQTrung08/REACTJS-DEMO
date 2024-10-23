@@ -1,8 +1,8 @@
-import { useAdvanceRefundContext } from 'core-modules';
+import { useListAdvanceRefundContext } from 'core-modules';
 import { SortDropdown } from 'src/based/components/common/sort';
 
 export const AdvanceRefundSort = () => {
-  const { filter } = useAdvanceRefundContext(); // Lấy filter từ context
+  const { filter } = useListAdvanceRefundContext(); // Lấy filter từ context
 
   const sortOptions = [
     {

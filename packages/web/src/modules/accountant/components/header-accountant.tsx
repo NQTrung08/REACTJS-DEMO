@@ -1,5 +1,5 @@
 import {
-  useAdvanceRefundContext
+  useManagerRefundContext
 } from 'core-modules';
 
 import { ButtonAdd } from 'src/based/components/common/ButtonAdd';
@@ -11,7 +11,7 @@ export const HeaderAccountant = ({
     isCreateOrUpdate,
     onCreateOrUpdate,
     // itemUpdate,
-  } = useAdvanceRefundContext();
+  } = useManagerRefundContext();
 
   return (
     <div className='flex justify-between items-center py-2 px-3 border-b'>

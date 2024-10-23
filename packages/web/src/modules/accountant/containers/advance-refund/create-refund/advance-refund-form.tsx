@@ -1,10 +1,10 @@
 import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Tabs } from "antd";
-import { useAdvanceRefundContext, useCreateAdvanceContext } from "core-modules";
+import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
 import { observer } from "mobx-react";
 import { useState } from "react";
-import { ContentCreateAdvance } from "../../components/advance-refund/create-advance.tsx/content-create-advance";
+import { ContentCreateAdvance } from "../../../components/advance-refund/create-advance.tsx/content-create-advance";
 
 const items = [
   {
@@ -46,7 +46,7 @@ const stepItems = [
 
 export const AdvanceRefundForm = observer(() => {
   const { formData } = useCreateAdvanceContext();
-  const { isCreateOrUpdate } = useAdvanceRefundContext();
+  const { isCreateOrUpdate } = useManagerRefundContext();
 
   const [current, setCurrent] = useState(0);
 

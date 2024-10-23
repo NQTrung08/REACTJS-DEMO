@@ -2,56 +2,56 @@ import type { TabsProps } from 'antd';
 import { Tabs } from 'antd';
 import { observer } from "mobx-react";
 import React from 'react';
-import { AllAdvance } from '../../containers/list-advance-refund/all-advance';
-import { CompleteAdvance } from '../../containers/list-advance-refund/complete-advance';
-import { ConfirmAdvance } from '../../containers/list-advance-refund/confirm-advance';
-import { DueAndOverdue } from '../../containers/list-advance-refund/due-overdue';
-import { NewAdvance } from '../../containers/list-advance-refund/new-advance';
-import { Processing } from '../../containers/list-advance-refund/processing';
-import { Refund } from '../../containers/list-advance-refund/refund';
-import { Reject } from '../../containers/list-advance-refund/reject';
+import { ListAllAdvance } from '../../containers/advance-refund/list-advance-refund/list-all-advance';
+import { ListCompleteAdvance } from '../../containers/advance-refund/list-advance-refund/list-complete-advance';
+import { ListConfirmAdvance } from '../../containers/advance-refund/list-advance-refund/list-confirm-advance';
+import { ListDueAndOverdue } from '../../containers/advance-refund/list-advance-refund/list-due-overdue';
+import { ListNewAdvance } from '../../containers/advance-refund/list-advance-refund/list-new-advance';
+import { ListProcessing } from '../../containers/advance-refund/list-advance-refund/list-processing';
+import { ListRefund } from '../../containers/advance-refund/list-advance-refund/list-refund';
+import { ListReject } from '../../containers/advance-refund/list-advance-refund/list-reject';
 
 const TabBar: React.FC = observer(() => {
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: 'Sắp đến hạn và quá hạn hoàn ứng',
-      children: <DueAndOverdue />,
+      children: <ListDueAndOverdue />,
     },
     {
       key: '2',
       label: 'Tạm ứng mới',
-      children: <NewAdvance />,
+      children: <ListNewAdvance />,
     },
     {
       key: '3',
       label: 'Đang phê duyệt',
-      children: <Processing />,
+      children: <ListProcessing />,
     },
     {
       key: '4',
       label: 'Đồng ý thanh toán',
-      children: <CompleteAdvance />,
+      children: <ListConfirmAdvance />,
     },
     {
       key: '5',
       label: 'Từ chối',
-      children: <Reject />,
+      children: <ListReject />,
     },
     {
       key: '6',
       label: 'Tạm ứng hoàn thành',
-      children: <ConfirmAdvance />,
+      children: <ListCompleteAdvance />,
     },
     {
       key: '7',
       label: 'Tất cả tạm ứng',
-      children: <AllAdvance />,
+      children: <ListAllAdvance />,
     },
     {
       key: '8',
       label: 'Hoàn ứng',
-      children: <Refund />,
+      children: <ListRefund />,
     },
   ];
 
