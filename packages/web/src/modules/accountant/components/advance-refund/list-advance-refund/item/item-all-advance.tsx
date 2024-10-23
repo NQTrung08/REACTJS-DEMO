@@ -1,9 +1,14 @@
 import { mdiChevronDown } from "@mdi/js";
 import Icon from "@mdi/react";
 import { AdvanceRefundModel } from "core-model";
+import { TAB_ADVANCE_REFUND } from "core-params";
 import { observer } from "mobx-react";
 
-export const ItemAllAdvance = observer(({ item }: { item: AdvanceRefundModel }) => {
+interface IProps {
+  item: AdvanceRefundModel,
+  tab: number;
+}
+export const ItemAllAdvance = observer(({ item, tab }: IProps) => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('vi-VN').format(amount);
   };
@@ -23,12 +28,14 @@ export const ItemAllAdvance = observer(({ item }: { item: AdvanceRefundModel }) 
   return (
     <div className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition-colors flex items-center">
       {/* Cột Trạng thái */}
+      
+      {tab == TAB_ADVANCE_REFUND.ALL && 
       <div className="w-[10%]">
         <span className={`font-medium px-2 py-1 rounded-3xl ${getStatusColor(item.status)}`}>
           {getStatusText(item.status)}
         </span>
       </div>
-
+      }
       {/* Cột Ngày ứng */}
       <div className="w-[10%]">
         {item.requestDate}

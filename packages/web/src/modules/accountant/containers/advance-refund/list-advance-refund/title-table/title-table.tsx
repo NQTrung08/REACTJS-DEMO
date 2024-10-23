@@ -1,11 +1,13 @@
+import { TAB_ADVANCE_REFUND } from "core-params";
+
 interface TitleTableProps {
-  tabName: 'overdue' | 'new' | 'processing' | 'confirm' | 'reject' | 'complete' | 'all' | 'refund';
+  tab: number;
 }
 
-export const TitleTable = ({ tabName }: TitleTableProps) => {
+export const TitleTable = ({tab}: TitleTableProps) => {
   const renderTitle = () => {
-    switch (tabName) {
-      case 'all':
+    switch (tab) {
+      case TAB_ADVANCE_REFUND.ALL:
         return (
           <>
             <span className="w-[10%]">Trạng thái</span>
@@ -18,11 +20,11 @@ export const TitleTable = ({ tabName }: TitleTableProps) => {
           </>
         );
 
-      case 'new':
-      case 'processing':
-      case 'confirm':
-      case 'reject':
-      case 'complete':
+      case TAB_ADVANCE_REFUND.NEW:
+      case TAB_ADVANCE_REFUND.PROCESSING:
+      case TAB_ADVANCE_REFUND.CONFIRM:
+      case TAB_ADVANCE_REFUND.REJECT:
+      case TAB_ADVANCE_REFUND.COMPLETE:
         return (
           <>
             <span className="w-[10%]">Ngày ứng</span>
@@ -34,8 +36,8 @@ export const TitleTable = ({ tabName }: TitleTableProps) => {
           </>
         );
 
-      case 'overdue':
-      case 'refund':
+      case TAB_ADVANCE_REFUND.OVERDUE:
+      case TAB_ADVANCE_REFUND.REFUND:
         return (
           <>
             <span className="w-[18%]">Trạng thái</span>

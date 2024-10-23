@@ -30,6 +30,9 @@
       "core-model": [
         "../core/src/models"
       ],
+      "core-params": [
+        "../core/src/params"
+      ],
     },
   },
   "include": [

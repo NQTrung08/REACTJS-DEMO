@@ -5,7 +5,13 @@ import { TitleTable } from "src/modules/accountant/containers/advance-refund/lis
 import { AdvancedRefund } from "../../../components/advance-refund/advanced";
 import { ToolBarRefund } from "../../../components/advance-refund/toolbar-refund";
 
-export const ListAllAdvance = observer(() => {
+interface IProps {
+  tab: number;
+}
+
+export const ListAllAdvance = observer(({
+  tab
+}: IProps) => {
   const items = advanceRefundStore.allAdvances;
 
   return (
@@ -14,10 +20,10 @@ export const ListAllAdvance = observer(() => {
       <ToolBarRefund />
 
       {/* Thêm bảng hiển thị dữ liệu */}
-      <TitleTable tabName="all" />
+      <TitleTable tab={tab} />
 
       {items.map((item, index) => (
-        <ItemAllAdvance key={index} item={item} />
+        <ItemAllAdvance key={index} item={item} tab={tab} />
       ))}
     </>
   );
