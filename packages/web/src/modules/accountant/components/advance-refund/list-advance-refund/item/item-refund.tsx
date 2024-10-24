@@ -31,7 +31,7 @@ export const ItemRefund = observer(({
   };
 
   return (
-    <div className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition-colors flex items-center">
+    <div className="border-b p-4 hover:bg-gray-50 transition-colors flex items-center">
       {/* Cột Trạng thái */}
       <div className="w-[18%]">
         <span className={`px-2 py-1 rounded-3xl ${getStatusColor(item.status)}`}>

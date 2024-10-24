@@ -26,7 +26,7 @@ export const ItemAllAdvance = observer(({ item, tab }: IProps) => {
   };
 
   return (
-    <div className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition-colors flex items-center">
+    <div className="border-b p-4 hover:bg-gray-50 transition-colors flex items-center">
       {/* Cột Trạng thái */}
       
       {tab == TAB_ADVANCE_REFUND.ALL && 

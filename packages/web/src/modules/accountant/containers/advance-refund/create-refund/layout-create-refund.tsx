@@ -1,6 +1,7 @@
 import { Steps } from "antd";
 import classNames from "classnames";
 import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
+import { observer } from "mobx-react";
 import { useState } from "react";
 import { AdvanceRefundForm } from "./advance-refund-form";
 
@@ -24,7 +25,7 @@ const stepItems = [
   },
 ];
 
-export const LayoutCreateRefund = () => {
+export const LayoutCreateRefund = observer(() => {
   const { formData } = useCreateAdvanceContext();
   const { isCreateOrUpdate } = useManagerRefundContext();
 
@@ -59,4 +60,4 @@ export const LayoutCreateRefund = () => {
       <AdvanceRefundForm />
     </div>
   )
-}
+})

@@ -10,8 +10,8 @@ export const ContentCreateAdvance = observer(() => {
         <input
           type="number"
           value={formData.advanceAmount}
-          onChange={(e) => formData.advanceAmount == parseFloat(e.target.value) || 0}
-          className="border-b w-[331px]"
+          onChange={(e) => formData.advanceAmount = parseFloat(e.target.value)}
+          className="border-b w-[331px] focus:outline-none"
         />
       </div>
 
@@ -20,9 +20,8 @@ export const ContentCreateAdvance = observer(() => {
         <input
           type="text"
           value={formData.content}
-          onChange={(e) => formData.content == e.target.value}
-          className="border-b w-[331px]"
-          readOnly
+          onChange={(e) => formData.content = e.target.value}
+          className="border-b w-[331px] focus:outline-none"
           placeholder="Nhập nội dung"
         />
       </div>

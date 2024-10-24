@@ -5,7 +5,7 @@ import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
 import { observer } from "mobx-react";
 import { useState } from "react";
 import DropdownStaff from "src/modules/accountant/components/advance-refund/create-advance.tsx/drop-down-staff";
-import { ContentCreateAdvance } from "../../../components/advance-refund/create-advance.tsx/content-create-advance";
+import { ContentCreateAdvance } from "./content-create-advance";
 
 const items = [
   {
@@ -56,6 +56,14 @@ export const AdvanceRefundForm = observer(() => {
     formData.requester = option.name; // Gán giá trị người đề nghị vào formData
   };
 
+  const handleSelectApprover = (option: any) => {
+    formData.approver = option.name;
+  };
+
+  const handleSelectBeneficiary = (option: any) => {
+    formData.beneficiary = option.name;
+  };
+
 
   return (
     <div>
@@ -67,9 +75,9 @@ export const AdvanceRefundForm = observer(() => {
             <label className="w-1/3 text-right">Người tạo:</label>
             <input
               type="text"
-              value={formData.creator}
-              onChange={(e) => formData.creator == e.target.value}
-              className="border-b w-2/3 focus:outline-none focus:border-blue-500"
+              value={'Lê Quang Khải'}
+              onChange={(e) => formData.creator = e.target.value}
+              className="w-2/3"
               readOnly
             />
           </div>
@@ -97,9 +105,9 @@ export const AdvanceRefundForm = observer(() => {
             <label className="w-1/3 text-right">Phòng ban:</label>
             <input
               type="text"
-              value={formData.department}
-              onChange={(e) => formData.department == e.target.value}
-              className="border-b w-2/3 focus:outline-none focus:border-blue-500"
+              value={'Development'}
+              onChange={(e) => formData.department = e.target.value}
+              className="w-2/3"
               readOnly
             />
           </div>
@@ -110,8 +118,8 @@ export const AdvanceRefundForm = observer(() => {
             <input
               type="date"
               value={formData.createAt}
-              onChange={(e) => formData.createAt == e.target.value}
-              className="w-2/3 border-b focus:outline-none focus:border-blue-500"
+              onChange={(e) => formData.createAt = e.target.value}
+              className="w-2/3 text-gray-900"
               readOnly
             />
           </div>
@@ -121,8 +129,8 @@ export const AdvanceRefundForm = observer(() => {
             <input
               type="date"
               value={formData.requestDate}
-              onChange={(e) => formData.requestDate == e.target.value}
-              className={`w-2/3 border-b focus:outline-none focus:border-blue-500 ${formData.requestDate ? 'border-gray-300' : 'border-red-500'}`}
+              onChange={(e) => formData.requestDate = e.target.value}
+              className={`w-2/3 border-b text-gray-500 focus:outline-none focus:border-blue-500 ${formData.requestDate ? 'border-b-0 text-gray-900' : 'border-red-500'}`}
             />
           </div>
 
@@ -137,8 +145,8 @@ export const AdvanceRefundForm = observer(() => {
             <input
               type="date"
               value={formData.refundDeadline}
-              onChange={(e) => formData.refundDeadline == e.target.value}
-              className={`w-2/3 border-b focus:outline-none focus:border-blue-500 ${formData.refundDeadline ? 'border-gray-300' : 'border-red-500'}`}
+              onChange={(e) => formData.refundDeadline = e.target.value}
+              className={`w-2/3 border-b text-gray-500 focus:outline-none focus:border-blue-500 ${formData.refundDeadline ? 'border-b-0 text-gray-900' : 'border-red-500'}`}
             />
           </div>
           {
@@ -153,12 +161,11 @@ export const AdvanceRefundForm = observer(() => {
         {/* Thụ hưởng */}
         < div className="col-span-1" >
           <label className="text-gray-900 block font-medium text-md">Thụ hưởng:</label>
-          <input
-            type="text"
-            value={formData.beneficiary}
-            onChange={(e) => formData.beneficiary == e.target.value}
-            className={`w-full text-md border-b block focus:outline-none focus:border-blue-500 ${formData.beneficiary ? 'border-gray-300' : 'border-red-500'}`}
-            placeholder="Nhập tên người thụ hưởng"
+          <DropdownStaff
+            placeholder="nhập tên người phê duyệt"
+            options={staffOptions}
+            onSelect={handleSelectBeneficiary}
+
           />
           {
             !formData.beneficiary && (
@@ -170,12 +177,11 @@ export const AdvanceRefundForm = observer(() => {
         {/* Người phê duyệt */}
         < div className="col-span-1" >
           <label className="block text-gray-900 font-medium">Người phê duyệt:</label>
-          <input
-            type="text"
-            value={formData.approver}
-            onChange={(e) => formData.approver == e.target.value}
-            className={`w-full block border-b focus:outline-none focus:border-blue-500 ${formData.approver ? 'border-gray-300' : 'border-red-500'}`}
-            placeholder="Nhập tên người phê duyệt"
+          <DropdownStaff
+            placeholder="nhập tên người phê duyệt"
+            options={staffOptions}
+            onSelect={handleSelectApprover}
+
           />
           {
             !formData.approver && (
@@ -194,7 +200,7 @@ export const AdvanceRefundForm = observer(() => {
       < div className="flex border-t justify-end gap-2 items-center text-md mt-16 px-3 py-2" >
         <button
           className="py-2 px-4 bg-gray-200 text-gray-700 rounded-sm hover:bg-gray-300"
-        onClick={handleCancel}
+          onClick={handleCancel}
         >
           Đóng lại
         </button>

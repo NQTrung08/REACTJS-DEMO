@@ -1,5 +1,6 @@
 import { Tabs } from 'antd';
 import classNames from 'classnames';
+import { ListAdvanceRefundProvider } from 'core-modules';
 import { TAB_ADVANCE_REFUND } from 'core-params';
 import { observer } from "mobx-react";
 import { useState } from 'react';
@@ -91,7 +92,9 @@ const TabBar = observer(() => {
             key={Number(item.key)}
           >
             <div className="flex flex-col h-full w-full">
+            <ListAdvanceRefundProvider>
               {renderTab(Number(item.key))}
+            </ListAdvanceRefundProvider>
             </div>
           </Tabs.TabPane>
         )}

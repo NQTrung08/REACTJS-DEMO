@@ -1,5 +1,5 @@
 import { AdvanceRefundModel } from "core-model";
-import advanceRefundStore from "core/src/stores/advance-refund-store";
+import { ListAdvanceRefundProvider, useListAdvanceRefundContext } from "core-modules";
 import { observer } from "mobx-react";
 import { BaseList } from "src/based/components/common/base-list";
 import { ItemAdvanceComplete } from "../../components/advance-refund/list-advance-refund/item/item-advance-complete";
@@ -13,10 +13,10 @@ interface IProps {
 export const ContainerCompleteAdvance = observer(({
   tab
 }: IProps) => {
-  const items = advanceRefundStore.allAdvances;
+  const { currentAdvanceRefund } = useListAdvanceRefundContext();
 
   const renderTitle = () => (
-    <TitleTableAdvanceComplete/>
+    <TitleTableAdvanceComplete />
   );
 
   const renderItem = (item: AdvanceRefundModel, index: number) => (
@@ -25,12 +25,17 @@ export const ContainerCompleteAdvance = observer(({
 
   return (
     <>
-      <FilterAdvanced tab={tab}/>
-      <BaseList
-        renderTitle={renderTitle}
-        renderItem={renderItem}
-        data={items}
-      />
+      <ListAdvanceRefundProvider>
+
+        <FilterAdvanced tab={tab} />
+        {/* Thêm bảng hiển thị dữ liệu */}
+        <BaseList
+          title='tạm ứng/hoàn ứng'
+          renderTitle={renderTitle}
+          renderItem={renderItem}
+          data={currentAdvanceRefund}
+        />
+      </ListAdvanceRefundProvider>
     </>
   );
 });

@@ -5,23 +5,24 @@ interface BaseListProps {
   renderTitle: () => JSX.Element;  // Hàm render tiêu đề
   renderItem: (item: AdvanceRefundModel, index: number) => JSX.Element;  // Hàm render từng item
   data: AdvanceRefundModel[]; // Dữ liệu của danh sách
+  title: string
 }
 
-const BaseList = ({ renderTitle, renderItem, data }: BaseListProps) => {
+const BaseList = ({ renderTitle, renderItem, data, title }: BaseListProps) => {
   return (
-    <>
-      <ToolBarRefund />
+    <div className="overflow-y-auto h-full">
+      <ToolBarRefund title={title}/>
       <div className="flex text-black font-medium p-3 border-b">
         {renderTitle()} {/* Gọi hàm render tiêu đề */}
       </div>
 
       {/* Hiển thị các items */}
-      <div className="divide-y">
+      <div className="">
         {data.map((item, index) => (
           renderItem(item, index)
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
