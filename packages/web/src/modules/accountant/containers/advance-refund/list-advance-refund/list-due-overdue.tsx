@@ -1,27 +1,38 @@
-import { TAB_ADVANCE_REFUND } from "core-params";
+import { AdvanceRefundModel } from "core-model";
 import advanceRefundStore from "core/src/stores/advance-refund-store";
 import { observer } from "mobx-react";
-import { AdvancedRefund } from "../../../components/advance-refund/advanced";
-import { ItemDueOverdue } from "../../../components/advance-refund/list-advance-refund/item/item-due-overdue";
-import { ToolBarRefund } from "../../../components/advance-refund/toolbar-refund";
-import { TitleTable } from "../../../containers/advance-refund/list-advance-refund/title-table/title-table";
+import { BaseList } from "src/based/components/common/base-list";
+import { ItemDueOverdue } from "src/modules/accountant/components/advance-refund/list-advance-refund/item/item-due-overdue";
+import { FilterAdvanced } from "./filter-default/filter-advanced";
+import { TitleTable } from "./title-table/title-table";
+import { ToolBarRefund } from "./toolbar-refund";
 
+interface IProps {
+  tab: number
+}
 
-export const ListDueAndOverdue = observer(() => {
+export const ListDueAndOverdue = observer(({
+  tab
+}: IProps) => {
   const items = advanceRefundStore.allAdvances;
+  const renderTitle = () => (
+    <TitleTable tab={tab} />
+  );
+
+  const renderItem = (item: AdvanceRefundModel, index: number) => (
+    <ItemDueOverdue key={index} item={item} tab={tab} />
+  );
 
   return (
     <>
-      <AdvancedRefund/>
+      <FilterAdvanced tab={tab}/>
       <ToolBarRefund />
       {/* Thêm bảng hiển thị dữ liệu */}
-      <TitleTable tab={TAB_ADVANCE_REFUND.OVERDUE} />
-
-      {/* Map qua các items và truyền từng item vào ItemDueOverdue */}
-      {items.map((item, index) => (
-        <ItemDueOverdue key={index} item={item} />
-      ))}
-
+      <BaseList
+        renderTitle={renderTitle}
+        renderItem={renderItem}
+        items={items}
+      />
     </>
   );
 });

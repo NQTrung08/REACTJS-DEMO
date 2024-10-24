@@ -2,10 +2,10 @@ import { Tabs } from 'antd';
 import classNames from 'classnames';
 import { TAB_ADVANCE_REFUND } from 'core-params';
 import { observer } from "mobx-react";
-import React, { useState } from 'react';
-import { ListAllAdvance } from '../../containers/advance-refund/list-advance-refund/list-all-advance';
-import { ListDueAndOverdue } from '../../containers/advance-refund/list-advance-refund/list-due-overdue';
-const TabBar: React.FC = observer(() => {
+import { useState } from 'react';
+import { ListAllAdvance } from './list-advance-refund/list-all-advance';
+import { ListDueAndOverdue } from './list-advance-refund/list-due-overdue';
+const TabBar = observer(() => {
   const dataTabs = [
     {
       key: TAB_ADVANCE_REFUND.OVERDUE,
@@ -47,7 +47,7 @@ const TabBar: React.FC = observer(() => {
     switch (key) {
       case TAB_ADVANCE_REFUND.OVERDUE:
       case TAB_ADVANCE_REFUND.REFUND:
-        return <ListDueAndOverdue/>
+        return <ListDueAndOverdue tab={key}/>
       case TAB_ADVANCE_REFUND.NEW:
       case TAB_ADVANCE_REFUND.PROCESSING:
       case TAB_ADVANCE_REFUND.CONFIRM:

@@ -4,12 +4,14 @@ import { ReactNode, createContext, useContext, useState } from "react";
 
 interface ManagerRefundContextType {
   isCreateOrUpdate: boolean;
-  onCreateOrUpdate: (value: boolean) => void
+  onCreateOrUpdate: (value: boolean) => void;
+  handleCancel: () => void
 }
 
 export const ManagerRefundContext = createContext<ManagerRefundContextType>({
   isCreateOrUpdate: false,
-  onCreateOrUpdate: () => { }
+  onCreateOrUpdate: () => { },
+  handleCancel: () => { }
 })
 
 
@@ -24,8 +26,14 @@ const ManagerRefundContextProvider = observer(({ children } : IProps) => {
     setIsCreateOrUpdate(value);
   };
 
+  const handleCancel = () => {
+    onCreateOrUpdate(false);
+  };
+
   return (
-    <ManagerRefundContext.Provider value={{ isCreateOrUpdate, onCreateOrUpdate }}>
+    <ManagerRefundContext.Provider value={{ isCreateOrUpdate, onCreateOrUpdate,
+      handleCancel
+     }}>
       {children}
     </ManagerRefundContext.Provider>
   );

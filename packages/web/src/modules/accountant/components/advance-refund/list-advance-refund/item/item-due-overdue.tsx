@@ -29,19 +29,17 @@ export const ItemDueOverdue = observer(({
   return (
     <div className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition-colors flex items-center">
       {/* Cột Trạng thái */}
-      <div className="w-[18%] flex items-center">
-        <span className={`font-medium px-2 py-1 rounded-3xl ${getStatusColor(item.status)}`}>
+      <div className="w-[18%]">
+        <span className={`px-2 py-1 rounded-3xl ${getStatusColor(item.status)}`}>
           {getStatusText(item.status)}
         </span>
       </div>
 
       {/* Cột Quá hạn */}
       <div className="w-[10%]">
-
-          <span className="text-red-300 text-md">
+          <span className="text-red-300">
            
-          </span>
-        
+          </span>  
       </div>
 
       {/* Cột Hạn hoàn */}
@@ -60,7 +58,7 @@ export const ItemDueOverdue = observer(({
       </div>
 
       {/* Cột Số tiền tạm ứng */}
-      <div className="w-[20%] text-right font-medium text-lg">
+      <div className="w-[20%] text-right">
         {formatCurrency(item.advanceAmount)}
       </div>
 

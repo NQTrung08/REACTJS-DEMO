@@ -4,6 +4,7 @@ import { Tabs } from "antd";
 import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
 import { observer } from "mobx-react";
 import { useState } from "react";
+import DropdownStaff from "src/modules/accountant/components/advance-refund/create-advance.tsx/drop-down-staff";
 import { ContentCreateAdvance } from "../../../components/advance-refund/create-advance.tsx/content-create-advance";
 
 const items = [
@@ -24,29 +25,17 @@ const items = [
   }
 ]
 
-const stepItems = [
-  {
-    title: "Lập phiếu",
-    content: "Content for Step 1",
-  },
-  {
-    title: "Phê duyệt",
-    content: "Content for Step 2",
-  },
-  {
-    title: "Chi tiền",
-    content: "Content for Step 3",
-  },
-  {
-    title: "Hoàn thành",
-    content: "Content for Step 4",
-  },
+// Dữ liệu mẫu cho DropdownStaff
+const staffOptions = [
+  { name: 'Nguyen Van A', position: 'Manager' },
+  { name: 'Tran Van B', position: 'Developer' },
+  { name: 'Le Thi C', position: 'HR' },
 ];
 
 
 export const AdvanceRefundForm = observer(() => {
   const { formData } = useCreateAdvanceContext();
-  const { isCreateOrUpdate } = useManagerRefundContext();
+  const { isCreateOrUpdate, handleCancel } = useManagerRefundContext();
 
   const [current, setCurrent] = useState(0);
 
@@ -60,6 +49,11 @@ export const AdvanceRefundForm = observer(() => {
 
   const onChange = (key: string) => {
     console.log('Active Tab:', key);
+  };
+
+  // Hàm chọn nhân viên
+  const handleSelectRequester = (option: any) => {
+    formData.requester = option.name; // Gán giá trị người đề nghị vào formData
   };
 
 
@@ -83,13 +77,14 @@ export const AdvanceRefundForm = observer(() => {
           <div className="flex gap-2">
             {/* Người đề nghị */}
             <label className="text-right w-1/3">Người đề nghị:</label>
-            <input
-              type="text"
-              value={formData.requester}
-              onChange={(e) => formData.requester == e.target.value}
-              className='border-b w-2/3 focus:outline-none focus:border-blue-500'
-              placeholder="Chọn người đề nghị"
-            />
+            <div className="w-2/3">
+              <DropdownStaff
+                placeholder="Chọn người đề nghị"
+                options={staffOptions}
+                onSelect={handleSelectRequester}
+
+              />
+            </div>
           </div>
           {
             !formData.requester && (
@@ -199,7 +194,7 @@ export const AdvanceRefundForm = observer(() => {
       < div className="flex border-t justify-end gap-2 items-center text-md mt-16 px-3 py-2" >
         <button
           className="py-2 px-4 bg-gray-200 text-gray-700 rounded-sm hover:bg-gray-300"
-        // onClick={() => formData.resetForm()}
+        onClick={handleCancel}
         >
           Đóng lại
         </button>

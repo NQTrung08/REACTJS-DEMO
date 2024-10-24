@@ -52,12 +52,12 @@ export const ItemAllAdvance = observer(({ item, tab }: IProps) => {
       </div>
 
       {/* Cột Tài khoản hưởng thụ */}
-      <div className="w-[25%]">
+      <div className={`w-[${tab === TAB_ADVANCE_REFUND.ALL ? '25%' : '30%'}]`}>
         {item.beneficiaryAccount.bank}
       </div>
 
       {/* Cột Số tiền tạm ứng */}
-      <div className="w-[15%] text-right font-medium text-lg">
+      <div className="w-[15%] text-right">
         {formatCurrency(item.advanceAmount)}
       </div>
 
