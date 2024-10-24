@@ -2,7 +2,7 @@ import { makeAutoObservable, observable } from "mobx";
 
 export class AdvanceRefundModel {
   @observable id: number = Date.now(); // Mã phiếu tạm ứng
-  @observable creator: string = ""; // Người tạo
+  @observable creator: string = "Lê Quang Khải"; // Người tạo
   @observable requester: string = ""; // Người đề nghị
   @observable beneficiary: string = ""; // Người thụ hưởng
   @observable beneficiaryAccount = {
@@ -12,7 +12,7 @@ export class AdvanceRefundModel {
   }; // Tài khoản hưởng thụ
   @observable approver: string = ""; // Người phê duyệt
   @observable status: string = ""; // Trảng thái
-  @observable department: string = ""; // Phòng ban
+  @observable department: string = "Developement"; // Phòng ban
   @observable createAt: string = new Date().toISOString().split('T')[0];
   @observable requestDate: string = ""; // Ngày tạm ứng
   @observable actualRefundDate = ""; // ngày thực hoàn

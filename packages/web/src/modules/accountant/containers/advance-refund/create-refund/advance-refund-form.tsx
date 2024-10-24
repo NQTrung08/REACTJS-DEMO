@@ -34,7 +34,7 @@ const staffOptions = [
 
 
 export const AdvanceRefundForm = observer(() => {
-  const { formData } = useCreateAdvanceContext();
+  const { formData, handleSubmit } = useCreateAdvanceContext();
   const { isCreateOrUpdate, handleCancel } = useManagerRefundContext();
 
   const [current, setCurrent] = useState(0);
@@ -75,7 +75,7 @@ export const AdvanceRefundForm = observer(() => {
             <label className="w-1/3 text-right">Người tạo:</label>
             <input
               type="text"
-              value={'Lê Quang Khải'}
+              defaultValue="Lê Quang Khải" // Gán giá trị mặc định
               onChange={(e) => formData.creator = e.target.value}
               className="w-2/3"
               readOnly
@@ -205,7 +205,8 @@ export const AdvanceRefundForm = observer(() => {
           Đóng lại
         </button>
         <div className="flex">
-          <button className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-600">
+          <button className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-600"
+            onClick={handleSubmit}>
             <Icon path={mdiChevronRight} className="text-white w-4 h-4" />
             <span>
               Tiếp theo

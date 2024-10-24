@@ -57,6 +57,7 @@ export const LayoutCreateRefund = observer(() => {
         <Steps className="w-1/3 " size="small" current={current} items={stepItems.map((item) => ({ title: item.title }))} />
       </div>
       {/* form */}
+
       <AdvanceRefundForm />
     </div>
   )

@@ -7,7 +7,7 @@ import { TabBar } from "../containers/advance-refund/tab-bar";
 export const AdvanceRefundScreen = observer(() => {
   return (
     <ManagerRefundContextProvider>
-      <div className="w-full h-full overflow-y-auto">
+      <div className="w-full h-full overflow-y-auto relative">
         <HeaderAccountant title='Tạm ứng/hoàn ứng' />
         <CreateAdvanceProvider>
           <LayoutCreateRefund />

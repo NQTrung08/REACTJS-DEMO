@@ -2,6 +2,7 @@ import { action, makeAutoObservable, observable } from "mobx";
 import { observer } from "mobx-react";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { AdvanceRefundModel } from "../../../models";
+import { useManagerRefundContext } from "./manager-refund-context";
 
 class FilterAdvanceRefund {
   @observable keyword: string = '';
@@ -35,7 +36,6 @@ class FilterAdvanceRefund {
 }
 
 interface ListAdvanceRefundContextType {
-  advancePerson: AdvanceRefundModel[];
   filter: FilterAdvanceRefund;
   dataView: AdvanceRefundModel[];
   currentAdvanceRefund: AdvanceRefundModel[];
@@ -48,7 +48,6 @@ interface ListAdvanceRefundContextType {
 }
 
 export const ListAdvanceRefundContext = createContext<ListAdvanceRefundContextType>({
-  advancePerson: [],
   filter: new FilterAdvanceRefund(),
   dataView: [],
   currentAdvanceRefund: [],
@@ -110,10 +109,13 @@ const data = [
   },
 ]
 
+interface IProps {
+  children: ReactNode;
+}
 
-const ListAdvanceRefundProvider: React.FC<IProps> = observer(({ children }) => {
+const ListAdvanceRefundProvider = observer(({ children }: IProps) => {
   const [filter, setFilter] = useState<FilterAdvanceRefund>(new FilterAdvanceRefund());
-  const [advancePerson, setAdvancePerson] = useState<AdvanceRefundModel[]>(data);
+  const { advancePerson } = useManagerRefundContext();
   const [dataView, setDataView] = useState<AdvanceRefundModel[]>([]);
 
   useEffect(() => {
@@ -121,12 +123,14 @@ const ListAdvanceRefundProvider: React.FC<IProps> = observer(({ children }) => {
     console.log('advancePerson', advancePerson);
     setDataView(dataTemp);
   }, [advancePerson]);
+
   const [currentPage, setCurrentPage] = useState(0);
   const perPage = 10;
   const totalPages = Math.ceil(dataView.length / perPage);
   const currentAdvanceRefund = dataView.slice(currentPage * perPage, (currentPage + 1) * perPage);
 
   console.log('currentAdvanceRefund', currentAdvanceRefund);
+
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
   };
@@ -135,12 +139,14 @@ const ListAdvanceRefundProvider: React.FC<IProps> = observer(({ children }) => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
+
+
+
   return (
     <ListAdvanceRefundContext.Provider value={{
-      filter, advancePerson, dataView,
+      filter, dataView,
       currentAdvanceRefund, currentPage, perPage, totalPages,
       handleNextPage, handlePreviousPage,
-
     }}>
       {children}
     </ListAdvanceRefundContext.Provider>

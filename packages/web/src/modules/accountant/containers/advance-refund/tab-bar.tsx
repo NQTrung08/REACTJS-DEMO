@@ -53,21 +53,21 @@ const TabBar = observer(() => {
   const renderTab = (key: number) => {
     switch (key) {
       case TAB_ADVANCE_REFUND.OVERDUE:
-        return <ContainerDueAndOverdue tab={key}/>
+        return <ContainerDueAndOverdue tab={key} />
       case TAB_ADVANCE_REFUND.REFUND:
-        return <ContainerRefund tab={key}/>
+        return <ContainerRefund tab={key} />
       case TAB_ADVANCE_REFUND.NEW:
-        return <ContainerNewAdvance tab={key}/>
+        return <ContainerNewAdvance tab={key} />
       case TAB_ADVANCE_REFUND.PROCESSING:
-        return <ContainerProcess tab={key}/>
+        return <ContainerProcess tab={key} />
       case TAB_ADVANCE_REFUND.CONFIRM:
-        return <ContainerConfirm tab={key}/>
+        return <ContainerConfirm tab={key} />
       case TAB_ADVANCE_REFUND.REJECT:
-        return <ContainerReject tab={key}/>
+        return <ContainerReject tab={key} />
       case TAB_ADVANCE_REFUND.COMPLETE:
-        return <ContainerCompleteAdvance tab={key}/>
+        return <ContainerCompleteAdvance tab={key} />
       case TAB_ADVANCE_REFUND.ALL:
-        return <ContainerAllAdvance tab={key}/>
+        return <ContainerAllAdvance tab={key} />
       default:
         return null
     }
@@ -91,10 +91,10 @@ const TabBar = observer(() => {
             }
             key={Number(item.key)}
           >
-            <div className="flex flex-col h-full w-full">
-            <ListAdvanceRefundProvider>
-              {renderTab(Number(item.key))}
-            </ListAdvanceRefundProvider>
+            <div className="flex flex-col h-screen w-full">
+              <ListAdvanceRefundProvider>
+                  {renderTab(Number(item.key))}
+              </ListAdvanceRefundProvider>
             </div>
           </Tabs.TabPane>
         )}
