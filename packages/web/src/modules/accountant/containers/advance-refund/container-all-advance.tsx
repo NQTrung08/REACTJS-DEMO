@@ -2,36 +2,34 @@ import { AdvanceRefundModel } from "core-model";
 import advanceRefundStore from "core/src/stores/advance-refund-store";
 import { observer } from "mobx-react";
 import { BaseList } from "src/based/components/common/base-list";
-import { ItemDueOverdue } from "src/modules/accountant/components/advance-refund/list-advance-refund/item/item-due-overdue";
-import { FilterAdvanced } from "./filter-default/filter-advanced";
-import { TitleTable } from "./title-table/title-table";
-import { ToolBarRefund } from "./toolbar-refund";
+import { ItemAllAdvance } from "src/modules/accountant/components/advance-refund/list-advance-refund/item/item-all-advance";
+import { TitleTableAllAdvance } from "../../components/advance-refund/list-advance-refund/title-table/title-table-all-advance";
+import { FilterAdvanced } from "./list-advance-refund/filter-default/filter-advanced";
 
 interface IProps {
-  tab: number
+  tab: number;
 }
 
-export const ListDueAndOverdue = observer(({
+export const ContainerAllAdvance = observer(({
   tab
 }: IProps) => {
   const items = advanceRefundStore.allAdvances;
+
   const renderTitle = () => (
-    <TitleTable tab={tab} />
+    <TitleTableAllAdvance/>
   );
 
   const renderItem = (item: AdvanceRefundModel, index: number) => (
-    <ItemDueOverdue key={index} item={item} tab={tab} />
+    <ItemAllAdvance key={index} item={item} tab={tab} />
   );
 
   return (
     <>
       <FilterAdvanced tab={tab}/>
-      <ToolBarRefund />
-      {/* Thêm bảng hiển thị dữ liệu */}
       <BaseList
         renderTitle={renderTitle}
         renderItem={renderItem}
-        items={items}
+        data={items}
       />
     </>
   );

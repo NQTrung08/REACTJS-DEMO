@@ -3,45 +3,21 @@ import Icon from "@mdi/react";
 import { AdvanceRefundModel } from "core-model";
 import { observer } from "mobx-react";
 
-// Định nghĩa interface cho các item
-
 interface IProps {
-  item: AdvanceRefundModel;
+  item: AdvanceRefundModel,
   tab: number;
 }
-
-
-export const ItemDueOverdue = observer(({
-  item, tab
-}: IProps) => {
+export const ItemConfirm = observer(({ item, tab }: IProps) => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('vi-VN').format(amount);
   };
 
-  const getStatusColor = (status: string) => {
-    if (status === 'overdue') return 'text-red-300 bg-red-50';
-    if (status === 'not_collected') return 'text-[#FFC043] bg-[#FFF2D9]';
-  };
-
-  const getStatusText = (status: string) => {
-    if (status === 'overdue') return 'Quá hạn';
-    if (status === 'not_collected') return 'Chưa thu';
-  };
-
   return (
     <div className="border-b last:border-b-0 p-4 hover:bg-gray-50 transition-colors flex items-center">
-      {/* Cột Trạng thái */}
-      <div className="w-[18%]">
-        <span className={`px-2 py-1 rounded-3xl ${getStatusColor(item.status)}`}>
-          {getStatusText(item.status)}
-        </span>
-      </div>
 
-      {/* Cột Quá hạn */}
+      {/* Cột Ngày ứng */}
       <div className="w-[10%]">
-          <span className="text-red-300">
-           
-          </span>  
+        {item.requestDate}
       </div>
 
       {/* Cột Hạn hoàn */}
@@ -49,25 +25,25 @@ export const ItemDueOverdue = observer(({
         {item.refundDeadline}
       </div>
 
-      {/* Cột Thực hoàn */}
-      <div className="w-[12%]">
-        {item.actualRefundDate}
-      </div>
-
       {/* Cột Người thụ hưởng */}
-      <div className="w-[25%]">
+      <div className="w-[20%]">
         {item.beneficiary}
       </div>
 
+      {/* Cột Tài khoản hưởng thụ */}
+      <div className='w-[30%]'>
+        {item.beneficiaryAccount.bank}
+      </div>
+
       {/* Cột Số tiền tạm ứng */}
-      <div className="w-[20%] text-right">
+      <div className="w-[15%] text-right">
         {formatCurrency(item.advanceAmount)}
       </div>
 
       {/* Nút hành động */}
       <div className="w-[15%] text-right flex justify-end">
         <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600 text-md font-medium">
-          <span>Thu tiền</span>
+          <span>Cập nhật</span>
           <Icon path={mdiChevronDown} className="w-4 h-4" />
         </button>
       </div>

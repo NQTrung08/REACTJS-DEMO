@@ -29,7 +29,7 @@ const DropdownStaff = ({ label, placeholder, options, onSelect }: DropdownStaffP
   };
 
   return (
-    <div className="flex items-center gap-2 mb-4 w-full">
+    <div className="flex items-center gap-2 w-full">
       <div className="relative w-full">
         <input
           type="text"

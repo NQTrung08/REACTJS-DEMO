@@ -3,8 +3,14 @@ import classNames from 'classnames';
 import { TAB_ADVANCE_REFUND } from 'core-params';
 import { observer } from "mobx-react";
 import { useState } from 'react';
-import { ListAllAdvance } from './list-advance-refund/list-all-advance';
-import { ListDueAndOverdue } from './list-advance-refund/list-due-overdue';
+import { ContainerAllAdvance } from './container-all-advance';
+import { ContainerCompleteAdvance } from './container-complete-advance';
+import { ContainerConfirm } from './container-confirm';
+import { ContainerDueAndOverdue } from './container-due-overdue';
+import { ContainerNewAdvance } from './container-new-advance';
+import { ContainerProcess } from './container-process';
+import { ContainerRefund } from './container-refund';
+import { ContainerReject } from './container-reject';
 const TabBar = observer(() => {
   const dataTabs = [
     {
@@ -46,15 +52,21 @@ const TabBar = observer(() => {
   const renderTab = (key: number) => {
     switch (key) {
       case TAB_ADVANCE_REFUND.OVERDUE:
+        return <ContainerDueAndOverdue tab={key}/>
       case TAB_ADVANCE_REFUND.REFUND:
-        return <ListDueAndOverdue tab={key}/>
+        return <ContainerRefund tab={key}/>
       case TAB_ADVANCE_REFUND.NEW:
+        return <ContainerNewAdvance tab={key}/>
       case TAB_ADVANCE_REFUND.PROCESSING:
+        return <ContainerProcess tab={key}/>
       case TAB_ADVANCE_REFUND.CONFIRM:
+        return <ContainerConfirm tab={key}/>
       case TAB_ADVANCE_REFUND.REJECT:
+        return <ContainerReject tab={key}/>
       case TAB_ADVANCE_REFUND.COMPLETE:
+        return <ContainerCompleteAdvance tab={key}/>
       case TAB_ADVANCE_REFUND.ALL:
-        return <ListAllAdvance tab={key}/>
+        return <ContainerAllAdvance tab={key}/>
       default:
         return null
     }

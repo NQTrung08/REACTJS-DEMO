@@ -11,7 +11,7 @@ interface IProps {
 }
 
 
-export const ItemDueOverdue = observer(({
+export const ItemRefund = observer(({
   item, tab
 }: IProps) => {
   const formatCurrency = (amount: number) => {
@@ -20,11 +20,13 @@ export const ItemDueOverdue = observer(({
 
   const getStatusColor = (status: string) => {
     if (status === 'overdue') return 'text-red-300 bg-red-50';
+    if (status === 'completed') return 'text-green-500 bg-green-50';
     if (status === 'not_collected') return 'text-[#FFC043] bg-[#FFF2D9]';
   };
 
   const getStatusText = (status: string) => {
     if (status === 'overdue') return 'Quá hạn';
+    if (status === 'completed') return 'Hoàn thành';
     if (status === 'not_collected') return 'Chưa thu';
   };
 
