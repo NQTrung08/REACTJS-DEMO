@@ -1,6 +1,6 @@
 import { Tabs } from 'antd';
 import classNames from 'classnames';
-import { ListAdvanceRefundProvider } from 'core-modules';
+import {ListAdvanceRefundProvider, useListAdvanceRefundContext} from 'core-modules';
 import { TAB_ADVANCE_REFUND } from 'core-params';
 import { observer } from "mobx-react";
 import { useState } from 'react';
@@ -12,66 +12,62 @@ import { ContainerNewAdvance } from './container-new-advance';
 import { ContainerProcess } from './container-process';
 import { ContainerRefund } from './container-refund';
 import { ContainerReject } from './container-reject';
+import {AdvanceRefundModel} from "core-model";
 const TabBar = observer(() => {
-  const dataTabs = [
+
+  const { currentAdvanceRefund } = useListAdvanceRefundContext();
+
+  console.log("11111", currentAdvanceRefund);
+
+  const DATA_TABS = [
     {
       key: TAB_ADVANCE_REFUND.OVERDUE,
       label: 'Sắp đến hạn và quá hạn hoàn ứng',
+      component: ContainerDueAndOverdue,
+      conditional: (item: AdvanceRefundModel) => true
     },
-    {
-      key: TAB_ADVANCE_REFUND.NEW,
-      label: 'Tạm ứng mới',
-    },
-    {
-      key: TAB_ADVANCE_REFUND.PROCESSING,
-      label: 'Đang phê duyệt',
-    },
-    {
-      key: TAB_ADVANCE_REFUND.CONFIRM,
-      label: 'Đồng ý thanh toán',
-    },
-    {
-      key: TAB_ADVANCE_REFUND.REJECT,
-      label: 'Từ chối',
-    },
-    {
-      key: TAB_ADVANCE_REFUND.COMPLETE,
-      label: 'Tạm ứng hoàn thành',
-    },
-    {
-      key: TAB_ADVANCE_REFUND.ALL,
-      label: 'Tất cả tạm ứng',
-    },
-    {
-      key: TAB_ADVANCE_REFUND.REFUND,
-      label: 'Hoàn ứng',
-    },
+    // {
+    //   key: TAB_ADVANCE_REFUND.NEW,
+    //   label: 'Tạm ứng mới',
+    //   component: ContainerNewAdvance
+    // },
+    // {
+    //   key: TAB_ADVANCE_REFUND.PROCESSING,
+    //   label: 'Đang phê duyệt',
+    //   component: ContainerProcess
+    // },
+    // {
+    //   key: TAB_ADVANCE_REFUND.CONFIRM,
+    //   label: 'Đồng ý thanh toán',
+    //   component: ContainerConfirm
+    // },
+    // {
+    //   key: TAB_ADVANCE_REFUND.REJECT,
+    //   label: 'Từ chối',
+    //   component: ContainerReject
+    // },
+    // {
+    //   key: TAB_ADVANCE_REFUND.COMPLETE,
+    //   label: 'Tạm ứng hoàn thành',
+    //   component: ContainerCompleteAdvance
+    // },
+    // {
+    //   key: TAB_ADVANCE_REFUND.ALL,
+    //   label: 'Tất cả tạm ứng',
+    //   component: ContainerAllAdvance
+    // },
+    // {
+    //   key: TAB_ADVANCE_REFUND.REFUND,
+    //   label: 'Hoàn ứng',
+    //   component: ContainerRefund
+    // },
   ];
 
   const [tabActive, setTabActive] = useState(1);
 
-  const renderTab = (key: number) => {
-    switch (key) {
-      case TAB_ADVANCE_REFUND.OVERDUE:
-        return <ContainerDueAndOverdue tab={key} />
-      case TAB_ADVANCE_REFUND.REFUND:
-        return <ContainerRefund tab={key} />
-      case TAB_ADVANCE_REFUND.NEW:
-        return <ContainerNewAdvance tab={key} />
-      case TAB_ADVANCE_REFUND.PROCESSING:
-        return <ContainerProcess tab={key} />
-      case TAB_ADVANCE_REFUND.CONFIRM:
-        return <ContainerConfirm tab={key} />
-      case TAB_ADVANCE_REFUND.REJECT:
-        return <ContainerReject tab={key} />
-      case TAB_ADVANCE_REFUND.COMPLETE:
-        return <ContainerCompleteAdvance tab={key} />
-      case TAB_ADVANCE_REFUND.ALL:
-        return <ContainerAllAdvance tab={key} />
-      default:
-        return null
-    }
-  }
+  const selectedTab = DATA_TABS.find(t => t.key === tabActive) as any;
+  const Component = selectedTab?.component as any;
+  const filteredData =  currentAdvanceRefund.filter((item) => selectedTab.conditional(item));
 
   return (
     <div>
@@ -82,7 +78,7 @@ const TabBar = observer(() => {
         tabBarGutter={0}
         activeKey={String(tabActive)}
       >
-        {dataTabs.map((item, index) =>
+        {DATA_TABS.map((item, index) =>
           <Tabs.TabPane
             tab={
               <div className={classNames('flex flex-row items-center space-x-1 px-4 ', { "border-b-1 rounded border-blue-600": tabActive === Number(item.key) })}>
@@ -93,7 +89,7 @@ const TabBar = observer(() => {
           >
             <div className="flex flex-col h-screen w-full">
               <ListAdvanceRefundProvider>
-                  {renderTab(Number(item.key))}
+                <Component tab={item.key} data={filteredData}/>
               </ListAdvanceRefundProvider>
             </div>
           </Tabs.TabPane>

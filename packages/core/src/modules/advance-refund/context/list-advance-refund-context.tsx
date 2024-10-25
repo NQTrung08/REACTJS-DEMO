@@ -70,9 +70,10 @@ const ListAdvanceRefundProvider = observer(({ children }: IProps) => {
   const [filter, setFilter] = useState<FilterAdvanceRefund>(new FilterAdvanceRefund());
   const { advancePerson } = useManagerRefundContext();
   const [dataView, setDataView] = useState<AdvanceRefundModel[]>([]);
-  
+
   useEffect(() => {
     let dataTemp: AdvanceRefundModel[] = advancePerson;
+
     if (filter.keyword) {
       dataTemp = dataTemp.filter((item) => {
         return item.beneficiary.toLowerCase().includes(filter.keyword.toLowerCase());
@@ -91,14 +92,14 @@ const ListAdvanceRefundProvider = observer(({ children }: IProps) => {
       dataTemp = dataTemp.sort((a, b) => {
         return new Date(b.refundDeadline).getTime() - new Date(a.refundDeadline).getTime();
       });
-    
+
     } else if (filter.sort === 'date_oldToNew') {
       // Sắp xếp từ cũ đến mới
       dataTemp = dataTemp.sort((a, b) => {
         return new Date(a.refundDeadline).getTime() - new Date(b.refundDeadline).getTime();
       });
     }
-    
+
     setDataView([...dataTemp]);
   }, [filter.keyword, filter.status, filter.sort, advancePerson]);
 

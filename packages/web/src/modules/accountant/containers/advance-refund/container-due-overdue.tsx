@@ -8,22 +8,15 @@ import { TitleTableOverDue } from "../../components/advance-refund/list-advance-
 import { FilterAdvanced } from "./list-advance-refund/filter-default/filter-advanced";
 
 interface IProps {
-  tab: number
+  tab: number,
+  data: AdvanceRefundModel[]
 }
 
 export const ContainerDueAndOverdue = observer(({
-  tab
+  tab,
+  data
 }: IProps) => {
-  const { currentAdvanceRefund } = useListAdvanceRefundContext();
-  const [filteredData, setFilteredData] = useState<AdvanceRefundModel[]>([]);
 
-  // Lọc dữ liệu và render lại khi currentAdvanceRefund thay đổi
-  useEffect(() => {
-    const newFilteredData = currentAdvanceRefund.filter(
-      (item: AdvanceRefundModel) => item.status !== 'completed'
-    );
-    setFilteredData(newFilteredData);
-  }, [currentAdvanceRefund]); // Phụ thuộc vào currentAdvanceRefund để chạy lại khi dữ liệu thay đổi
 
   const renderTitle = () => (
     <TitleTableOverDue />
@@ -41,7 +34,7 @@ export const ContainerDueAndOverdue = observer(({
           title='tạm ứng/hoàn ứng'
           renderTitle={renderTitle}
           renderItem={renderItem}
-          data={filteredData}
+          data={data}
         />
     </>
   );

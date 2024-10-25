@@ -51,7 +51,7 @@ const CreateAdvanceProvider = observer(({ children }: IProps) => {
     resetFormData();
     onCreateOrUpdate(false);
   }
-  
+
   const handleSubmit = () => {
     console.log('CreateAdvanceProvider', formData);
     addAdvancePerson(formData);

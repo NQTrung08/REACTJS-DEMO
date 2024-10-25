@@ -4,9 +4,12 @@ import { Tabs } from "antd";
 import classNames from "classnames";
 import { useCreateAdvanceContext } from "core-modules";
 import { observer } from "mobx-react";
-import { useState } from "react";
+import {FC, useState} from "react";
 import DropdownStaff from "src/modules/accountant/containers/advance-refund/create-refund/drop-down-staff";
 import { ContentCreateAdvance } from "./content-create-advance";
+import {AdvanceStep1} from "./steps/advance-step-1";
+import {AdvanceStep2} from "./steps/advance-step-2";
+import {StepType} from "./layout-create-refund";
 
 const dataTabs = [
   {
@@ -34,10 +37,11 @@ const staffOptions = [
 ];
 
 
-export const AdvanceRefundForm = observer(() => {
+export const AdvanceRefundForm:FC<StepType> = observer(({submitDataState}) => {
   const { formData, handleSubmit, handleCancel } = useCreateAdvanceContext();
   const [tabActive, setTabActive] = useState(1);
   const [current, setCurrent] = useState(0);
+
 
   const next = () => {
     setCurrent(current + 1);
@@ -72,6 +76,8 @@ export const AdvanceRefundForm = observer(() => {
         return null
     }
   }
+
+
 
   return (
     <div>
@@ -217,7 +223,7 @@ export const AdvanceRefundForm = observer(() => {
               }
               key={Number(item.key)}
             >
-              <div className="flex flex-col w-full">  
+              <div className="flex flex-col w-full">
                   {renderTab(Number(item.key))}
               </div>
             </Tabs.TabPane>
@@ -225,27 +231,7 @@ export const AdvanceRefundForm = observer(() => {
         </Tabs>
       </div >
 
-      {/* Button Actions */}
-      < div className="flex border-t justify-end gap-2 items-center text-md mt-16 px-3 py-2" >
-        <button
-          className="py-2 px-4 text-gray-700 rounded-sm hover:bg-gray-100"
-          onClick={handleCancel}
-        >
-          Đóng lại
-        </button>
-        <div className="flex">
-          <button className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-sm focus:outline-none"
-            onClick={handleSubmit}>
-            <Icon path={mdiChevronRight} className="text-white w-4 h-4" />
-            <span>
-              Tiếp theo
-            </span>
-          </button>
-          <button className="ml-[1px] px-3 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-500">
-            <Icon path={mdiChevronDown} className="text-white w-4 h-4" />
-          </button>
-        </div>
-      </div >
+
     </div>
   );
 });

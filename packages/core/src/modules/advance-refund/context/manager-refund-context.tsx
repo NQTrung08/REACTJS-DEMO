@@ -99,6 +99,7 @@ const ManagerRefundContextProvider = observer(({ children } : IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
   const [advancePerson, setAdvancePerson] = useState<AdvanceRefundModel[]>([]);
 
+
   const [itemUpdate, setItemUpdate] = useState<AdvanceRefundModel | null>(null);
   const onCreateOrUpdate = (value: boolean) => {
     setIsCreateOrUpdate(value);
@@ -112,7 +113,7 @@ const ManagerRefundContextProvider = observer(({ children } : IProps) => {
       return newList;
     });
   };
-  
+
 
   return (
     <ManagerRefundContext.Provider value={{ isCreateOrUpdate, onCreateOrUpdate,
