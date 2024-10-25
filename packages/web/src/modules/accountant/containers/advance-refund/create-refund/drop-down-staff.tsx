@@ -1,7 +1,7 @@
 import { mdiChevronDown } from '@mdi/js';
 import Icon from '@mdi/react';
-import { useState } from 'react';
-import { ItemStaff } from './item-staff';
+import { useEffect, useRef, useState } from 'react';
+import { ItemStaff } from '../../../components/advance-refund/create-advance.tsx/item-staff';
 
 interface Option {
   name: string;
@@ -14,9 +14,11 @@ interface DropdownStaffProps {
   options: Option[];
   onSelect: (option: Option) => void;
 }
+
 const DropdownStaff = ({ label, placeholder, options, onSelect }: DropdownStaffProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState('');
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -28,9 +30,22 @@ const DropdownStaff = ({ label, placeholder, options, onSelect }: DropdownStaffP
     setIsDropdownOpen(false);
   };
 
+  // Đóng dropdown khi click ra ngoài
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="flex items-center gap-2 w-full">
-      <div className="relative w-full">
+      <div ref={dropdownRef} className="relative w-full">
         <input
           type="text"
           value={selectedValue}

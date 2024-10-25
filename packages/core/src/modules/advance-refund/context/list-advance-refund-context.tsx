@@ -7,7 +7,7 @@ import { useManagerRefundContext } from "./manager-refund-context";
 class FilterAdvanceRefund {
   @observable keyword: string = '';
   @observable status: 'not_collected' | 'overdue' | 'completed' | 'all' = 'all';
-  @observable sort: 'date_asc' | 'date_desc' = 'date_asc';
+  @observable sort: 'date_newToOld' | 'date_oldToNew' = 'date_newToOld';
 
   constructor() {
     makeAutoObservable(this);
@@ -28,8 +28,8 @@ class FilterAdvanceRefund {
   // Thay đổi kiểu sắp xếp
   @action
   setSort(sort: string) {
-    if (sort === 'date_asc' || sort === 'date_desc') {
-      this.sort = sort as 'date_asc' | 'date_desc'; // Chuyển đổi kiểu
+    if (sort === 'date_newToOld' || sort === 'date_oldToNew') {
+      this.sort = sort as 'date_newToOld' | 'date_oldToNew'; // Chuyển đổi kiểu
     }
   }
 
@@ -87,17 +87,20 @@ const ListAdvanceRefundProvider = observer(({ children }: IProps) => {
 
     }
 
-    if (filter.sort === 'date_asc') {
+    if (filter.sort === 'date_newToOld') {
+      // Sắp xếp từ mới đến cũ
       dataTemp = dataTemp.sort((a, b) => {
-        return new Date(a.createAt).getTime() - new Date(b.createAt).getTime();
+        return new Date(b.refundDeadline).getTime() - new Date(a.refundDeadline).getTime();
       });
-
-    } else if (filter.sort === 'date_desc') {
+    
+    } else if (filter.sort === 'date_oldToNew') {
+      // Sắp xếp từ cũ đến mới
       dataTemp = dataTemp.sort((a, b) => {
-        return new Date(b.createAt).getTime() - new Date(a.createAt).getTime();
+        return new Date(a.refundDeadline).getTime() - new Date(b.refundDeadline).getTime();
       });
     }
-    setDataView(dataTemp);
+    
+    setDataView([...dataTemp]);
   }, [filter.keyword, filter.status, filter.sort, advancePerson]);
 
   const [currentPage, setCurrentPage] = useState(0);

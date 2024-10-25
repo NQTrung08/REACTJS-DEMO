@@ -20,6 +20,7 @@ export const SortDropdown = observer(({ title, sortOptions, filter }: SortDropdo
   const handleSortChange = (sortOrder: string, sortLabel: string) => {
     filter.setSort(sortOrder); // Gọi hàm setSort từ filter
     setSelectedTitle(sortLabel);
+    console.log('Sắp xếp:', sortOrder);
     setIsDropdownOpen(false);
   };
 

@@ -1,19 +1,46 @@
-import { mdiChevronDown } from "@mdi/js";
-import Icon from "@mdi/react";
 import { AdvanceRefundModel } from "core-model";
 import { observer } from "mobx-react";
+import { useEffect, useRef, useState } from "react";
+import { ActionButton } from "./button/action-button";
 
 interface IProps {
   item: AdvanceRefundModel,
   tab: number;
 }
 export const ItemAdvanceComplete = observer(({ item, tab }: IProps) => {
+
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null); // Tạo ref cho dropdown
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('vi-VN').format(amount);
   };
 
+  const toggleDropdown = () => {
+    setDropdownOpen(prev => !prev);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      setDropdownOpen(false); // Đóng dropdown khi click bên ngoài
+    }
+  };
+
+  useEffect(() => {
+    if (isDropdownOpen) {
+      // Lắng nghe sự kiện click ra ngoài
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      // Nếu dropdown đóng, gỡ bỏ sự kiện
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); // Cleanup
+    };
+  }, [isDropdownOpen]);
+
   return (
-    <div className="border-b p-4 hover:bg-gray-50 transition-colors flex items-center">
+    <div className="border-b p-4 hover:shadow-lg transition-shadow duration-200 ease-in-out flex items-center relative">
 
       {/* Cột Ngày ứng */}
       <div className="w-[10%]">
@@ -42,10 +69,12 @@ export const ItemAdvanceComplete = observer(({ item, tab }: IProps) => {
 
       {/* Nút hành động */}
       <div className="w-[15%] text-right flex justify-end">
-        <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600 text-md font-medium">
-          <span>Cập nhật</span>
-          <Icon path={mdiChevronDown} className="w-4 h-4" />
-        </button>
+      <ActionButton
+          status={item.status}
+          isDropdownOpen={isDropdownOpen}
+          toggleDropdown={toggleDropdown}
+          onCancel={() => { }}
+        />
       </div>
     </div>
   );

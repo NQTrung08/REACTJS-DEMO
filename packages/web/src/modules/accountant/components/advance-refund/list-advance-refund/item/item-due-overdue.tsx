@@ -22,6 +22,7 @@ export const ItemDueOverdue = observer(({
   const getStatusColor = (status: string) => {
     if (status === 'overdue') return 'text-red-300 bg-red-50';
     if (status === 'not_collected') return 'text-[#FFC043] bg-[#FFF2D9]';
+    
   };
 
   const getStatusText = (status: string) => {
@@ -30,7 +31,7 @@ export const ItemDueOverdue = observer(({
   };
 
   return (
-    <div className="border-b p-4 hover:bg-gray-50 transition-colors flex items-center">
+    <div className="border-b p-4 hover:shadow-lg transition-shadow duration-200 ease-in-out flex items-center relative">
       {/* Cột Trạng thái */}
       <div className="w-[18%]">
         <span className={`px-2 py-1 rounded-3xl ${getStatusColor(item.status)}`}>

@@ -15,6 +15,8 @@ export const ContainerRefund = observer(({
 }: IProps) => {
 
   const { currentAdvanceRefund } = useListAdvanceRefundContext();
+
+
   const renderTitle = () => (
     <TitleTableRefund />
   );

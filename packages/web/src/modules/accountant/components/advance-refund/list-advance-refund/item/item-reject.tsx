@@ -13,7 +13,7 @@ export const ItemReject = observer(({ item, tab }: IProps) => {
   };
 
   return (
-    <div className="border-b p-4 hover:bg-gray-50 transition-colors flex items-center">
+    <div className="border-b p-4 hover:shadow-lg transition-shadow duration-200 ease-in-out flex items-center relative">
 
       {/* Cột Ngày ứng */}
       <div className="w-[10%]">

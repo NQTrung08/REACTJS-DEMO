@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
 import { observer } from "mobx-react";
 import { useState } from "react";
-import DropdownStaff from "src/modules/accountant/components/advance-refund/create-advance.tsx/drop-down-staff";
+import DropdownStaff from "src/modules/accountant/containers/advance-refund/create-refund/drop-down-staff";
 import { ContentCreateAdvance } from "./content-create-advance";
 
 const dataTabs = [
@@ -164,9 +164,6 @@ export const AdvanceRefundForm = observer(() => {
             )
           }
         </div >
-
-
-
         {/* Thụ hưởng */}
         < div className="col-span-1" >
           <label className="text-gray-900 block font-medium text-md">Thụ hưởng:</label>

@@ -14,7 +14,7 @@ export const ContainerAllAdvance = observer(({
   tab
 }: IProps) => {
   const { currentAdvanceRefund } = useListAdvanceRefundContext();
-  console.log("trang1",currentAdvanceRefund);
+  console.log("trang all",currentAdvanceRefund);
   const renderTitle = () => (
     <TitleTableAllAdvance />
   );
@@ -25,7 +25,6 @@ export const ContainerAllAdvance = observer(({
 
   return (
     <>
-
         <FilterAdvanced tab={tab} />
         {/* Thêm bảng hiển thị dữ liệu */}
         <BaseList
