@@ -7,7 +7,7 @@ interface DropdownProps {
   children: React.ReactNode; // Thêm children để truyền nút tuỳ chỉnh
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({ isOpen, toggleDropdown, children }) => {
+export const Dropdown = ({ isOpen, toggleDropdown, children }: DropdownProps) => {
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickOutside = (event: MouseEvent) => {

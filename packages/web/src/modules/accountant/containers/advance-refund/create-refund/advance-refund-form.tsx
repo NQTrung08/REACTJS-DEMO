@@ -2,7 +2,7 @@ import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Tabs } from "antd";
 import classNames from "classnames";
-import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
+import { useCreateAdvanceContext } from "core-modules";
 import { observer } from "mobx-react";
 import { useState } from "react";
 import DropdownStaff from "src/modules/accountant/containers/advance-refund/create-refund/drop-down-staff";
@@ -35,8 +35,7 @@ const staffOptions = [
 
 
 export const AdvanceRefundForm = observer(() => {
-  const { formData, handleSubmit } = useCreateAdvanceContext();
-  const { isCreateOrUpdate, handleCancel } = useManagerRefundContext();
+  const { formData, handleSubmit, handleCancel } = useCreateAdvanceContext();
   const [tabActive, setTabActive] = useState(1);
   const [current, setCurrent] = useState(0);
 
@@ -229,13 +228,13 @@ export const AdvanceRefundForm = observer(() => {
       {/* Button Actions */}
       < div className="flex border-t justify-end gap-2 items-center text-md mt-16 px-3 py-2" >
         <button
-          className="py-2 px-4 bg-gray-200 text-gray-700 rounded-sm hover:bg-gray-300"
+          className="py-2 px-4 text-gray-700 rounded-sm hover:bg-gray-100"
           onClick={handleCancel}
         >
           Đóng lại
         </button>
         <div className="flex">
-          <button className="flex items-center gap-2 px-3 py-2 bg-blue-600 text-white rounded-sm hover:bg-blue-600"
+          <button className="flex items-center gap-2 px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-sm focus:outline-none"
             onClick={handleSubmit}>
             <Icon path={mdiChevronRight} className="text-white w-4 h-4" />
             <span>

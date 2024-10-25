@@ -101,6 +101,7 @@ export const ItemAllAdvance = observer(({ item, tab }: IProps) => {
           isDropdownOpen={isDropdownOpen}
           toggleDropdown={toggleDropdown}
           onCancel={() => { }}
+          advance={item}
         />
       </div>
     </div>

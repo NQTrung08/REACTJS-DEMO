@@ -6,17 +6,19 @@ import { AdvanceRefundModel } from "../../../models";
 interface ManagerRefundContextType {
   isCreateOrUpdate: boolean;
   onCreateOrUpdate: (value: boolean) => void;
-  handleCancel: () => void,
   addAdvancePerson: (advance: AdvanceRefundModel) => void;
   advancePerson: AdvanceRefundModel[];
+  itemUpdate: AdvanceRefundModel | null;
+  setItemUpdate: (advance: AdvanceRefundModel) => void;
 }
 
 export const ManagerRefundContext = createContext<ManagerRefundContextType>({
   isCreateOrUpdate: false,
   onCreateOrUpdate: () => { },
-  handleCancel: () => { },
   advancePerson: [],
-  addAdvancePerson: (advance: AdvanceRefundModel) => { }
+  addAdvancePerson: (advance: AdvanceRefundModel) => { },
+  itemUpdate: null,
+  setItemUpdate: () => { },
 })
 
 
@@ -95,14 +97,13 @@ const data = [
 
 const ManagerRefundContextProvider = observer(({ children } : IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
-  const [advancePerson, setAdvancePerson] = useState<AdvanceRefundModel[]>(data);
+  const [advancePerson, setAdvancePerson] = useState<AdvanceRefundModel[]>([]);
+
+  const [itemUpdate, setItemUpdate] = useState<AdvanceRefundModel | null>(null);
   const onCreateOrUpdate = (value: boolean) => {
     setIsCreateOrUpdate(value);
   };
 
-  const handleCancel = () => {
-    onCreateOrUpdate(false);
-  };
 
   const addAdvancePerson = (advance: AdvanceRefundModel) => {
     console.log('advance', advance);
@@ -115,9 +116,10 @@ const ManagerRefundContextProvider = observer(({ children } : IProps) => {
 
   return (
     <ManagerRefundContext.Provider value={{ isCreateOrUpdate, onCreateOrUpdate,
-      handleCancel,
       addAdvancePerson,
-      advancePerson
+      advancePerson,
+      itemUpdate,
+      setItemUpdate
      }}>
       {children}
     </ManagerRefundContext.Provider>

@@ -1,10 +1,17 @@
 import { useListAdvanceRefundContext } from 'core-modules';
+import { TAB_ADVANCE_REFUND } from 'core-params';
 import { observer } from 'mobx-react';
 import { StatusFilter } from 'src/based/components/common/status-filter';
+import { FilterExtend } from './filter-extend';
 
-export const FilterDefaultTabNew = observer(() => {
+interface IProps {
+  isOpen: boolean
+}
+
+export const FilterDefaultTabNew = observer(({
+  isOpen
+}: IProps) => {
   const { filter } = useListAdvanceRefundContext(); // Lấy filter từ context
-
   const filterOptions = [
     {
       label: 'Tất cả',
@@ -14,10 +21,14 @@ export const FilterDefaultTabNew = observer(() => {
     }
   ];
 
+  console.log('isOpen', isOpen);
+
   return (
     <div>
       <StatusFilter title="Người đề nghị" filterOptions={filterOptions} filter={filter} />
-      {/* Các thành phần khác của StaffList */}
+      {isOpen && (
+        <FilterExtend tab={TAB_ADVANCE_REFUND.NEW}/>
+      )}
     </div>
   );
 });

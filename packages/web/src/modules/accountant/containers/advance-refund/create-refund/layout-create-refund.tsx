@@ -35,7 +35,7 @@ export const LayoutCreateRefund = observer(() => {
     <div className={classNames("bg-white border border-gray-200 shadow-md", {
       "block": isCreateOrUpdate,
       "hidden": !isCreateOrUpdate
-    })} id="create-advance">
+    })} id="create-or-update">
       {/* Header form */}
       <div className="flex justify-between items-center py-8 px-3 border-b border-dashed">
         <span className="text-gray-900 font-medium text-llg">#TU202402070001</span>

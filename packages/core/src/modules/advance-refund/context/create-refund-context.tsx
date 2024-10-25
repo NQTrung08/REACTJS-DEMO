@@ -1,17 +1,19 @@
 import { observer } from "mobx-react";
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { AdvanceRefundModel } from "../../../models";
 import { useManagerRefundContext } from "./manager-refund-context";
 
 interface CreateAdvanceContextType {
   formData: AdvanceRefundModel,
-  handleSubmit: () => void
+  handleSubmit: () => void,
+  handleCancel: () => void
 
 }
 
 export const CreateAdvanceContext = createContext<CreateAdvanceContextType>({
   formData: new AdvanceRefundModel(),
   handleSubmit: () => { },
+  handleCancel: () => { }
 })
 
 interface IProps {
@@ -20,8 +22,36 @@ interface IProps {
 
 const CreateAdvanceProvider = observer(({ children }: IProps) => {
   const [formData, setFormData] = useState<AdvanceRefundModel>(new AdvanceRefundModel());
-  const { addAdvancePerson } = useManagerRefundContext();
+  const { addAdvancePerson, itemUpdate, onCreateOrUpdate } = useManagerRefundContext();
 
+  useEffect(() => {
+    if (itemUpdate) {
+      // Nếu có itemUpdate, cập nhật formData từ itemUpdate
+      formData.setAll(itemUpdate);
+   } else {
+     resetFormData();
+   }
+  }, [itemUpdate, formData]);
+
+
+  const resetFormData = () => {
+    // TODO: Khoi tao formData voi cac giatri mac dinh
+    formData.setAll({
+      advanceAmount: 0,
+      content: '',
+      requester: '',
+      approver: '',
+      beneficiary: '',
+      requestDate: '',
+      refundDeadline: '',
+    })
+  }
+
+  const handleCancel = () => {
+    resetFormData();
+    onCreateOrUpdate(false);
+  }
+  
   const handleSubmit = () => {
     console.log('CreateAdvanceProvider', formData);
     addAdvancePerson(formData);
@@ -29,7 +59,8 @@ const CreateAdvanceProvider = observer(({ children }: IProps) => {
   return (
     <CreateAdvanceContext.Provider value={{
       formData,
-      handleSubmit
+      handleSubmit,
+      handleCancel
     }}>
       {children}
     </CreateAdvanceContext.Provider>

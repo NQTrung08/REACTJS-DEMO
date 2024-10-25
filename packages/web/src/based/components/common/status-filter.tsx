@@ -34,7 +34,7 @@ export const StatusFilter = observer(({
   return (
     <div className='flex gap-2 p-2 items-center text-xs'>
       <Icon path={mdiFilterMultipleOutline} className='size-4 text-[#757575]' />
-      <span className='text-[#757575] font-medium'>{title}</span>
+      <span className='text-gray-500 font-medium'>{title}</span>
       {filterOptions.map(option => (
         <div
           key={option.value}

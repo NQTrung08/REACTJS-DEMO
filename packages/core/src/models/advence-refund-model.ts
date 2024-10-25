@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 
 export class AdvanceRefundModel {
   @observable id: number = Date.now(); // Mã phiếu tạm ứng
@@ -24,6 +24,11 @@ export class AdvanceRefundModel {
 
   constructor() {
     makeAutoObservable(this); // Tự động quan sát mọi thuộc tính của class
+  }
+
+  @action
+  setAll(data: Partial<AdvanceRefundModel>) {
+    Object.assign(this, data);
   }
 
 }

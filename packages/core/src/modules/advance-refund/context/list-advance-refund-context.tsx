@@ -56,7 +56,6 @@ export const ListAdvanceRefundContext = createContext<ListAdvanceRefundContextTy
   totalPages: 0,
   handleNextPage: () => { },
   handlePreviousPage: () => { },
-
 })
 interface IProps {
   children: ReactNode;
@@ -71,7 +70,7 @@ const ListAdvanceRefundProvider = observer(({ children }: IProps) => {
   const [filter, setFilter] = useState<FilterAdvanceRefund>(new FilterAdvanceRefund());
   const { advancePerson } = useManagerRefundContext();
   const [dataView, setDataView] = useState<AdvanceRefundModel[]>([]);
-
+  
   useEffect(() => {
     let dataTemp: AdvanceRefundModel[] = advancePerson;
     if (filter.keyword) {
