@@ -8,9 +8,11 @@ import { SearchAdvanceRefund } from '../search-advance-refund';
 import { AdvanceRefundSort } from '../sort-refund';
 import { FilterDefaultTabNew } from './filter-default-tab-new';
 import { StatusFilterAdvanceRefund } from './status-filter-refund';
+import {AdvanceRefundModel} from "core-model";
 
 interface IProps {
-  tab: number
+  tab: number,
+  data: AdvanceRefundModel[]
 }
 
 export const FilterAdvanced = observer(({
@@ -22,6 +24,9 @@ export const FilterAdvanced = observer(({
     console.log('toggleAdvancedFilter');
     setAdvancedFilterOpen(prev => !prev);
   };
+
+
+
 
   return (
     <div>

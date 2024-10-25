@@ -1,4 +1,4 @@
-import { CreateAdvanceProvider, ManagerRefundContextProvider } from "core-modules";
+import {CreateAdvanceProvider, ListAdvanceRefundProvider, ManagerRefundContextProvider} from "core-modules";
 import { observer } from "mobx-react";
 import { HeaderAccountant } from "../components/header-accountant";
 import { LayoutCreateRefund } from "../containers/advance-refund/create-refund/layout-create-refund";
@@ -17,7 +17,9 @@ export const AdvanceRefundScreen = observer(() => {
         <CreateAdvanceProvider>
           <LayoutCreateRefund openState={state} />
         </CreateAdvanceProvider>
-        <TabBar />
+        <ListAdvanceRefundProvider>
+          <TabBar />
+        </ListAdvanceRefundProvider>
       </div>
     </ManagerRefundContextProvider>
 
