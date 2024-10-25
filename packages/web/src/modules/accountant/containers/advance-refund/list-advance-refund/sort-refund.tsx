@@ -1,7 +1,8 @@
 import { useListAdvanceRefundContext } from 'core-modules';
+import { observer } from 'mobx-react';
 import { SortDropdown } from 'src/based/components/common/sort';
 
-export const AdvanceRefundSort = () => {
+export const AdvanceRefundSort = observer(() => {
   const { filter } = useListAdvanceRefundContext(); // Lấy filter từ context
 
   const sortOptions = [
@@ -22,4 +23,4 @@ export const AdvanceRefundSort = () => {
       {/* Các thành phần khác của StaffList */}
     </div>
   );
-};
+});

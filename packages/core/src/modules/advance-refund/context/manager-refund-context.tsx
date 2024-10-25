@@ -24,9 +24,56 @@ interface IProps {
   children: ReactNode
 }
 
+const data = [
+  {
+    id: 1,
+    creator: 'Nguyễn Văn A',
+    requester: 'Lê Văn B',
+    beneficiary: 'Trần Thị C',
+    beneficiaryAccount: {
+      accountNumber: '123456789',
+      bank: 'MSB',
+      accountImage: '',
+    },
+    approver: 'Nguyễn Văn D',
+    status: 'not_collected',
+    department: 'Kế Toán',
+    createAt: '2024-03-22',
+    requestDate: '2024-03-22',
+    actualRefundDate: '',
+    overdue: 0,
+    refundDeadline: '2024-03-22',
+    advanceAmount: 1000000,
+    content: 'Tạm ứng mua văn phòng phẩm',
+    attachedDocuments: [],
+  },
+  {
+    id: 2,
+    creator: 'Nguyễn Văn A',
+    requester: 'Lê Văn B',
+    beneficiary: 'Phạm Văn D',
+    beneficiaryAccount: {
+      accountNumber: '987654321',
+      bank: 'Vietcombank',
+      accountImage: '',
+    },
+    approver: 'Nguyễn Văn E',
+    status: 'overdue',
+    department: 'Nhân Sự',
+    createAt: '2024-03-10',
+    requestDate: '2024-03-15',
+    actualRefundDate: '2024-04-01',
+    overdue: 12,
+    refundDeadline: '2024-03-22',
+    advanceAmount: 20000000,
+    content: 'Tạm ứng chi phí hội nghị',
+    attachedDocuments: [],
+  },
+]
+
 const ManagerRefundContextProvider = observer(({ children } : IProps) => {
   const [isCreateOrUpdate, setIsCreateOrUpdate] = useState<boolean>(false);
-  const [advancePerson, setAdvancePerson] = useState<AdvanceRefundModel[]>([]);
+  const [advancePerson, setAdvancePerson] = useState<AdvanceRefundModel[]>(data);
   const onCreateOrUpdate = (value: boolean) => {
     setIsCreateOrUpdate(value);
   };

@@ -1,12 +1,13 @@
 import { useListAdvanceRefundContext } from 'core-modules';
 import { TAB_ADVANCE_REFUND } from 'core-params';
+import { observer } from 'mobx-react';
 import { StatusFilter } from 'src/based/components/common/status-filter';
 
 interface IProps {
   tab: number;
 }
 
-export const StatusFilterAdvanceRefund = ({
+export const StatusFilterAdvanceRefund = observer(({
   tab
 }: IProps) => {
   const { filter } = useListAdvanceRefundContext(); // Lấy filter từ context
@@ -55,4 +56,4 @@ export const StatusFilterAdvanceRefund = ({
       {/* Các thành phần khác của StaffList */}
     </div>
   );
-};
+});

@@ -1,5 +1,5 @@
 import { AdvanceRefundModel } from "core-model";
-import { ListAdvanceRefundProvider, useListAdvanceRefundContext } from "core-modules";
+import { useListAdvanceRefundContext } from "core-modules";
 import { observer } from "mobx-react";
 import { BaseList } from "src/based/components/common/base-list";
 import { ItemDueOverdue } from "src/modules/accountant/components/advance-refund/list-advance-refund/item/item-due-overdue";
@@ -14,6 +14,7 @@ export const ContainerDueAndOverdue = observer(({
   tab
 }: IProps) => {
   const { currentAdvanceRefund } = useListAdvanceRefundContext();
+  console.log("container overdue",currentAdvanceRefund);
   const renderTitle = () => (
     <TitleTableOverDue />
   );
@@ -24,9 +25,7 @@ export const ContainerDueAndOverdue = observer(({
 
   return (
     <>
-      <ListAdvanceRefundProvider>
-
-        <FilterAdvanced tab={tab} />
+      <FilterAdvanced tab={tab} />
         {/* Thêm bảng hiển thị dữ liệu */}
         <BaseList
           title='tạm ứng/hoàn ứng'
@@ -34,7 +33,6 @@ export const ContainerDueAndOverdue = observer(({
           renderItem={renderItem}
           data={currentAdvanceRefund}
         />
-      </ListAdvanceRefundProvider>
     </>
   );
 });

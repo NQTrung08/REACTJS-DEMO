@@ -16,9 +16,10 @@ interface SortDropdownProps {
 
 export const SortDropdown = observer(({ title, sortOptions, filter }: SortDropdownProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const handleSortChange = (sortOrder: string) => {
+  const [selectedTitle, setSelectedTitle] = useState(title); // Thêm state cho tiêu đề
+  const handleSortChange = (sortOrder: string, sortLabel: string) => {
     filter.setSort(sortOrder); // Gọi hàm setSort từ filter
+    setSelectedTitle(sortLabel);
     setIsDropdownOpen(false);
   };
 
@@ -31,7 +32,7 @@ export const SortDropdown = observer(({ title, sortOptions, filter }: SortDropdo
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
           <Icon path={mdiSortAscending} className='w-4 h-4' />
-          <span className='ml-2 text-md'>{title}</span>
+          <span className='ml-2 text-md'>{selectedTitle}</span>
           <Icon path={mdiChevronDown} className='ml-1 w-4 h-4' />
 
         </div>
@@ -43,7 +44,7 @@ export const SortDropdown = observer(({ title, sortOptions, filter }: SortDropdo
             <div
               key={option.value}
               className='p-2 flex cursor-pointer hover:bg-gray-100 text-md'
-              onClick={() => handleSortChange(option.value)}
+              onClick={() => handleSortChange(option.value, option.label)}
             >
               <span className='ml-2'>{option.label}</span>
             </div>

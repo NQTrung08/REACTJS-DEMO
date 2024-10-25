@@ -62,52 +62,6 @@ interface IProps {
   children: ReactNode;
 }
 
-const data = [
-  {
-    id: 1,
-    creator: 'Nguyễn Văn A',
-    requester: 'Lê Văn B',
-    beneficiary: 'Trần Thị C',
-    beneficiaryAccount: {
-      accountNumber: '123456789',
-      bank: 'MSB',
-      accountImage: '',
-    },
-    approver: 'Nguyễn Văn D',
-    status: 'not_collected',
-    department: 'Kế Toán',
-    createAt: '2024-03-22',
-    requestDate: '2024-03-22',
-    actualRefundDate: '',
-    overdue: 0,
-    refundDeadline: '2024-03-22',
-    advanceAmount: 1000000,
-    content: 'Tạm ứng mua văn phòng phẩm',
-    attachedDocuments: [],
-  },
-  {
-    id: 2,
-    creator: 'Nguyễn Văn A',
-    requester: 'Lê Văn B',
-    beneficiary: 'Phạm Văn D',
-    beneficiaryAccount: {
-      accountNumber: '987654321',
-      bank: 'Vietcombank',
-      accountImage: '',
-    },
-    approver: 'Nguyễn Văn E',
-    status: 'overdue',
-    department: 'Nhân Sự',
-    createAt: '2024-03-10',
-    requestDate: '2024-03-15',
-    actualRefundDate: '2024-04-01',
-    overdue: 12,
-    refundDeadline: '2024-03-22',
-    advanceAmount: 20000000,
-    content: 'Tạm ứng chi phí hội nghị',
-    attachedDocuments: [],
-  },
-]
 
 interface IProps {
   children: ReactNode;
@@ -120,16 +74,36 @@ const ListAdvanceRefundProvider = observer(({ children }: IProps) => {
 
   useEffect(() => {
     let dataTemp: AdvanceRefundModel[] = advancePerson;
-    console.log('advancePerson', advancePerson);
+    if (filter.keyword) {
+      dataTemp = dataTemp.filter((item) => {
+        return item.beneficiary.toLowerCase().includes(filter.keyword.toLowerCase());
+      });
+    }
+
+    if (filter.status !== 'all') {
+      dataTemp = dataTemp.filter((item) => {
+        return item.status === filter.status;
+      });
+
+    }
+
+    if (filter.sort === 'date_asc') {
+      dataTemp = dataTemp.sort((a, b) => {
+        return new Date(a.createAt).getTime() - new Date(b.createAt).getTime();
+      });
+
+    } else if (filter.sort === 'date_desc') {
+      dataTemp = dataTemp.sort((a, b) => {
+        return new Date(b.createAt).getTime() - new Date(a.createAt).getTime();
+      });
+    }
     setDataView(dataTemp);
-  }, [advancePerson]);
+  }, [filter.keyword, filter.status, filter.sort, advancePerson]);
 
   const [currentPage, setCurrentPage] = useState(0);
   const perPage = 10;
   const totalPages = Math.ceil(dataView.length / perPage);
   const currentAdvanceRefund = dataView.slice(currentPage * perPage, (currentPage + 1) * perPage);
-
-  console.log('currentAdvanceRefund', currentAdvanceRefund);
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));

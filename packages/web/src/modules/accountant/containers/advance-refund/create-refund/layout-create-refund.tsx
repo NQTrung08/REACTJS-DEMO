@@ -1,28 +1,15 @@
-import { Steps } from "antd";
 import classNames from "classnames";
 import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
 import { observer } from "mobx-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { AdvanceRefundForm } from "./advance-refund-form";
 
 
 const stepItems = [
-  {
-    title: "Lập phiếu",
-    content: "Content for Step 1",
-  },
-  {
-    title: "Phê duyệt",
-    content: "Content for Step 2",
-  },
-  {
-    title: "Chi tiền",
-    content: "Content for Step 3",
-  },
-  {
-    title: "Hoàn thành",
-    content: "Content for Step 4",
-  },
+  { number: 1, label: 'Lập phiếu' },
+  { number: 2, label: 'Phê duyệt' },
+  { number: 3, label: 'Chi tiền' },
+  { number: 4, label: 'Hoàn thành' }
 ];
 
 export const LayoutCreateRefund = observer(() => {
@@ -54,7 +41,25 @@ export const LayoutCreateRefund = observer(() => {
         <span className="text-gray-900 font-medium text-llg">#TU202402070001</span>
         <span className="text-xl font-semibold">TẠM ỨNG</span>
         {/* Steps */}
-        <Steps className="w-1/3 " size="small" current={current} items={stepItems.map((item) => ({ title: item.title }))} />
+        {/* <Steps className="w-1/3" size="small" current={current} items={stepItems.map((item) => ({ title: item.title }))} />
+         */}
+
+        <div className="flex items-center justify-between w-[380px]">
+          {stepItems.map((step, index) => (
+            <React.Fragment key={step.number}>
+              <div className="flex items-center gap-1">
+                <div className="flex text-sm items-center justify-center w-4 h-4 rounded-full bg-blue-600 text-white font-medium">
+                  {step.number}
+                </div>
+                <span className="text-sm font-medium text-gray-700">{step.label}</span>
+              </div>
+              {index < stepItems.length - 1 && (
+                <div className="flex-1 h-0.5 bg-blue-600 mx-2" />
+              )}
+            </React.Fragment>
+          ))}
+        </div>
+
       </div>
       {/* form */}
 

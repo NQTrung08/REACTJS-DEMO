@@ -1,5 +1,6 @@
 
 import { TAB_ADVANCE_REFUND } from 'core-params';
+import { observer } from 'mobx-react';
 import { Search } from 'src/based/components/common/Search';
 import { AdvanceRefundSort } from '../sort-refund';
 import { FilterDefaultTabNew } from './filter-default-tab-new';
@@ -9,7 +10,7 @@ interface IProps {
   tab: number
 }
 
-export const FilterAdvanced = ({
+export const FilterAdvanced = observer(({
   tab
 }: IProps) => {
 
@@ -33,4 +34,4 @@ export const FilterAdvanced = ({
     </div>
 
   )
-}
+})

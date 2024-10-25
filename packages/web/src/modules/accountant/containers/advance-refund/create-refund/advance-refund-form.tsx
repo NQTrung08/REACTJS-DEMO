@@ -1,13 +1,14 @@
 import { mdiChevronDown, mdiChevronRight } from "@mdi/js";
 import Icon from "@mdi/react";
 import { Tabs } from "antd";
+import classNames from "classnames";
 import { useCreateAdvanceContext, useManagerRefundContext } from "core-modules";
 import { observer } from "mobx-react";
 import { useState } from "react";
 import DropdownStaff from "src/modules/accountant/components/advance-refund/create-advance.tsx/drop-down-staff";
 import { ContentCreateAdvance } from "./content-create-advance";
 
-const items = [
+const dataTabs = [
   {
     key: '1',
     label: 'Nội dung',
@@ -36,7 +37,7 @@ const staffOptions = [
 export const AdvanceRefundForm = observer(() => {
   const { formData, handleSubmit } = useCreateAdvanceContext();
   const { isCreateOrUpdate, handleCancel } = useManagerRefundContext();
-
+  const [tabActive, setTabActive] = useState(1);
   const [current, setCurrent] = useState(0);
 
   const next = () => {
@@ -64,13 +65,21 @@ export const AdvanceRefundForm = observer(() => {
     formData.beneficiary = option.name;
   };
 
+  const renderTab = (key: number) => {
+    switch (key) {
+      case 1:
+        return <ContentCreateAdvance />
+      default:
+        return null
+    }
+  }
 
   return (
     <div>
       {/* Form fields */}
       < div className="grid grid-cols-3 gap-4 mb-4 text-gray-900 text-md p-3" >
         {/* Người tạo */}
-        <div className="col-span-1 -ml-8" >
+        <div className="col-span-1" >
           <div className="flex gap-2">
             <label className="w-1/3 text-right">Người tạo:</label>
             <input
@@ -82,7 +91,7 @@ export const AdvanceRefundForm = observer(() => {
             />
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-1">
             {/* Người đề nghị */}
             <label className="text-right w-1/3">Người đề nghị:</label>
             <div className="w-2/3">
@@ -101,7 +110,7 @@ export const AdvanceRefundForm = observer(() => {
           }
 
           {/* Phòng ban */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-1">
             <label className="w-1/3 text-right">Phòng ban:</label>
             <input
               type="text"
@@ -113,7 +122,7 @@ export const AdvanceRefundForm = observer(() => {
           </div>
 
           {/* Ngày tạo */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-1">
             <label className="text-gray-900 w-1/3 text-right">Ngày tạo:</label>
             <input
               type="date"
@@ -124,7 +133,7 @@ export const AdvanceRefundForm = observer(() => {
             />
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-1">
             <label className="text-gray-900 text-right w-1/3">Ngày tạm ứng:</label>
             <input
               type="date"
@@ -140,7 +149,7 @@ export const AdvanceRefundForm = observer(() => {
             )
           }
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 mt-1">
             <label className="text-gray-900 text-right w-1/3">Hạn hoàn:</label>
             <input
               type="date"
@@ -193,7 +202,31 @@ export const AdvanceRefundForm = observer(() => {
 
       {/* Content */}
       < div className="mb-4" >
-        <Tabs defaultActiveKey="1" items={items} onChange={onChange} tabBarStyle={{ margin: 0 }} />
+        {/* <Tabs defaultActiveKey="1" items={items} onChange={onChange} tabBarStyle={{ margin: 0 }} />
+         */}
+
+        <Tabs
+          hideAdd
+          tabBarStyle={{ marginBottom: 0, paddingInline: 0, paddingBottom: 0, height: 36 }}
+          onChange={(index) => setTabActive(Number(index))}
+          tabBarGutter={0}
+          activeKey={String(tabActive)}
+        >
+          {dataTabs.map((item, index) =>
+            <Tabs.TabPane
+              tab={
+                <div className={classNames('flex flex-row items-center space-x-1 px-4 ', { "border-b-1 rounded border-blue-600": tabActive === Number(item.key) })}>
+                  <span className={classNames('font-normal', { "text-blue-600": tabActive === Number(item.key) })}>{item.label}</span>
+                </div>
+              }
+              key={Number(item.key)}
+            >
+              <div className="flex flex-col w-full">  
+                  {renderTab(Number(item.key))}
+              </div>
+            </Tabs.TabPane>
+          )}
+        </Tabs>
       </div >
 
       {/* Button Actions */}

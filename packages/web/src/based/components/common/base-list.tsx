@@ -9,6 +9,7 @@ interface BaseListProps {
 }
 
 const BaseList = ({ renderTitle, renderItem, data, title }: BaseListProps) => {
+  // const { currentAdvanceRefund } = useListAdvanceRefundContext();
   return (
     <div className="overflow-y-auto h-full">
       <ToolBarRefund title={title}/>

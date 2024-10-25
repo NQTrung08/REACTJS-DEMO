@@ -1,5 +1,5 @@
 import { AdvanceRefundModel } from "core-model";
-import { ListAdvanceRefundProvider, useListAdvanceRefundContext } from "core-modules";
+import { useListAdvanceRefundContext } from "core-modules";
 import { observer } from "mobx-react";
 import { BaseList } from "src/based/components/common/base-list";
 import { ItemAllAdvance } from "src/modules/accountant/components/advance-refund/list-advance-refund/item/item-all-advance";
@@ -25,7 +25,6 @@ export const ContainerAllAdvance = observer(({
 
   return (
     <>
-      <ListAdvanceRefundProvider>
 
         <FilterAdvanced tab={tab} />
         {/* Thêm bảng hiển thị dữ liệu */}
@@ -35,7 +34,6 @@ export const ContainerAllAdvance = observer(({
           renderItem={renderItem}
           data={currentAdvanceRefund}
         />
-      </ListAdvanceRefundProvider>
     </>
   );
 });

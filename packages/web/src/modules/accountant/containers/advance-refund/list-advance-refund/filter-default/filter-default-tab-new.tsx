@@ -1,7 +1,8 @@
 import { useListAdvanceRefundContext } from 'core-modules';
+import { observer } from 'mobx-react';
 import { StatusFilter } from 'src/based/components/common/status-filter';
 
-export const FilterDefaultTabNew = () => {
+export const FilterDefaultTabNew = observer(() => {
   const { filter } = useListAdvanceRefundContext(); // Lấy filter từ context
 
   const filterOptions = [
@@ -19,4 +20,4 @@ export const FilterDefaultTabNew = () => {
       {/* Các thành phần khác của StaffList */}
     </div>
   );
-};
+});
