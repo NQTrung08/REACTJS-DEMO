@@ -1,16 +1,16 @@
-import { useListAdvanceRefundContext } from "core-modules"
 import { Toolbar } from "src/based/components/common/Toolbar"
 
 interface IToolBarRefund {
-  title: string
+  title: string,
+  quantity?: number
 }
 
 export const ToolBarRefund = ({
-  title
+  title,
+  quantity
 }: IToolBarRefund) => {
-  const {dataView} = useListAdvanceRefundContext()
-
+  
   return (
-    <Toolbar title={title} quantity={dataView.length} label={title} />
+    <Toolbar title={title} quantity={quantity} label={title} />
   )
 }

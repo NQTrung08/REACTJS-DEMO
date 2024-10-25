@@ -1,7 +1,9 @@
 
+import { mdiFilterOutline } from '@mdi/js';
+import Icon from '@mdi/react';
 import { TAB_ADVANCE_REFUND } from 'core-params';
 import { observer } from 'mobx-react';
-import { Search } from 'src/based/components/common/Search';
+import { SearchAdvanceRefund } from '../search-advance-refund';
 import { AdvanceRefundSort } from '../sort-refund';
 import { FilterDefaultTabNew } from './filter-default-tab-new';
 import { StatusFilterAdvanceRefund } from './status-filter-refund';
@@ -17,9 +19,12 @@ export const FilterAdvanced = observer(({
   return (
     <div>
       <div className='border-y p-2 flex justify-between items-center'>
-        <Search placeholder='Tìm kiếm' />
+        <SearchAdvanceRefund placeholder='Tìm kiếm' />
         {/* Filter */}
-        <AdvanceRefundSort />
+        <div className='flex items-center'>
+          <AdvanceRefundSort />
+          <Icon path={mdiFilterOutline} className='ml-2 w-4 h-4' />
+        </div>
       </div>
       {
         tab === TAB_ADVANCE_REFUND.OVERDUE ? (
@@ -30,6 +35,7 @@ export const FilterAdvanced = observer(({
           <FilterDefaultTabNew />
         )
       }
+
 
     </div>
 

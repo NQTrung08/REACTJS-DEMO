@@ -1,5 +1,6 @@
 import { mdiChevronDown } from "@mdi/js";
 import Icon from "@mdi/react";
+import classNames from "classnames";
 import { AdvanceRefundModel } from "core-model";
 import { observer } from "mobx-react";
 
@@ -39,9 +40,9 @@ export const ItemDueOverdue = observer(({
 
       {/* Cột Quá hạn */}
       <div className="w-[10%]">
-          <span className="text-red-300">
-           
-          </span>  
+        <span className={classNames({ 'text-red-300': item.overdue > 0 })}>
+          {item.overdue} ngày
+        </span>
       </div>
 
       {/* Cột Hạn hoàn */}

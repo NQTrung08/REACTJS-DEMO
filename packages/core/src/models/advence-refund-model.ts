@@ -16,7 +16,7 @@ export class AdvanceRefundModel {
   @observable createAt: string = new Date().toISOString().split('T')[0];
   @observable requestDate: string = ""; // Ngày tạm ứng
   @observable actualRefundDate = ""; // ngày thực hoàn
-  @observable overdue: number = 0;
+  @observable overdue: number = 0; // quá hạn
   @observable refundDeadline: string = ""; // Hạn hoàn
   @observable advanceAmount: number = 0; // Số tiền tạm ứng
   @observable content: string = ""; // Nội dung tạm ứng

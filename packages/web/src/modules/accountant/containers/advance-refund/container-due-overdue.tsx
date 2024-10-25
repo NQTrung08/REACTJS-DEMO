@@ -15,6 +15,10 @@ export const ContainerDueAndOverdue = observer(({
 }: IProps) => {
   const { currentAdvanceRefund } = useListAdvanceRefundContext();
   console.log("container overdue",currentAdvanceRefund);
+
+  const filteredData = currentAdvanceRefund.filter(
+    (item: AdvanceRefundModel) => item.status !== 'completed'
+  );
   const renderTitle = () => (
     <TitleTableOverDue />
   );
@@ -31,7 +35,7 @@ export const ContainerDueAndOverdue = observer(({
           title='tạm ứng/hoàn ứng'
           renderTitle={renderTitle}
           renderItem={renderItem}
-          data={currentAdvanceRefund}
+          data={filteredData}
         />
     </>
   );

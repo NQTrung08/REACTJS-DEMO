@@ -1,5 +1,6 @@
 import { mdiChevronDown } from "@mdi/js";
 import Icon from "@mdi/react";
+import classNames from "classnames";
 import { AdvanceRefundModel } from "core-model";
 import { observer } from "mobx-react";
 
@@ -41,9 +42,9 @@ export const ItemRefund = observer(({
 
       {/* Cột Quá hạn */}
       <div className="w-[10%]">
-          <span className="text-red-300">
-           
-          </span>  
+        <span className={classNames({ 'text-red-300': item.overdue > 0 })}>
+          {item.overdue} ngày
+        </span>
       </div>
 
       {/* Cột Hạn hoàn */}
@@ -68,10 +69,16 @@ export const ItemRefund = observer(({
 
       {/* Nút hành động */}
       <div className="w-[15%] text-right flex justify-end">
-        <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600 text-md font-medium">
-          <span>Thu tiền</span>
-          <Icon path={mdiChevronDown} className="w-4 h-4" />
-        </button>
+        {item.status === 'completed' ? (
+          <button className="text-blue-500 hover:text-blue-600 text-md font-medium">
+            Xem chi tiết
+          </button>
+        ) : (
+          <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600 text-md font-medium">
+            <span>Thu tiền</span>
+            <Icon path={mdiChevronDown} className="w-4 h-4" />
+          </button>
+        )}
       </div>
     </div>
   );

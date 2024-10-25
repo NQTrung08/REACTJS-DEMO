@@ -62,11 +62,17 @@ export const ItemAllAdvance = observer(({ item, tab }: IProps) => {
       </div>
 
       {/* Nút hành động */}
-      <div className="w-[10%] text-right flex justify-end">
-        <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600 text-md font-medium">
-          <span>Cập nhật</span>
-          <Icon path={mdiChevronDown} className="w-4 h-4" />
-        </button>
+      <div className="w-[15%] text-right flex justify-end">
+        {item.status === 'completed' ? (
+          <button className="text-blue-500 hover:text-blue-600 text-md font-medium">
+            Xem chi tiết
+          </button>
+        ) : (
+          <button className="flex items-center gap-2 text-blue-500 hover:text-blue-600 text-md font-medium">
+            <span>Cập nhật</span>
+            <Icon path={mdiChevronDown} className="w-4 h-4" />
+          </button>
+        )}
       </div>
     </div>
   );

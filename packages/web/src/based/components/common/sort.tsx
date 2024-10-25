@@ -1,4 +1,4 @@
-import { mdiChevronDown, mdiFilterOutline, mdiSortAscending } from '@mdi/js';
+import { mdiChevronDown, mdiSortAscending } from '@mdi/js';
 import Icon from '@mdi/react';
 import { observer } from 'mobx-react';
 import { useState } from 'react';
@@ -36,7 +36,6 @@ export const SortDropdown = observer(({ title, sortOptions, filter }: SortDropdo
           <Icon path={mdiChevronDown} className='ml-1 w-4 h-4' />
 
         </div>
-        <Icon path={mdiFilterOutline} className='ml-2 w-4 h-4' />
       </div>
       {isDropdownOpen && (
         <div className='absolute mt-2 bg-white border shadow rounded'>

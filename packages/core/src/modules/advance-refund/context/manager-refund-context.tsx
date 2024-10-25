@@ -69,6 +69,28 @@ const data = [
     content: 'Tạm ứng chi phí hội nghị',
     attachedDocuments: [],
   },
+  {
+    id: 3,
+    creator: 'Nguyễn Quang E',
+    requester: 'Lê Lai',
+    beneficiary: 'Phạm Văn D',
+    beneficiaryAccount: {
+      accountNumber: '987654321',
+      bank: 'Vietcombank',
+      accountImage: '',
+    },
+    approver: 'Nguyễn Văn E',
+    status: 'completed',
+    department: 'Nhân Sự',
+    createAt: '2024-03-10',
+    requestDate: '2024-03-15',
+    actualRefundDate: '2024-04-01',
+    overdue: 12,
+    refundDeadline: '2024-03-22',
+    advanceAmount: 20000000,
+    content: 'Tạm ứng chi phí hội nghị',
+    attachedDocuments: [],
+  },
 ]
 
 const ManagerRefundContextProvider = observer(({ children } : IProps) => {
